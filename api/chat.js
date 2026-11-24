@@ -24,22 +24,39 @@ module.exports = async function handler(req, res) {
   if (!message || message.length > 600) return res.status(400).json({ error: "Please enter a question of up to 600 characters." });
 
   try {
-    const upstream = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent", {
+    const upstream = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-goog-api-key": key },
       body: JSON.stringify({
-        systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
-        contents: [{ role: "user", parts: [{ text: message }] }],
-        generationConfig: { temperature: 0.4, maxOutputTokens: 500 }
+        model: "gemini-3.8-flash",
+        system_instruction: SYSTEM_INSTRUCTION,
+        input: message,
+        generation_config: { temperature: 0.4, max_output_tokens: 500 }
       })
     });
-    const payload = await upstream.json();
+
+    const rawPayload = await upstream.text();
+    let payload;
+    try { payload = JSON.parse(rawPayload); } catch (_) { payload = {}; }
+
     if (!upstream.ok) {
-      console.error("Gemini API error:", upstream.status, payload?.error?.message || "unknown");
-      return res.status(502).json({ error: "The AI service could not answer right now. Please try again shortly." });
+      const detail = payload?.error?.message || payload?.message || rawPayload.slice(0, 300) || "unknown";
+      console.error("Gemini Interactions API error:", upstream.status, detail);
+      return res.status(502).json({ error: "Gemini API error (" + upstream.status + "): " + detail });
     }
-    const reply = payload?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("").trim();
-    if (!reply) return res.status(502).json({ error: "The AI returned an empty response. Please try again." });
+
+    const reply = payload?.steps
+      ?.filter(step => step.type === "model_output")
+      ?.flatMap(step => step.content || [])
+      ?.filter(part => part.type === "text")
+      ?.map(part => part.text || "")
+      ?.join("")
+      ?.trim();
+
+    if (!reply) {
+      console.error("Gemini returned no text output:", JSON.stringify(payload).slice(0, 500));
+      return res.status(502).json({ error: "The AI returned an empty response. Please try again." });
+    }
     return res.status(200).json({ reply });
   } catch (error) {
     console.error("Portfolio chat request failed:", error?.message || error);
