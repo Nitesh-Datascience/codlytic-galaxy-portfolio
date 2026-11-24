@@ -219,6 +219,140 @@ section{padding:90px clamp(20px,8vw,120px)}.section-head{text-align:center;margi
  .system .sky-canopy{left:-15%;right:-15%;top:-12%;height:88%}
 }
 
+
+/* CODLYTIC UNIVERSE v2 — cohesive deep-space visual system */
+:root{
+ --bg:#03040d;--cyan:#83edff;--violet:#b59aff;--muted:#b7c4df;
+ --panel:rgba(10,17,39,.72);--line:rgba(146,203,255,.22);
+}
+html{background:#03040d;scroll-padding-top:86px}
+body{
+ background:
+  radial-gradient(ellipse at 50% 8%,#18254a 0%,transparent 40%),
+  radial-gradient(ellipse at 8% 48%,#18204a55 0%,transparent 34%),
+  radial-gradient(ellipse at 92% 72%,#351c5550 0%,transparent 35%),
+  linear-gradient(180deg,#03040d 0%,#07091b 48%,#03040d 100%);
+}
+#stars{z-index:-2;opacity:.9}
+.nebula{
+ z-index:-1;opacity:.9;
+ background:
+  radial-gradient(ellipse 45% 24% at 22% 18%,#5a46a52b 0%,transparent 72%),
+  radial-gradient(ellipse 42% 26% at 80% 42%,#277da52b 0%,transparent 74%),
+  radial-gradient(ellipse 48% 28% at 46% 82%,#6740a526 0%,transparent 76%),
+  radial-gradient(ellipse at 50% 50%,#080d20 0%,#03040d 78%);
+}
+.nebula:before,.nebula:after{
+ content:"";position:absolute;inset:-20%;pointer-events:none;
+ background:conic-gradient(from 25deg at 50% 50%,transparent 0 18%,#7b68c20a 24%,transparent 34% 58%,#64dfff0b 66%,transparent 78%);
+ filter:blur(38px);animation:nebulaFlow 48s linear infinite;
+}
+.nebula:after{transform:rotate(90deg) scale(1.2);opacity:.6;animation-duration:70s}
+@keyframes nebulaFlow{to{transform:rotate(360deg)}}
+nav{
+ padding-top:15px;padding-bottom:15px;
+ background:linear-gradient(180deg,#050918eF,#070b1bd9);
+ border-bottom:1px solid #9bdfff22;
+ box-shadow:0 10px 45px #0005;
+}
+.brand{text-shadow:0 0 22px #70e7ff88}
+nav .links a{position:relative;white-space:nowrap;transition:color .2s}
+nav .links a:after{
+ content:"";position:absolute;left:0;right:100%;bottom:-8px;height:1px;
+ background:linear-gradient(90deg,var(--cyan),var(--violet));transition:right .25s;
+}
+nav .links a:hover:after,nav .links a:focus-visible:after{right:0}
+.hero{isolation:isolate}
+.hero:before{
+ inset:0;background:
+ radial-gradient(ellipse at 50% 56%,#4acfff15 0%,transparent 42%),
+ radial-gradient(ellipse at 50% 20%,#9b75ff12 0%,transparent 52%);
+}
+.hero .eyebrow{font-weight:700;text-shadow:0 0 18px #70e7ff88}
+.hero h1{
+ letter-spacing:.015em;
+ background-image:linear-gradient(100deg,#fff 8%,#b9f5ff 38%,#a9a3ff 72%,#fff 96%);
+ filter:drop-shadow(0 0 24px #75dfff35);
+}
+.system{filter:drop-shadow(0 0 38px #4bdfff20)}
+.system:before{
+ inset:12%;background:radial-gradient(ellipse,#284a873d 0%,#111b3c25 44%,transparent 74%);
+}
+.system:after{opacity:.8}
+.sun{box-shadow:0 0 42px #ffbd70,0 0 105px #a64fff99,0 0 190px #ff9c4a3b}
+.orbit{border-color:#9bdfff4a;box-shadow:0 0 18px #56cfff12}
+.orbit:nth-of-type(odd){border-color:#b5a0ff55}
+.planet{cursor:pointer}
+section{
+ position:relative;isolation:isolate;
+ background:linear-gradient(180deg,transparent 0%,#080d1b35 50%,transparent 100%);
+}
+section:before{
+ content:"";position:absolute;z-index:-1;left:8%;right:8%;top:12%;height:76%;
+ pointer-events:none;border-radius:50%;
+ background:radial-gradient(ellipse at center,#294c8b16 0%,#6e4ca10a 42%,transparent 72%);
+ filter:blur(24px);
+}
+.section-head .eyebrow{letter-spacing:.32em}
+.section-head h2{letter-spacing:-.035em}
+.about{
+ max-width:900px;padding:clamp(25px,5vw,48px);
+ border:1px solid var(--line);border-radius:26px;
+ background:linear-gradient(135deg,#111b36c9,#090f22b8);
+ box-shadow:inset 0 1px #ffffff12,0 24px 80px #0004,0 0 45px #65dfff0b;
+ backdrop-filter:blur(16px);
+}
+.about p{font-size:clamp(1rem,1.7vw,1.12rem)}
+.grid{gap:22px}
+.card{
+ min-height:250px;padding:27px;
+ border-color:#8abfff2e;
+ background:linear-gradient(145deg,#121d3bd9,#090f22e8 72%);
+ box-shadow:inset 0 1px #ffffff12,0 18px 55px #0003;
+}
+.card:after{
+ content:"";position:absolute;width:170px;height:170px;right:-85px;top:-90px;
+ border:1px solid #8bdfff20;border-radius:50%;
+ box-shadow:0 0 0 16px #8bdfff08,0 0 0 34px #8bdfff05;
+ pointer-events:none;
+}
+.card:hover{transform:translateY(-8px);border-color:#83edff88;box-shadow:0 24px 65px #0007,0 0 35px #51cfff18}
+.card h3{font-size:1.18rem;letter-spacing:-.02em}
+.card p{color:#bac8e3}
+.orb{box-shadow:inset -10px -9px 16px #0009,0 0 25px #68dfff44,0 0 50px #68dfff16}
+.tag{background:#78dfff0b;letter-spacing:.025em}
+.btn{box-shadow:0 8px 28px #27bde522,inset 0 1px #ffffff25}
+.btn.secondary{background:#ffffff08;border-color:#9bcfff45}
+.contact .section-head{
+ max-width:900px;margin:0 auto;padding:clamp(28px,5vw,54px);
+ border:1px solid var(--line);border-radius:28px;
+ background:linear-gradient(145deg,#101a36cc,#080e20dd);
+ box-shadow:0 25px 80px #0005;
+}
+footer{background:#03040d88;border-top-color:#9bdfff20}
+.guide-panel{
+ background:linear-gradient(150deg,#101b38f7,#080d20fa);
+ border-color:#83edff66;box-shadow:0 22px 90px #000c,0 0 45px #47cfff16;
+}
+.guide-launch{background:linear-gradient(110deg,#11617fee,#6745a9f2);box-shadow:0 10px 40px #0009,0 0 28px #46cfff2b}
+.chat-form input{font-size:16px}
+@media(max-width:700px){
+ nav{align-items:flex-start;gap:12px;padding:12px 15px}
+ nav .brand{font-size:.9rem;padding-top:3px}
+ nav .links{max-width:76vw;overflow-x:auto;gap:16px;padding:3px 1px 8px;scrollbar-width:none}
+ nav .links::-webkit-scrollbar{display:none}
+ nav .links a{font-size:.76rem}
+ .hero h1{font-size:clamp(2.65rem,13vw,4.2rem)}
+ .hero>div>p{line-height:1.55}
+ .about{padding:24px 20px}
+ .card{min-height:0;padding:23px}
+ .guide-launch{right:14px;bottom:14px;padding:12px 15px}
+ .guide-panel{right:12px;bottom:76px;width:min(390px,calc(100vw - 24px));padding:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .nebula:before,.nebula:after{animation:none!important}
+}
+
 </style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About Me</a><a href="#universe">Explore Planet</a><a href="#projects">Project Planet</a><a href="#contact">Contact</a></div></nav>
@@ -259,8 +393,7 @@ document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click'
 document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('click',()=>{document.getElementById('projects').scrollIntoView({behavior:'smooth'});const map={analytics:0,churn:1,fraud:2};const cards=document.querySelectorAll('#projects .card');cards.forEach((card,i)=>{card.style.borderColor=i===map[p.dataset.topic]?'#70e7ff':'#9bb7ff26';card.style.boxShadow=i===map[p.dataset.topic]?'0 0 35px #36cfff55':'';});}));
 
 
-// Cinematic auto-scroll after intro; stop only when the visitor deliberately interacts.
-(function(){
+// Visitor-controlled navigation: the page never auto-scrolls away from the universe intro.
  let interrupted=false, started=false, timer;
  const interrupt=()=>{if(!started){interrupted=true;clearTimeout(timer);}};
  const keyInterrupt=e=>{if(['ArrowDown','PageDown',' ','End'].includes(e.key))interrupt();};
@@ -275,6 +408,5 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
    }
   },9000);
  }
-})();
 
 </script></body></html>
