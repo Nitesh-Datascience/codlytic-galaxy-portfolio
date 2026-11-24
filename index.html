@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#050713"><meta name="description" content="CODLYTIC — Nitesh's universe of data, analytics and intelligent projects.">
+<meta name="theme-color" content="#050713"><meta name="description" content="Explore Nitesh’s CODLYTIC galaxy: data analytics, Python, SQL, machine learning projects and ways to connect."><meta property="og:title" content="CODLYTIC — Galaxy Portfolio"><meta property="og:description" content="Explore data analytics, Python, SQL, AI and machine learning projects by Nitesh."><meta property="og:type" content="website"><meta name="twitter:card" content="summary">
 <title>CODLYTIC — Galaxy Portfolio</title>
 <style>
 :root{--bg:#050713;--cyan:#70e7ff;--violet:#a78bfa;--muted:#aab2cc;--panel:rgba(14,20,43,.72)}
@@ -461,6 +461,18 @@ nav{z-index:10!important}
  .journey-section>*{opacity:1!important;transform:none!important;filter:none!important}
 }
 
+
+/* Final portfolio polish: skills and verified social destinations */
+.social-grid{width:min(920px,100%);margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px;text-align:left}
+.social-card{display:flex;align-items:center;gap:13px;min-width:0;padding:15px 16px;border:1px solid #8bdfff30;border-radius:16px;background:linear-gradient(130deg,#101b35dd,#111025cc);transition:transform .22s,border-color .22s,box-shadow .22s}
+.social-card:hover{transform:translateY(-4px);border-color:#70e7ff99;box-shadow:0 12px 35px #43cfff20}
+.social-mark{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#164e70,#65439a);color:#fff;font-size:1.12rem;font-weight:900;box-shadow:0 0 20px #57dfff22}
+.social-card>span:nth-child(2){display:grid;gap:3px;min-width:0}.social-card strong{font-size:.94rem;color:#f5f8ff}.social-card small{font-size:.75rem;color:#9eaccb;overflow-wrap:anywhere}.social-card>b{margin-left:auto;color:#83eaff;font-size:1rem}
+.toolkit{padding-top:62px;padding-bottom:78px}.toolkit-grid{width:min(1000px,100%);margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.toolkit-item{position:relative;display:grid;gap:7px;padding:19px;border:1px solid #9bb7ff26;border-radius:16px;background:#0d1429bb;overflow:hidden}
+.toolkit-item:after{content:"";position:absolute;right:-30px;top:-38px;width:100px;height:100px;border-radius:50%;background:#63dfff0b;filter:blur(5px)}
+.toolkit-item>span{color:#70e7ff;font-size:.68rem;letter-spacing:.16em}.toolkit-item strong{font-size:1rem}.toolkit-item small{color:#aab2cc;font-size:.8rem}
+@media(max-width:600px){.social-grid{grid-template-columns:1fr}.toolkit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.toolkit-item{padding:15px 12px}.toolkit-item strong{font-size:.9rem}.toolkit-item small{font-size:.72rem}}
 </style></head>
 <body><canvas id="stars"></canvas><canvas id="warpParticles" aria-hidden="true"></canvas><div class="nebula"></div><div class="warp-field" aria-hidden="true"><i class="warp-ray ray-a"></i><i class="warp-ray ray-b"></i><i class="warp-ray ray-c"></i><i class="warp-ray ray-d"></i><i class="warp-dust dust-a"></i><i class="warp-dust dust-b"></i><i class="warp-dust dust-c"></i></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About Me</a><a href="#universe">Explore Planet</a><a href="#projects">Project Planet</a><a href="#contact">Contact</a></div></nav>
@@ -468,13 +480,29 @@ nav{z-index:10!important}
 <div class="system" id="universe" aria-label="Animated solar system with eight planets and Pluto"><div class="sky-canopy" aria-hidden="true"></div><div class="sun" title="Sun"></div><i class="cosmic-streak one"></i><i class="cosmic-streak two"></i><div class="orbit o1"><button class="planet p1" type="button" aria-label="Mercury" title="Mercury"></button></div><div class="orbit o2"><button class="planet p2" type="button" aria-label="Venus" title="Venus"></button></div><div class="orbit o3"><button class="planet p3" type="button" data-topic="analytics" aria-label="Earth" title="Earth"></button></div><div class="orbit o4"><button class="planet p4" type="button" data-topic="churn" aria-label="Mars" title="Mars"></button></div><div class="orbit o5"><button class="planet p5" type="button" data-topic="fraud" aria-label="Jupiter" title="Jupiter"></button></div><div class="orbit o6"><button class="planet p6" type="button" aria-label="Saturn" title="Saturn"></button></div><div class="orbit o7"><button class="planet p7" type="button" aria-label="Uranus" title="Uranus"></button></div><div class="orbit o8"><button class="planet p8" type="button" aria-label="Neptune" title="Neptune"></button></div><div class="orbit o9"><button class="planet p9" type="button" aria-label="Pluto dwarf planet" title="Pluto (dwarf planet)"></button></div></div>
 </div></header>
 <section id="about"><div class="section-head"><div class="eyebrow">THE EXPLORER</div><h2>About Me</h2></div><div class="about"><p>Hi, I'm <strong>Nitesh</strong> — a data-focused builder interested in analytics, Python, SQL, AI and machine learning. CODLYTIC is my space to share projects, experiments and the learning behind every solution. This portfolio is a growing universe: project details and verified outcomes will be added as each mission is published.</p></div></section>
-<section id="projects"><div class="section-head"><div class="eyebrow">EXPLORE THE SYSTEM</div><h2>Project Planet</h2><p>Each planet represents a different area of my work.</p></div><div class="grid">
+<section id="toolkit" class="toolkit"><div class="section-head"><div class="eyebrow">THE CREATOR'S TOOLKIT</div><h2>Skills & Focus Areas</h2><p>Tools and technologies I use to explore data and build practical solutions.</p></div><div class="toolkit-grid">
+<div class="toolkit-item"><span>01</span><strong>Python</strong><small>Data analysis & automation</small></div>
+<div class="toolkit-item"><span>02</span><strong>SQL</strong><small>Querying & data exploration</small></div>
+<div class="toolkit-item"><span>03</span><strong>Excel</strong><small>Analysis & reporting</small></div>
+<div class="toolkit-item"><span>04</span><strong>Machine Learning</strong><small>Predictive modeling</small></div>
+<div class="toolkit-item"><span>05</span><strong>AI & Data Science</strong><small>Applied intelligent solutions</small></div>
+<div class="toolkit-item"><span>06</span><strong>Streamlit</strong><small>Interactive dashboards</small></div>
+</div></section><section id="projects"><div class="section-head"><div class="eyebrow">EXPLORE THE SYSTEM</div><h2>Project Planet</h2><p>Each planet represents a different area of my work.</p></div><div class="grid">
 <article class="card"><div class="orb earth"></div><span class="tag">MISSION 01 · LEARNER INTELLIGENCE</span><h3>EduPro — Learner Intelligence</h3><p>A Streamlit dashboard for learner segmentation, course recommendations and comparison of 13 classification, regression and anomaly-detection models.</p><span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">ML</span><p><a class="btn secondary" href="https://github.com/Nitesh-Datascience/EduPro_Project" target="_blank" rel="noreferrer">View project ↗</a></p></article>
 <article class="card"><div class="orb mars"></div><span class="tag">MISSION 02 · CUSTOMER ANALYTICS</span><h3>Customer Churn Intelligence</h3><p>An interactive dashboard with executive KPIs, churn analysis, individual customer risk prediction and model-performance views.</p><span class="tag">Python</span><span class="tag">Prediction</span><span class="tag">Streamlit</span><p><a class="btn secondary" href="https://github.com/Nitesh-Datascience/Customer_churn_Prediction" target="_blank" rel="noreferrer">View project ↗</a></p></article>
 <article class="card"><div class="orb jupiter"></div><span class="tag">MISSION 03 · FINANCIAL AI</span><h3>Financial Fraud Detection</h3><p>A multi-dataset fraud analysis dashboard comparing supervised classifiers and anomaly-detection approaches, with evaluation limitations documented.</p><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Fraud ML</span><p><a class="btn secondary" href="https://github.com/Nitesh-Datascience/Financial_Fraud_Detection" target="_blank" rel="noreferrer">View project ↗</a></p></article>
 </div></section>
 
-<section id="contact" class="contact"><div class="section-head"><div class="eyebrow">OPEN A COMMUNICATION CHANNEL</div><h2>Let's Connect</h2><p>Have a project, opportunity or idea? Let's talk.</p><div class="actions"><a class="btn" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub ↗</a><a class="btn secondary" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">Connect on GitHub ↗</a></div></div></section>
+<section id="contact" class="contact"><div class="section-head"><div class="eyebrow">OPEN A COMMUNICATION CHANNEL</div><h2>Let's Connect</h2><p>Have a project, opportunity or idea? Connect with me across my social platforms.</p></div>
+<div class="social-grid" aria-label="Social media profiles">
+<a class="social-card" href="https://www.linkedin.com/in/niteshkumar-codlytic" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"><span class="social-mark">in</span><span><strong>LinkedIn</strong><small>Professional network</small></span><b>↗</b></a>
+<a class="social-card" href="https://youtube.com/@codlytic?si=eOt4sZl41KjLhHft" target="_blank" rel="noopener noreferrer" aria-label="CODLYTIC YouTube channel"><span class="social-mark">▶</span><span><strong>YouTube</strong><small>CODLYTIC channel</small></span><b>↗</b></a>
+<a class="social-card" href="https://x.com/HeyNiteshh" target="_blank" rel="noopener noreferrer" aria-label="X profile"><span class="social-mark">𝕏</span><span><strong>X</strong><small>Updates & ideas</small></span><b>↗</b></a>
+<a class="social-card" href="https://www.instagram.com/codlytic/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profile"><span class="social-mark">◎</span><span><strong>Instagram</strong><small>CODLYTIC updates</small></span><b>↗</b></a>
+<a class="social-card" href="https://www.facebook.com/share/1J7a5fWJVQ/" target="_blank" rel="noopener noreferrer" aria-label="Facebook profile"><span class="social-mark">f</span><span><strong>Facebook</strong><small>Connect on Facebook</small></span><b>↗</b></a>
+<a class="social-card" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"><span class="social-mark">⌘</span><span><strong>GitHub</strong><small>Projects & source code</small></span><b>↗</b></a>
+<a class="social-card" href="mailto:ns0762005@gmail.com" aria-label="Send email"><span class="social-mark">✉</span><span><strong>Email</strong><small>ns0762005@gmail.com</small></span><b>↗</b></a>
+</div></section>
 
 <button class="guide-launch" id="guideLaunch" type="button" aria-expanded="false" aria-controls="guidePanel">✦ Ask Portfolio Guide</button>
 <aside class="guide-panel" id="guidePanel" aria-label="CODLYTIC Portfolio Guide">
