@@ -428,6 +428,39 @@ nav,header.hero,body>section,footer{position:relative;z-index:1}
 @media(max-width:700px){#warpParticles{opacity:.7}.system{transform-origin:50% 35%}}
 @media(prefers-reduced-motion:reduce){#warpParticles{display:none!important}.system{transform:none!important;opacity:1!important;filter:none!important}}
 
+
+/* FINAL CINEMATIC PASS — keep the galaxy visibly layered above every page background */
+html,body{background:#030611!important}
+body{isolation:isolate}
+#stars{position:fixed!important;inset:0!important;z-index:0!important;pointer-events:none;opacity:.82}
+.nebula{position:fixed!important;inset:0!important;z-index:0!important;pointer-events:none!important;overflow:hidden;
+ background:radial-gradient(ellipse at 18% 22%,#164b8738 0%,transparent 42%),radial-gradient(ellipse at 82% 36%,#542b8730 0%,transparent 44%),radial-gradient(ellipse at 52% 88%,#075b7540 0%,transparent 48%),linear-gradient(145deg,#02040d,#070b1b 52%,#030611)!important}
+.nebula:before,.nebula:after{content:"";position:absolute;inset:-35%;pointer-events:none;filter:blur(48px);mix-blend-mode:screen;opacity:.58;animation:codlyticNebulaFlow 18s ease-in-out infinite alternate}
+.nebula:before{background:radial-gradient(ellipse at 28% 42%,#27baff35 0%,transparent 34%),radial-gradient(ellipse at 72% 62%,#9560ff30 0%,transparent 38%)}
+.nebula:after{background:radial-gradient(ellipse at 68% 25%,#24d8d022 0%,transparent 30%),radial-gradient(ellipse at 35% 78%,#6c4dff26 0%,transparent 36%);animation-duration:24s;animation-direction:alternate-reverse}
+@keyframes codlyticNebulaFlow{0%{transform:translate3d(-3%,1%,0) rotate(-8deg) scale(.94)}100%{transform:translate3d(4%,-2%,0) rotate(9deg) scale(1.12)}}
+#warpParticles{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;z-index:1!important;opacity:.88!important;mix-blend-mode:screen;pointer-events:none}
+.warp-field{position:fixed!important;inset:0!important;z-index:2!important;opacity:.92!important;pointer-events:none!important;mix-blend-mode:screen}
+.warp-field:before{inset:-25%!important;filter:blur(42px)!important;background:radial-gradient(ellipse at 50% 48%,#43caff24 0%,#8c54ff18 32%,transparent 70%),linear-gradient(115deg,transparent 25%,#54dfff12 48%,transparent 70%)!important;animation:codlyticLightSweep 12s ease-in-out infinite alternate}
+.warp-field:after{width:3px!important;box-shadow:0 0 34px #6fe8ffbb,0 0 100px #9b79ff88!important;opacity:.65!important}
+@keyframes codlyticLightSweep{0%{transform:translate3d(-5%,2%,0) rotate(-8deg) scale(.9)}100%{transform:translate3d(5%,-2%,0) rotate(8deg) scale(1.12)}}
+nav,header.hero,body>section,footer{position:relative!important;z-index:3!important;background:transparent!important}
+nav{z-index:10!important}
+.guide-launch{z-index:20!important}.guide-panel{z-index:21!important}
+.hero{background:radial-gradient(ellipse at 50% 58%,#143a6522,transparent 58%)!important}
+.hero:before{z-index:2!important;background:radial-gradient(ellipse at 50% 58%,#42caff22 0%,transparent 56%),radial-gradient(ellipse at 50% 25%,#a16aff18 0%,transparent 48%)!important}
+.system{filter:drop-shadow(0 0 42px #40cfff44)!important}
+.sun{box-shadow:0 0 48px #ffb45c,0 0 125px #a64fffbb,0 0 210px #ff9c4a55!important}
+.orbit{border-color:#a8eaff77!important;box-shadow:0 0 18px #56cfff22,inset 0 0 16px #56cfff12!important}
+.journey-section>*{transition:opacity .85s ease,transform 1s cubic-bezier(.2,.7,.2,1),filter 1s ease!important}
+.journey-section.journey-visible>*{filter:drop-shadow(0 0 12px #58cfff0c)!important}
+@media(prefers-reduced-motion:reduce){
+ .nebula:before,.nebula:after,.warp-field:before{animation:none!important;opacity:.55!important}
+ #warpParticles{display:block!important;opacity:.5!important}
+ .warp-field{display:block!important;opacity:.65!important}
+ .journey-section>*{opacity:1!important;transform:none!important;filter:none!important}
+}
+
 </style></head>
 <body><canvas id="stars"></canvas><canvas id="warpParticles" aria-hidden="true"></canvas><div class="nebula"></div><div class="warp-field" aria-hidden="true"><i class="warp-ray ray-a"></i><i class="warp-ray ray-b"></i><i class="warp-ray ray-c"></i><i class="warp-ray ray-d"></i><i class="warp-dust dust-a"></i><i class="warp-dust dust-b"></i><i class="warp-dust dust-c"></i></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About Me</a><a href="#universe">Explore Planet</a><a href="#projects">Project Planet</a><a href="#contact">Contact</a></div></nav>
@@ -492,7 +525,7 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
   const boost=tourActive ? .48 : 0;
   for(const star of stars){
    let oldDepth=star.depth;
-   star.depth-=.0018+speed*.035+boost*.018;
+   star.depth-=.0045+speed*.055+boost*.045;
    if(star.depth<=.075){star.depth=1;oldDepth=1;star.angle=Math.random()*Math.PI*2;star.hue=Math.random()>.8?'#c9baff':'#a9efff';}
    const radius=(1/star.depth)*Math.min(vw,vh)*.48;
    const oldRadius=(1/oldDepth)*Math.min(vw,vh)*.48;
