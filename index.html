@@ -655,7 +655,7 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
   const previousBehavior=root.style.scrollBehavior;
   root.style.scrollBehavior='auto';
   let index=0,from=scrollY,started=0;
-  const duration=4800,pause=1150;
+  const duration=6000,pause=1350;
   const inputEvents=['wheel','touchstart','pointerdown','keydown'];
   const cleanup=()=>{
    tourActive=false;cancelAnimationFrame(tourFrame);
