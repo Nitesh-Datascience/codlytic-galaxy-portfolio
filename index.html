@@ -523,6 +523,20 @@ nav{z-index:10!important}
 @media(max-width:600px){
  .p3{width:25px;height:25px}.p5{width:37px;height:37px}.p6{width:35px;height:35px}.p6:after{width:59px;height:19px}
 }
+
+/* CODLYTIC suggestion box */
+.suggestion-section{padding-top:34px}
+.suggestion-panel{width:min(760px,100%);margin:0 auto;padding:clamp(22px,4vw,34px);border:1px solid #70e7ff44;border-radius:24px;background:linear-gradient(145deg,#101b35dd,#101027dd);box-shadow:0 18px 60px #0006,0 0 34px #36cfff12;backdrop-filter:blur(14px)}
+.suggestion-panel h3{margin:0 0 8px;font-size:1.35rem;color:#eafaff}
+.suggestion-panel>p{margin:0 0 20px;color:var(--muted);line-height:1.65}
+.suggestion-form{display:grid;gap:12px}
+.suggestion-form input,.suggestion-form textarea,.suggestion-form select{width:100%;border:1px solid #8bdfff44;border-radius:12px;background:#050b1c;color:#f5f7ff;padding:13px 14px;font:inherit;outline:none}
+.suggestion-form textarea{min-height:125px;resize:vertical;line-height:1.55}
+.suggestion-form input:focus,.suggestion-form textarea:focus,.suggestion-form select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #70e7ff15}
+.suggestion-form textarea::placeholder,.suggestion-form input::placeholder{color:#8292b4}
+.suggestion-form .btn{justify-self:start}
+.suggestion-status{min-height:20px;color:#9deeff;font-size:.82rem;margin:0}
+@media(max-width:600px){.suggestion-section{padding-top:18px}.suggestion-panel{border-radius:18px}.suggestion-form .btn{width:100%}}
 </style></head>
 <body><canvas id="stars"></canvas><canvas id="warpParticles" aria-hidden="true"></canvas><div class="nebula"></div><div class="warp-field" aria-hidden="true"><i class="warp-ray ray-a"></i><i class="warp-ray ray-b"></i><i class="warp-ray ray-c"></i><i class="warp-ray ray-d"></i><i class="warp-dust dust-a"></i><i class="warp-dust dust-b"></i><i class="warp-dust dust-c"></i></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About Me</a><a href="#universe">Explore Planet</a><a href="#projects">Project Planet</a><a href="#toolkit">Skills</a><a href="#contact">Contact</a></div></nav>
@@ -554,6 +568,26 @@ nav{z-index:10!important}
 <a class="social-card" href="mailto:ns0762005@gmail.com" aria-label="Send email"><span class="social-mark">✉</span><span><strong>Email</strong><small>ns0762005@gmail.com</small></span><b>↗</b></a>
 </div></section>
 
+<section id="suggestions" class="suggestion-section">
+ <div class="section-head"><div class="eyebrow">YOUR IDEAS MATTER</div><h2>Share a Suggestion</h2><p>Have an idea to improve CODLYTIC? Send a note — feedback is always welcome.</p></div>
+ <div class="suggestion-panel">
+  <h3>Help shape the next mission ✦</h3>
+  <p>Share a feature idea, report something that needs attention, or suggest what you’d like to explore next.</p>
+  <form class="suggestion-form" id="suggestionForm">
+   <input id="suggestionName" type="text" maxlength="80" placeholder="Your name (optional)" aria-label="Your name (optional)">
+   <select id="suggestionTopic" aria-label="Suggestion topic">
+    <option value="General suggestion">General suggestion</option>
+    <option value="Design or experience">Design or experience</option>
+    <option value="Project idea">Project idea</option>
+    <option value="Bug or issue">Bug or issue</option>
+   </select>
+   <textarea id="suggestionMessage" maxlength="2000" placeholder="Write your suggestion here..." aria-label="Your suggestion" required></textarea>
+   <button class="btn" type="submit">Send Suggestion ↗</button>
+   <p class="suggestion-status" id="suggestionStatus" role="status" aria-live="polite">Your email app will open with your suggestion ready to send.</p>
+  </form>
+ </div>
+</section>
+
 <button class="guide-launch" id="guideLaunch" type="button" aria-expanded="false" aria-controls="guidePanel">✦ Ask Portfolio Guide</button>
 <aside class="guide-panel" id="guidePanel" aria-label="CODLYTIC Portfolio Guide">
  <div class="guide-top"><h3>CODLYTIC Guide ✦</h3><button class="guide-close" id="guideClose" type="button" aria-label="Close guide">✕</button></div>
@@ -569,6 +603,18 @@ const c=document.getElementById('stars'),ctx=c.getContext('2d');let w,h,backgrou
 const guidePanel=document.getElementById('guidePanel'),guideLaunch=document.getElementById('guideLaunch');
 guideLaunch.addEventListener('click',()=>{const open=guidePanel.classList.toggle('open');guideLaunch.setAttribute('aria-expanded',String(open));});
 document.getElementById('guideClose').addEventListener('click',()=>{guidePanel.classList.remove('open');guideLaunch.setAttribute('aria-expanded','false');});
+const suggestionForm=document.getElementById('suggestionForm');
+suggestionForm.addEventListener('submit',event=>{
+ event.preventDefault();
+ const message=document.getElementById('suggestionMessage').value.trim();
+ if(!message){document.getElementById('suggestionStatus').textContent='Please write a suggestion before sending.';return;}
+ const name=document.getElementById('suggestionName').value.trim()||'Not provided';
+ const topic=document.getElementById('suggestionTopic').value;
+ const subject=encodeURIComponent('CODLYTIC Portfolio Suggestion — '+topic);
+ const body=encodeURIComponent('Name: '+name+'\nTopic: '+topic+'\n\nSuggestion:\n'+message);
+ document.getElementById('suggestionStatus').textContent='Opening your email app… Please press Send there to submit your suggestion.';
+ window.location.href='mailto:ns0762005@gmail.com?subject='+subject+'&body='+body;
+});
 const chatForm=document.getElementById('chatForm'),chatInput=document.getElementById('chatInput'),chatMessages=document.getElementById('chatMessages'),chatSend=document.getElementById('chatSend'),chatStatus=document.getElementById('chatStatus');
 function addChatBubble(text,who){const el=document.createElement('div');el.className='chat-bubble '+who;el.textContent=text;chatMessages.appendChild(el);chatMessages.scrollTop=chatMessages.scrollHeight;return el;}
 // Set CODLYTIC_CHAT_API_URL to the deployed Vercel function URL when the site is hosted on GitHub Pages.
@@ -655,7 +701,7 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
   const previousBehavior=root.style.scrollBehavior;
   root.style.scrollBehavior='auto';
   let index=0,from=scrollY,started=0;
-  const duration=6000,pause=1350;
+  const duration=7000,pause=1600;
   const inputEvents=['wheel','touchstart','pointerdown','keydown'];
   const cleanup=()=>{
    tourActive=false;cancelAnimationFrame(tourFrame);
