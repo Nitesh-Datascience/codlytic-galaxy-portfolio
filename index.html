@@ -76,6 +76,40 @@ section{padding:90px clamp(20px,8vw,120px)}.section-head{text-align:center;margi
 }
 @media(prefers-reduced-motion:reduce){.system{animation:none!important}.orbit:before{animation:none!important;transform:scale(1);opacity:.5}}
 
+
+/* Full-screen cinematic intro: reveal the whole galaxy, then glide to projects */
+.hero{min-height:100svh;height:100svh;padding:0 16px;overflow:hidden}
+.hero>div{height:100svh;min-height:0;padding-top:clamp(76px,10vh,112px);justify-content:flex-start}
+.system{top:56%;width:min(1200px,100vw);height:min(82vh,780px);animation:fullGalaxyZoom 8s cubic-bezier(.2,.72,.22,1) both}
+@keyframes fullGalaxyZoom{
+ 0%{opacity:0;transform:translate(-50%,-43%) scale(1.28);filter:blur(7px)}
+ 16%{opacity:1;filter:blur(0)}
+ 72%{transform:translate(-50%,-50%) scale(1.08)}
+ 100%{opacity:1;transform:translate(-50%,-50%) scale(.88);filter:drop-shadow(0 0 38px #4bdfff30)}
+}
+.orbit:before{animation:ringExpand 4.8s cubic-bezier(.16,.75,.25,1) both}
+@keyframes ringExpand{
+ 0%{transform:scale(.68);opacity:0}
+ 24%{opacity:.9}
+ 72%{transform:scale(1.16);opacity:.28}
+ 100%{transform:scale(1);opacity:.58}
+}
+.hero .eyebrow,.hero h1,.hero>div>p,.hero .actions{animation:heroCopyIn 1.2s ease-out both}
+.hero h1{animation-delay:.18s}.hero>div>p{animation-delay:.32s}.hero .actions{animation-delay:.46s}
+@keyframes heroCopyIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){
+ .hero{height:100svh;min-height:680px}
+ .hero>div{height:100svh;min-height:680px;padding-top:88px}
+ .system{top:62%;width:100vw;height:500px;animation:fullGalaxyZoomMobile 8s cubic-bezier(.2,.72,.22,1) both}
+}
+@keyframes fullGalaxyZoomMobile{
+ 0%{opacity:0;transform:translate(-50%,-43%) scale(1.18);filter:blur(5px)}
+ 18%{opacity:1;filter:blur(0)}
+ 72%{transform:translate(-50%,-50%) scale(1.04)}
+ 100%{opacity:1;transform:translate(-50%,-50%) scale(.94)}
+}
+@media(prefers-reduced-motion:reduce){.hero .eyebrow,.hero h1,.hero>div>p,.hero .actions{animation:none!important}.system{animation:none!important}}
+
 </style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#universe">Universe</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
@@ -120,7 +154,7 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
  const cancel=()=>{cancelled=true;clearTimeout(timer);};
  ['wheel','touchstart','pointerdown','keydown','scroll'].forEach(evt=>window.addEventListener(evt,cancel,{once:true,passive:true}));
  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-   timer=setTimeout(()=>{if(!cancelled && window.scrollY<40){document.getElementById('projects')?.scrollIntoView({behavior:'smooth',block:'start'});}},16000);
+   timer=setTimeout(()=>{if(!cancelled && window.scrollY<40){document.getElementById('projects')?.scrollIntoView({behavior:'smooth',block:'start'});}},9500);
  }
 })();
 
