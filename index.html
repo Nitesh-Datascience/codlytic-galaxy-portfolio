@@ -18,6 +18,27 @@ section{padding:90px clamp(20px,8vw,120px)}.section-head{text-align:center;margi
 .planet{border:0;padding:0;display:block;transition:transform .25s,filter .25s}.planet:hover,.planet:focus-visible{filter:brightness(1.5);outline:2px solid #b8f5ff;outline-offset:5px;transform:translate(-50%,-50%) scale(1.28)}
 .guide-launch{position:fixed;right:22px;bottom:22px;z-index:8;border:1px solid #80eaff88;border-radius:999px;padding:13px 18px;background:linear-gradient(110deg,#145a78ee,#60418fee);color:#fff;box-shadow:0 8px 35px #0008;cursor:pointer;font-weight:700}.guide-panel{position:fixed;right:22px;bottom:84px;width:min(360px,calc(100vw - 32px));z-index:9;background:#0b1228f5;border:1px solid #82dfff66;border-radius:20px;padding:20px;box-shadow:0 20px 70px #000b;backdrop-filter:blur(18px);display:none}.guide-panel.open{display:block;animation:guideIn .2s ease-out}@keyframes guideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.guide-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.guide-top h3{margin:0;color:#9cecff}.guide-close{border:0;background:#ffffff12;color:#fff;border-radius:9px;padding:6px 10px;cursor:pointer}.guide-panel p{color:#c0c9e1;line-height:1.6;font-size:.92rem}.guide-choices{display:grid;gap:8px}.guide-choice{border:1px solid #8bdfff44;background:#ffffff09;color:#f5f7ff;padding:10px 12px;border-radius:12px;text-align:left;cursor:pointer}.guide-choice:hover{background:#1b668055;border-color:#8bdfff99}.guide-answer{min-height:48px;padding:12px;border-radius:12px;background:#ffffff0a;color:#dbeaff;font-size:.9rem;line-height:1.55;margin-top:12px}.planet-hint{color:#9eb4d5;font-size:.8rem;margin-top:8px}
 .chat-messages{height:230px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:10px 2px}.chat-bubble{max-width:92%;padding:10px 12px;border-radius:13px;font-size:.88rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}.chat-bubble.bot{align-self:flex-start;background:#ffffff12;color:#e6f0ff;border:1px solid #8bdfff22}.chat-bubble.user{align-self:flex-end;background:#155b78aa;color:white;border:1px solid #8bdfff55}.chat-prompts{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}.chat-prompts .guide-choice{font-size:.76rem;padding:7px 9px}.chat-form{display:flex;gap:7px}.chat-form input{min-width:0;flex:1;background:#050b1c;border:1px solid #8bdfff55;border-radius:11px;padding:11px;color:white;outline:none}.chat-form input:focus{border-color:#70e7ff}.chat-send{border:0;border-radius:11px;padding:0 13px;background:linear-gradient(110deg,#176b88,#6444a0);color:white;font-weight:700;cursor:pointer}.chat-send:disabled{opacity:.5;cursor:wait}.chat-status{font-size:.72rem;color:#8fa5c9;margin-top:8px}
+
+/* CODLYTIC hero solar-system enhancement */
+.hero{min-height:100svh;padding:76px 16px 24px;overflow:hidden}
+.hero>div{position:relative;width:100%;height:calc(100svh - 100px);min-height:650px;display:flex;flex-direction:column;align-items:center;padding-top:clamp(32px,7vh,76px)}
+.hero .eyebrow,.hero h1,.hero>div>p,.hero .actions{position:relative;z-index:3}
+.hero h1{font-size:clamp(2.8rem,7vw,6.4rem);margin:10px 0 8px;text-shadow:0 0 34px #6deaff44}
+.hero>div>p{max-width:600px;margin:8px auto 10px;font-size:clamp(.9rem,1.4vw,1.08rem)}
+.hero .actions{margin-top:12px}
+.system{position:absolute;z-index:1;left:50%;top:59%;transform:translate(-50%,-50%);width:min(1040px,100vw);height:min(78vh,760px);min-height:540px;margin:0;filter:drop-shadow(0 0 30px #4bdfff18);animation:systemArrive 1.5s cubic-bezier(.16,.8,.25,1) both}
+.system:before{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(ellipse,#172d5b33 0%,#101a3a18 42%,transparent 72%);filter:blur(20px)}
+.sun{width:clamp(66px,8vw,104px);height:clamp(66px,8vw,104px);box-shadow:0 0 45px #ffb45c,0 0 110px #a64fff99,0 0 180px #ff9c4a33;animation:sunPulse 4s ease-in-out infinite}
+.orbit{border-color:#9bdfff55;box-shadow:0 0 18px #56cfff0b,inset 0 0 12px #56cfff08}
+.orbit.o1{--diameter:145px;--speed:7s}.orbit.o2{--diameter:215px;--speed:10s}.orbit.o3{--diameter:285px;--speed:13s}.orbit.o4{--diameter:355px;--speed:17s}.orbit.o5{--diameter:425px;--speed:22s}.orbit.o6{--diameter:495px;--speed:28s}.orbit.o7{--diameter:565px;--speed:35s}.orbit.o8{--diameter:635px;--speed:43s}.orbit.o9{--diameter:705px;--speed:52s}
+.planet{filter:drop-shadow(0 0 8px #8ceaff88)}
+@keyframes sunPulse{0%,100%{filter:brightness(1);transform:translate(-50%,-50%) scale(1)}50%{filter:brightness(1.18);transform:translate(-50%,-50%) scale(1.07)}}
+@keyframes systemArrive{from{opacity:0;transform:translate(-50%,-45%) scale(.82)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.hero:after{content:"SCROLL TO EXPLORE  ↓";position:absolute;bottom:17px;left:50%;transform:translateX(-50%);z-index:3;color:#9db9d9;font-size:.68rem;letter-spacing:.22em;animation:scrollHint 1.8s ease-in-out infinite}
+@keyframes scrollHint{0%,100%{opacity:.45;translate:0 0}50%{opacity:1;translate:0 6px}}
+@media(max-width:700px){.hero{padding-top:72px}.hero>div{height:calc(100svh - 80px);min-height:590px;padding-top:35px}.hero h1{font-size:clamp(2.8rem,14vw,4.5rem)}.hero>div>p{max-width:340px}.system{top:62%;width:100vw;height:500px;min-height:0}.orbit.o1{--diameter:100px}.orbit.o2{--diameter:145px}.orbit.o3{--diameter:190px}.orbit.o4{--diameter:235px}.orbit.o5{--diameter:280px}.orbit.o6{--diameter:325px}.orbit.o7{--diameter:370px}.orbit.o8{--diameter:415px}.orbit.o9{--diameter:460px}.sun{width:58px;height:58px}.hero:after{bottom:10px}}
+@media(prefers-reduced-motion:reduce){.system,.sun,.hero:after{animation:none!important}.orbit{animation-duration:90s!important}}
+
 </style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#universe">Universe</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
@@ -53,5 +74,17 @@ async function askPortfolio(question){if(!question.trim())return;addChatBubble(q
 chatForm.addEventListener('submit',e=>{e.preventDefault();askPortfolio(chatInput.value);});
 document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>askPortfolio(b.dataset.prompt)));
 document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('click',()=>{document.getElementById('projects').scrollIntoView({behavior:'smooth'});const map={analytics:0,churn:1,fraud:2};const cards=document.querySelectorAll('#projects .card');cards.forEach((card,i)=>{card.style.borderColor=i===map[p.dataset.topic]?'#70e7ff':'#9bb7ff26';card.style.boxShadow=i===map[p.dataset.topic]?'0 0 35px #36cfff55':'';});}));
+
+
+// One gentle first-visit transition from the animated solar system to the project planets.
+// It is cancelled as soon as the visitor interacts or starts scrolling.
+(function(){
+ let cancelled=false, timer;
+ const cancel=()=>{cancelled=true;clearTimeout(timer);};
+ ['wheel','touchstart','pointerdown','keydown','scroll'].forEach(evt=>window.addEventListener(evt,cancel,{once:true,passive:true}));
+ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+   timer=setTimeout(()=>{if(!cancelled && window.scrollY<40){document.getElementById('projects')?.scrollIntoView({behavior:'smooth',block:'start'});}},16000);
+ }
+})();
 
 </script></body></html>
