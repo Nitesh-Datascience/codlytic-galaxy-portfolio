@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
       return res.status(403).json({ error: "Invalid request origin." });
     }
   }
-  const key = process.env.GEMINI_API_KEY;
+  const key = process.env.gemini_api_key || process.env.GEMINI_API_KEY;
   if (!key) return res.status(503).json({ error: "The AI service is not configured yet. Please try again later." });
   const message = typeof req.body?.message === "string" ? req.body.message.trim() : "";
   if (!message || message.length > 600) return res.status(400).json({ error: "Please enter a question of up to 600 characters." });
