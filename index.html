@@ -188,6 +188,33 @@ section{padding:90px clamp(20px,8vw,120px)}.section-head{text-align:center;margi
 }
 @keyframes deepStarTwinkle{0%{opacity:.28;transform:translate3d(0,2px,0) scale(.99)}45%{opacity:.85}100%{opacity:1;transform:translate3d(0,-3px,0) scale(1.01)}}
 
+
+/* Seamless starfield treatment — remove the visible dome/canopy silhouette */
+.system .sky-canopy{
+ left:-10%;right:-10%;top:-19%;height:94%;
+ border-radius:0;
+ background:
+  radial-gradient(ellipse at 50% 28%,#172b56a0 0%,#111d3b55 34%,transparent 70%),
+  radial-gradient(ellipse at 17% 35%,#7555b52b 0%,transparent 43%),
+  radial-gradient(ellipse at 83% 30%,#3d9bb533 0%,transparent 45%),
+  radial-gradient(ellipse at 50% 68%,#416bb51a 0%,transparent 62%);
+ filter:none;
+ -webkit-mask-image:radial-gradient(ellipse at 50% 43%,#000 0%,#000 38%,transparent 76%);
+ mask-image:radial-gradient(ellipse at 50% 43%,#000 0%,#000 38%,transparent 76%);
+ opacity:.9;
+}
+.system .sky-canopy:before,.system .sky-canopy:after{
+ inset:2% 3% 5%;
+ border-radius:0;
+ -webkit-mask-image:radial-gradient(ellipse at 50% 45%,#000 0%,#000 44%,transparent 78%);
+ mask-image:radial-gradient(ellipse at 50% 45%,#000 0%,#000 44%,transparent 78%);
+}
+.system .sky-canopy:before{filter:drop-shadow(0 0 3px #b8e8ff66)}
+.system .sky-canopy:after{filter:blur(.25px) drop-shadow(0 0 5px #b8d9ff66)}
+@media(max-width:700px){
+ .system .sky-canopy{left:-15%;right:-15%;top:-12%;height:88%}
+}
+
 </style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#universe">Universe</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
