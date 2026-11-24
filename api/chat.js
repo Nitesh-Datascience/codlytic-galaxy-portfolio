@@ -3,7 +3,7 @@ const SYSTEM_INSTRUCTION = `You are the CODLYTIC portfolio assistant for Nitesh.
 
 // Use the lightweight model first for faster replies; fall back to the stronger model if needed.
 const PRIMARY_MODEL = "gemini-3.5-flash-lite";
-const FALLBACK_MODEL = "gemini-3.1-flash-lite";
+const FALLBACK_MODEL = "gemini-3.5-flash";
 const RETRYABLE_STATUSES = new Set([429, 500, 502, 503, 504]);
 const MAX_RETRIES = 0;
 
@@ -15,6 +15,7 @@ async function requestGemini(model, key, message) {
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
     try {
       const upstream = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+        signal: AbortSignal.timeout(11000),
         method: "POST",
         headers: { "Content-Type": "application/json", "x-goog-api-key": key },
         body: JSON.stringify({
@@ -59,9 +60,11 @@ async function requestGemini(model, key, message) {
       console.error("Gemini returned no text output:", model, JSON.stringify(payload).slice(0, 500));
       return { ok: false, retryable: true, error: lastError, status: 502 };
     } catch (error) {
-      lastError = error?.message || "Network request failed.";
+      lastError = error?.name === "TimeoutError" || error?.name === "AbortError"
+        ? "Gemini request timed out after 11 seconds."
+        : (error?.message || "Network request failed.");
       console.error("Gemini request failed:", model, lastError);
-      if (attempt === MAX_RETRIES) return { ok: false, retryable: true, error: lastError, status: 503 };
+      if (attempt === MAX_RETRIES) return { ok: false, retryable: true, error: lastError, status: 504 };
       await wait(600);
     }
   }
