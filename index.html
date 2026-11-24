@@ -131,6 +131,21 @@ section{padding:90px clamp(20px,8vw,120px)}.section-head{text-align:center;margi
 .guide-launch:hover{transform:translateY(-3px);box-shadow:0 10px 38px #36cfff44}
 @media(prefers-reduced-motion:reduce){.hero:before,.btn:before{animation:none!important;transition:none!important}}
 
+
+/* Final balanced solar-system scale: larger on desktop, still fully framed on phones */
+@media (min-width:701px){
+ .system{width:min(1420px,100vw);height:min(92vh,900px);top:54%}
+ .orbit.o1{--diameter:185px}.orbit.o2{--diameter:275px}.orbit.o3{--diameter:365px}.orbit.o4{--diameter:455px}.orbit.o5{--diameter:545px}.orbit.o6{--diameter:635px}.orbit.o7{--diameter:725px}.orbit.o8{--diameter:815px}.orbit.o9{--diameter:905px}
+ .p1{width:15px;height:15px}.p2{width:20px;height:20px}.p3{width:26px;height:26px}.p4{width:23px;height:23px}.p5{width:46px;height:46px}.p6{width:42px;height:42px}.p6:after{width:68px;height:19px}.p7{width:34px;height:34px}.p8{width:33px;height:33px}.p9{width:18px;height:18px}
+}
+@media (min-width:701px) and (max-height:760px){
+ .system{top:57%;height:88vh}
+}
+@media(max-width:700px){
+ .system{width:100vw;height:540px;top:62%}
+ .orbit.o1{--diameter:120px}.orbit.o2{--diameter:170px}.orbit.o3{--diameter:220px}.orbit.o4{--diameter:270px}.orbit.o5{--diameter:320px}.orbit.o6{--diameter:370px}.orbit.o7{--diameter:420px}.orbit.o8{--diameter:470px}.orbit.o9{--diameter:520px}
+}
+
 </style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#universe">Universe</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
