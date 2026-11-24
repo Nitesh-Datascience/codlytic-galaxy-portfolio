@@ -168,14 +168,19 @@ document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click'
 document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('click',()=>{document.getElementById('projects').scrollIntoView({behavior:'smooth'});const map={analytics:0,churn:1,fraud:2};const cards=document.querySelectorAll('#projects .card');cards.forEach((card,i)=>{card.style.borderColor=i===map[p.dataset.topic]?'#70e7ff':'#9bb7ff26';card.style.boxShadow=i===map[p.dataset.topic]?'0 0 35px #36cfff55':'';});}));
 
 
-// One gentle first-visit transition from the animated solar system to the project planets.
-// It is cancelled as soon as the visitor interacts or starts scrolling.
+// Reliable first-visit auto journey: let the intro finish, then glide to Projects.
+// Only deliberate touch/trackpad/mouse-wheel scrolling interrupts the automatic journey.
 (function(){
- let cancelled=false, timer;
- const cancel=()=>{cancelled=true;clearTimeout(timer);};
- ['wheel','touchstart','pointerdown','keydown','scroll'].forEach(evt=>window.addEventListener(evt,cancel,{once:true,passive:true}));
+ let interrupted=false, started=false, timer;
+ const interrupt=()=>{if(!started){interrupted=true;clearTimeout(timer);}};
+ ['wheel','touchstart'].forEach(evt=>window.addEventListener(evt,interrupt,{once:true,passive:true}));
  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-   timer=setTimeout(()=>{if(!cancelled && window.scrollY<40){document.getElementById('projects')?.scrollIntoView({behavior:'smooth',block:'start'});}},9500);
+   timer=setTimeout(()=>{
+     if(!interrupted && !started && window.scrollY<40){
+       started=true;
+       document.getElementById('projects')?.scrollIntoView({behavior:'smooth',block:'start'});
+     }
+   },8500);
  }
 })();
 
