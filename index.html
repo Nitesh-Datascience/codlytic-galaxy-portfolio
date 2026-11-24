@@ -36,12 +36,12 @@ section{padding:90px clamp(20px,8vw,120px)}.section-head{text-align:center;margi
 @keyframes systemArrive{from{opacity:0;transform:translate(-50%,-45%) scale(.82)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .hero:after{content:"SCROLL TO EXPLORE  ↓";position:absolute;bottom:17px;left:50%;transform:translateX(-50%);z-index:3;color:#9db9d9;font-size:.68rem;letter-spacing:.22em;animation:scrollHint 1.8s ease-in-out infinite}
 @keyframes scrollHint{0%,100%{opacity:.45;translate:0 0}50%{opacity:1;translate:0 6px}}
-@media(max-width:700px){.hero{padding-top:72px}.hero>div{height:calc(100svh - 80px);min-height:590px;padding-top:35px}.hero h1{font-size:clamp(2.8rem,14vw,4.5rem)}.hero>div>p{max-width:340px}.system{top:62%;width:100vw;height:500px;min-height:0}.orbit.o1{--diameter:100px}.orbit.o2{--diameter:145px}.orbit.o3{--diameter:190px}.orbit.o4{--diameter:235px}.orbit.o5{--diameter:280px}.orbit.o6{--diameter:325px}.orbit.o7{--diameter:370px}.orbit.o8{--diameter:415px}.orbit.o9{--diameter:460px}.sun{width:58px;height:58px}.hero:after{bottom:10px}}
+@media(max-width:700px){.system{top:55%;height:470px}.hero{padding-top:72px}.hero>div{height:calc(100svh - 80px);min-height:590px;padding-top:35px}.hero h1{font-size:clamp(2.8rem,14vw,4.5rem)}.hero>div>p{max-width:340px}.system{top:62%;width:100vw;height:500px;min-height:0}.orbit.o1{--diameter:100px}.orbit.o2{--diameter:145px}.orbit.o3{--diameter:190px}.orbit.o4{--diameter:235px}.orbit.o5{--diameter:280px}.orbit.o6{--diameter:325px}.orbit.o7{--diameter:370px}.orbit.o8{--diameter:415px}.orbit.o9{--diameter:460px}.sun{width:58px;height:58px}.hero:after{bottom:10px}}
 @media(prefers-reduced-motion:reduce){.system,.sun,.hero:after{animation:none!important}.orbit{animation-duration:90s!important}}
 
 
 /* Cinematic galaxy polish: layered solar corona, asteroid belt, shooting stars and planet labels */
-.system{isolation:isolate;transform-style:preserve-3d}
+.system{isolation:isolate;transform-style:preserve-3d;top:52%;height:min(74vh,710px)}
 .system:after{content:"";position:absolute;inset:4%;border-radius:50%;pointer-events:none;background:conic-gradient(from 0deg,transparent 0 8%,#77e8ff12 10%,transparent 14% 36%,#b78cff12 39%,transparent 44% 68%,#77e8ff10 72%,transparent 78%);filter:blur(16px);animation:galaxyDrift 32s linear infinite;z-index:-1}
 .sun:before,.sun:after{content:"";position:absolute;inset:-17px;border:1px solid #ffc87955;border-radius:50%;box-shadow:0 0 28px #ffb45c33;animation:corona 5s ease-in-out infinite}
 .sun:after{inset:-31px;border-color:#a78bfa44;animation-delay:-2.5s}
