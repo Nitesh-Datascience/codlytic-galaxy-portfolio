@@ -414,13 +414,18 @@ footer{background:#03040d88;border-top-color:#9bdfff20}
 }
 
 
-/* Visible cinematic travel layer and scroll-reactive solar system */
-#warpParticles{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.78;mix-blend-mode:screen}
+/* Cinematic hyperspace tunnel: radial star travel, luminous nebula and planetary pull-back */
+#warpParticles{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.92;mix-blend-mode:screen}
 nav,header.hero,body>section,footer{position:relative;z-index:1}
-.system{transform:scale(var(--system-zoom,1));transform-origin:50% 42%;will-change:transform,opacity}
+.system{transform:scale(var(--system-zoom,1));transform-origin:50% 42%;will-change:transform,opacity;transition:filter .3s linear}
 .warp-field{z-index:0;mix-blend-mode:screen}
+.warp-field:before{background:radial-gradient(ellipse at 50% 48%,#56cfff12 0%,#7654bd0c 26%,transparent 68%),linear-gradient(180deg,transparent,#5de5ff0b 48%,transparent)}
+.warp-field:after{width:2px;opacity:calc(var(--journey-glow)*.75);filter:blur(1px);box-shadow:0 0 30px #6fe8ff88,0 0 90px #9b79ff55}
 .journey-section>*{will-change:opacity,transform,filter}
-@media(max-width:700px){#warpParticles{opacity:.52}.system{transform-origin:50% 35%}}
+.journey-section .section-head{transition-delay:.08s}
+.journey-section .card:nth-child(2){transition-delay:.12s}
+.journey-section .card:nth-child(3){transition-delay:.22s}
+@media(max-width:700px){#warpParticles{opacity:.7}.system{transform-origin:50% 35%}}
 @media(prefers-reduced-motion:reduce){#warpParticles{display:none!important}.system{transform:none!important;opacity:1!important;filter:none!important}}
 
 </style></head>
@@ -463,90 +468,109 @@ document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click'
 document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('click',()=>{document.getElementById('projects').scrollIntoView({behavior:'smooth'});const map={analytics:0,churn:1,fraud:2};const cards=document.querySelectorAll('#projects .card');cards.forEach((card,i)=>{card.style.borderColor=i===map[p.dataset.topic]?'#70e7ff':'#9bb7ff26';card.style.boxShadow=i===map[p.dataset.topic]?'0 0 35px #36cfff55':'';});}));
 
 
-// CODLYTIC cinematic flight: scroll-reactive planets, warp particles and interruptible auto-tour.
+// CODLYTIC hyperspace flight: automatic guided tour plus user-controlled cinematic scroll.
  const root=document.documentElement;
  const system=document.querySelector('.system');
  const hero=document.querySelector('.hero');
  const particleCanvas=document.getElementById('warpParticles');
  const pctx=particleCanvas.getContext('2d');
- let vw=innerWidth,vh=innerHeight,lastY=scrollY,scrollVelocity=0,particleList=[];
- let scrollTick=false, tourActive=false, tourFrame=0;
+ let vw=innerWidth,vh=innerHeight,lastY=scrollY,scrollVelocity=0,stars=[];
+ let scrollTick=false,tourActive=false,tourFrame=0;
  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  function resizeWarp(){
-  vw=innerWidth;vh=innerHeight;particleCanvas.width=Math.round(vw*devicePixelRatio);particleCanvas.height=Math.round(vh*devicePixelRatio);
+  vw=innerWidth;vh=innerHeight;
+  particleCanvas.width=Math.round(vw*devicePixelRatio);particleCanvas.height=Math.round(vh*devicePixelRatio);
   pctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-  particleList=Array.from({length:Math.min(180,Math.floor(vw*vh/6500))},()=>({x:Math.random()*vw,y:Math.random()*vh,z:Math.random()*1.8+.35,phase:Math.random()*Math.PI*2}));
+  stars=Array.from({length:Math.min(230,Math.floor(vw*vh/5200))},()=>({
+   angle:Math.random()*Math.PI*2,depth:Math.random()*.88+.12,
+   hue:Math.random()>.78?'#c6b5ff':'#a9efff',size:Math.random()*1.5+.45
+  }));
  }
- function drawWarp(){
+ function drawHyperspace(){
   pctx.clearRect(0,0,vw,vh);
-  const intensity=Math.min(1,Math.abs(scrollVelocity)/24);
-  for(const p of particleList){
-   const drift=.18+p.z*.25+intensity*(2.8+p.z*5);
-   p.y-=drift;
-   p.x+=Math.sin(p.phase+performance.now()*.00035)*(.12+intensity*.7);
-   if(p.y < -16){p.y=vh+12;p.x=Math.random()*vw;}
-   if(p.x < -12)p.x=vw+8;if(p.x>vw+12)p.x=-8;
-   const alpha=.25+Math.min(.7,p.z*.25+intensity*.35);
-   pctx.globalAlpha=alpha;pctx.strokeStyle=p.z>1.35?'#c8baff':'#9beeff';pctx.lineWidth=p.z>1.35?1.5:1;
-   pctx.shadowBlur=4+intensity*12;pctx.shadowColor='#65dfff';
-   pctx.beginPath();pctx.moveTo(p.x,p.y);pctx.lineTo(p.x-scrollVelocity*.18*p.z,p.y+(3+intensity*24)*p.z);pctx.stroke();
-   if(intensity>.18){pctx.globalAlpha=intensity*.42;pctx.fillStyle='#e8fbff';pctx.beginPath();pctx.arc(p.x,p.y,1+p.z*.7,0,Math.PI*2);pctx.fill();}
+  const cx=vw*.5,cy=vh*.48;
+  const speed=Math.min(1,Math.abs(scrollVelocity)/28);
+  const boost=tourActive?.48:0;
+  for(const star of stars){
+   const oldDepth=star.depth;
+   star.depth-=.0018+speed*.035+boost*.018;
+   if(star.depth<=.075){star.depth=1;star.angle=Math.random()*Math.PI*2;star.hue=Math.random()>.78?'#c6b5ff':'#a9efff';}
+   const radius=(1/star.depth)*Math.min(vw,vh)*.48;
+   const oldRadius=(1/oldDepth)*Math.min(vw,vh)*.48;
+   const x=cx+Math.cos(star.angle)*radius;
+   const y=cy+Math.sin(star.angle)*radius;
+   const ox=cx+Math.cos(star.angle)*oldRadius;
+   const oy=cy+Math.sin(star.angle)*oldRadius;
+   const alpha=Math.min(.88,(1-star.depth)*.95);
+   pctx.globalAlpha=alpha;pctx.strokeStyle=star.hue;
+   pctx.lineWidth=star.size*(.5+speed*1.8);
+   pctx.shadowBlur=5+speed*15;pctx.shadowColor=star.hue;
+   pctx.beginPath();pctx.moveTo(ox,oy);pctx.lineTo(x,y);pctx.stroke();
+   if(star.depth<.34){pctx.globalAlpha=alpha*.72;pctx.fillStyle='#effcff';pctx.beginPath();pctx.arc(x,y,star.size*1.2,0,Math.PI*2);pctx.fill();}
   }
   pctx.globalAlpha=1;pctx.shadowBlur=0;
-  scrollVelocity*=.91;
-  requestAnimationFrame(drawWarp);
+  scrollVelocity*=.9;
+  requestAnimationFrame(drawHyperspace);
  }
  function updateCosmicJourney(){
   const maxScroll=Math.max(1,document.documentElement.scrollHeight-innerHeight);
   const progress=Math.min(1,Math.max(0,scrollY/maxScroll));
   root.style.setProperty('--journey-progress',progress.toFixed(4));
-  root.style.setProperty('--journey-glow',(0.2+progress*.8).toFixed(3));
+  root.style.setProperty('--journey-glow',(0.24+progress*.76).toFixed(3));
   if(system&&hero){
-   const heroTravel=Math.min(1,Math.max(0,scrollY/(Math.max(1,hero.offsetHeight*.82))));
-   root.style.setProperty('--system-zoom',(1-heroTravel*.82).toFixed(3));
-   system.style.opacity=String(Math.max(.08,1-heroTravel*.96));
-   system.style.filter='blur('+(heroTravel*2.5).toFixed(1)+'px)';
+   const travel=Math.min(1,Math.max(0,scrollY/Math.max(1,hero.offsetHeight*.9)));
+   root.style.setProperty('--system-zoom',(1-travel*.88).toFixed(3));
+   system.style.opacity=String(Math.max(.02,1-travel*.99));
+   system.style.filter='blur('+(travel*3).toFixed(1)+'px)';
   }
   scrollTick=false;
  }
  window.addEventListener('scroll',()=>{
-  const now=scrollY;scrollVelocity=Math.max(-45,Math.min(45,now-lastY));lastY=now;
+  const now=scrollY;scrollVelocity=Math.max(-65,Math.min(65,now-lastY));lastY=now;
   if(!scrollTick){requestAnimationFrame(updateCosmicJourney);scrollTick=true;}
  },{passive:true});
  window.addEventListener('resize',resizeWarp,{passive:true});
- resizeWarp();drawWarp();updateCosmicJourney();
+ resizeWarp();drawHyperspace();updateCosmicJourney();
 
  const journeySections=document.querySelectorAll('header.hero,body>section');
  if('IntersectionObserver' in window&&!reducedMotion){
   const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
    if(entry.isIntersecting)entry.target.classList.add('journey-visible');
-  }),{threshold:.1,rootMargin:'0px 0px -6% 0px'});
+  }),{threshold:.08,rootMargin:'0px 0px -4% 0px'});
   journeySections.forEach(section=>{section.classList.add('journey-section');revealObserver.observe(section);});
  }else journeySections.forEach(section=>section.classList.add('journey-visible'));
 
- // A one-time guided fly-through. Any intentional user input immediately takes control back.
+ // Auto-tour starts on every fresh page load. Scroll, touch or keyboard input hands control to the visitor.
  function startCosmicTour(){
-  if(reducedMotion||tourActive||sessionStorage.getItem('codlyticTourSeen')==='yes')return;
+  if(reducedMotion||tourActive)return;
   const stops=['about','projects','contact'].map(id=>document.getElementById(id)).filter(Boolean);
   if(!stops.length)return;
-  tourActive=true;let stopIndex=0,from=scrollY,started=0;
-  const duration=3300,pause=900;
-  const cancel=()=>{if(!tourActive)return;tourActive=false;cancelAnimationFrame(tourFrame);sessionStorage.setItem('codlyticTourSeen','yes');};
-  const interruptEvents=['wheel','touchstart','pointerdown','keydown'];
-  interruptEvents.forEach(type=>window.addEventListener(type,cancel,{passive:true,once:true}));
+  tourActive=true;let index=0,from=scrollY,started=0;
+  const duration=4200,pause=1250;
+  const interrupt=()=>{
+   if(!tourActive)return;
+   tourActive=false;cancelAnimationFrame(tourFrame);
+   ['wheel','touchstart','pointerdown','keydown'].forEach(type=>window.removeEventListener(type,interrupt));
+  };
+  ['wheel','touchstart','pointerdown','keydown'].forEach(type=>window.addEventListener(type,interrupt,{passive:true}));
   const animate=timestamp=>{
    if(!tourActive)return;
    if(!started)started=timestamp;
-   const elapsed=timestamp-started, t=Math.min(1,elapsed/duration), eased=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-   const target=Math.max(0,stops[stopIndex].getBoundingClientRect().top+scrollY-54);
+   const elapsed=timestamp-started;
+   const t=Math.min(1,elapsed/duration);
+   const eased=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+   const target=Math.max(0,stops[index].getBoundingClientRect().top+scrollY-58);
    window.scrollTo(0,from+(target-from)*eased);
-   if(t<1){tourFrame=requestAnimationFrame(animate);return;}
    if(elapsed<duration+pause){tourFrame=requestAnimationFrame(animate);return;}
-   stopIndex++;
-   if(stopIndex>=stops.length){tourActive=false;sessionStorage.setItem('codlyticTourSeen','yes');interruptEvents.forEach(type=>window.removeEventListener(type,cancel));return;}
+   index++;
+   if(index>=stops.length){tourActive=false;['wheel','touchstart','pointerdown','keydown'].forEach(type=>window.removeEventListener(type,interrupt));return;}
    from=scrollY;started=timestamp;tourFrame=requestAnimationFrame(animate);
   };
   tourFrame=requestAnimationFrame(animate);
  }
- if(!reducedMotion)setTimeout(startCosmicTour,1800);
+ if(!reducedMotion){
+  // Give the hero and solar system time to appear before the cinematic journey begins.
+  window.addEventListener('load',()=>setTimeout(startCosmicTour,1400),{once:true});
+  if(document.readyState==='complete')setTimeout(startCosmicTour,1400);
+ }
 </script></body></html>
