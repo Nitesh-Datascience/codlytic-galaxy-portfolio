@@ -60,6 +60,22 @@ section{padding:90px clamp(20px,8vw,120px)}.section-head{text-align:center;margi
 @media(max-width:700px){.cosmic-streak{width:65px}.planet:before{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.system:after,.sun:before,.sun:after,.cosmic-streak,.hero .system .planet{animation:none!important}}
 
+
+/* Expanded cinematic solar system reveal */
+.system{top:49%;width:min(1180px,100vw);height:min(82vh,780px);animation:systemReveal 2.8s cubic-bezier(.16,.8,.25,1) both}
+@keyframes systemReveal{0%{opacity:0;transform:translate(-50%,-43%) scale(1.18);filter:blur(5px)}55%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:blur(0)}}
+.orbit{overflow:visible}
+.orbit:before{content:"";position:absolute;inset:-2px;border:1px solid #8ceaff55;border-radius:50%;box-shadow:0 0 22px #69dfff22;transform:scale(.78);opacity:0;pointer-events:none;animation:ringExpand 3.2s cubic-bezier(.16,.75,.25,1) both}
+@keyframes ringExpand{0%{transform:scale(.78);opacity:0}28%{opacity:.85}78%{transform:scale(1.12);opacity:.35}100%{transform:scale(1);opacity:.62}}
+.orbit.o1{--diameter:160px}.orbit.o2{--diameter:235px}.orbit.o3{--diameter:310px}.orbit.o4{--diameter:385px}.orbit.o5{--diameter:460px}.orbit.o6{--diameter:535px}.orbit.o7{--diameter:610px}.orbit.o8{--diameter:685px}.orbit.o9{--diameter:760px}
+.p1{width:13px;height:13px}.p2{width:17px;height:17px}.p3{width:22px;height:22px}.p4{width:20px;height:20px}.p5{width:40px;height:40px}.p6{width:36px;height:36px}.p6:after{width:58px;height:16px}.p7{width:29px;height:29px}.p8{width:28px;height:28px}.p9{width:15px;height:15px}
+@media(max-width:700px){
+ .system{top:62%;width:100vw;height:500px;animation:systemReveal 2.8s cubic-bezier(.16,.8,.25,1) both}
+ .orbit.o1{--diameter:112px}.orbit.o2{--diameter:158px}.orbit.o3{--diameter:204px}.orbit.o4{--diameter:250px}.orbit.o5{--diameter:296px}.orbit.o6{--diameter:342px}.orbit.o7{--diameter:388px}.orbit.o8{--diameter:434px}.orbit.o9{--diameter:480px}
+ .p1{width:10px;height:10px}.p2{width:13px;height:13px}.p3{width:17px;height:17px}.p4{width:15px;height:15px}.p5{width:32px;height:32px}.p6{width:29px;height:29px}.p6:after{width:47px;height:13px}.p7{width:23px;height:23px}.p8{width:22px;height:22px}.p9{width:12px;height:12px}
+}
+@media(prefers-reduced-motion:reduce){.system{animation:none!important}.orbit:before{animation:none!important;transform:scale(1);opacity:.5}}
+
 </style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#universe">Universe</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
