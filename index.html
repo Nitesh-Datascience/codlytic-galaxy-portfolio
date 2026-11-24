@@ -468,7 +468,7 @@ document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click'
 document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('click',()=>{document.getElementById('projects').scrollIntoView({behavior:'smooth'});const map={analytics:0,churn:1,fraud:2};const cards=document.querySelectorAll('#projects .card');cards.forEach((card,i)=>{card.style.borderColor=i===map[p.dataset.topic]?'#70e7ff':'#9bb7ff26';card.style.boxShadow=i===map[p.dataset.topic]?'0 0 35px #36cfff55':'';});}));
 
 
-// CODLYTIC hyperspace flight: automatic guided tour plus user-controlled cinematic scroll.
+// CODLYTIC hyperspace flight: reliable auto-tour with interruptible manual control.
  const root=document.documentElement;
  const system=document.querySelector('.system');
  const hero=document.querySelector('.hero');
@@ -476,40 +476,35 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
  const pctx=particleCanvas.getContext('2d');
  let vw=innerWidth,vh=innerHeight,lastY=scrollY,scrollVelocity=0,stars=[];
  let scrollTick=false,tourActive=false,tourFrame=0;
- const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const originalScrollBehavior=getComputedStyle(root).scrollBehavior;
  function resizeWarp(){
   vw=innerWidth;vh=innerHeight;
   particleCanvas.width=Math.round(vw*devicePixelRatio);particleCanvas.height=Math.round(vh*devicePixelRatio);
   pctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-  stars=Array.from({length:Math.min(230,Math.floor(vw*vh/5200))},()=>({
+  stars=Array.from({length:Math.min(210,Math.floor(vw*vh/5600))},()=>({
    angle:Math.random()*Math.PI*2,depth:Math.random()*.88+.12,
-   hue:Math.random()>.78?'#c6b5ff':'#a9efff',size:Math.random()*1.5+.45
+   hue:Math.random()>.8?'#c9baff':'#a9efff',size:Math.random()*1.45+.45
   }));
  }
  function drawHyperspace(){
   pctx.clearRect(0,0,vw,vh);
-  const cx=vw*.5,cy=vh*.48;
-  const speed=Math.min(1,Math.abs(scrollVelocity)/28);
-  const boost=tourActive ? 0.48 : 0;
+  const cx=vw*.5,cy=vh*.48,speed=Math.min(1,Math.abs(scrollVelocity)/28);
+  const boost=tourActive ? .48 : 0;
   for(const star of stars){
    let oldDepth=star.depth;
    star.depth-=.0018+speed*.035+boost*.018;
-   if(star.depth<=.075){star.depth=1;oldDepth=1;star.angle=Math.random()*Math.PI*2;star.hue=Math.random()>.78?'#c6b5ff':'#a9efff';}
+   if(star.depth<=.075){star.depth=1;oldDepth=1;star.angle=Math.random()*Math.PI*2;star.hue=Math.random()>.8?'#c9baff':'#a9efff';}
    const radius=(1/star.depth)*Math.min(vw,vh)*.48;
    const oldRadius=(1/oldDepth)*Math.min(vw,vh)*.48;
-   const x=cx+Math.cos(star.angle)*radius;
-   const y=cy+Math.sin(star.angle)*radius;
-   const ox=cx+Math.cos(star.angle)*oldRadius;
-   const oy=cy+Math.sin(star.angle)*oldRadius;
+   const x=cx+Math.cos(star.angle)*radius,y=cy+Math.sin(star.angle)*radius;
+   const ox=cx+Math.cos(star.angle)*oldRadius,oy=cy+Math.sin(star.angle)*oldRadius;
    const alpha=Math.min(.88,(1-star.depth)*.95);
-   pctx.globalAlpha=alpha;pctx.strokeStyle=star.hue;
-   pctx.lineWidth=star.size*(.5+speed*1.8);
+   pctx.globalAlpha=alpha;pctx.strokeStyle=star.hue;pctx.lineWidth=star.size*(.5+speed*1.8);
    pctx.shadowBlur=5+speed*15;pctx.shadowColor=star.hue;
    pctx.beginPath();pctx.moveTo(ox,oy);pctx.lineTo(x,y);pctx.stroke();
    if(star.depth<.34){pctx.globalAlpha=alpha*.72;pctx.fillStyle='#effcff';pctx.beginPath();pctx.arc(x,y,star.size*1.2,0,Math.PI*2);pctx.fill();}
   }
-  pctx.globalAlpha=1;pctx.shadowBlur=0;
-  scrollVelocity*=.9;
+  pctx.globalAlpha=1;pctx.shadowBlur=0;scrollVelocity*=.9;
   requestAnimationFrame(drawHyperspace);
  }
  function updateCosmicJourney(){
@@ -533,44 +528,54 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
  resizeWarp();drawHyperspace();updateCosmicJourney();
 
  const journeySections=document.querySelectorAll('header.hero,body>section');
- if('IntersectionObserver' in window&&!reducedMotion){
+ if('IntersectionObserver' in window){
   const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
    if(entry.isIntersecting)entry.target.classList.add('journey-visible');
   }),{threshold:.08,rootMargin:'0px 0px -4% 0px'});
   journeySections.forEach(section=>{section.classList.add('journey-section');revealObserver.observe(section);});
  }else journeySections.forEach(section=>section.classList.add('journey-visible'));
 
- // Auto-tour starts on every fresh page load. Scroll, touch or keyboard input hands control to the visitor.
+ // Auto-tour always starts on a fresh page load. Explicit user input cancels it.
  function startCosmicTour(){
-  if(reducedMotion||tourActive)return;
+  if(tourActive)return;
   const stops=['about','projects','contact'].map(id=>document.getElementById(id)).filter(Boolean);
   if(!stops.length)return;
-  tourActive=true;let index=0,from=scrollY,started=0;
-  const duration=4200,pause=1250;
-  const interrupt=()=>{
-   if(!tourActive)return;
+  tourActive=true;
+  const previousBehavior=root.style.scrollBehavior;
+  root.style.scrollBehavior='auto';
+  let index=0,from=scrollY,started=0;
+  const duration=4800,pause=1150;
+  const inputEvents=['wheel','touchstart','pointerdown','keydown'];
+  const cleanup=()=>{
    tourActive=false;cancelAnimationFrame(tourFrame);
-   ['wheel','touchstart','pointerdown','keydown'].forEach(type=>window.removeEventListener(type,interrupt));
+   root.style.scrollBehavior=previousBehavior||originalScrollBehavior||'auto';
+   inputEvents.forEach(type=>window.removeEventListener(type,interrupt));
   };
-  ['wheel','touchstart','pointerdown','keydown'].forEach(type=>window.addEventListener(type,interrupt,{passive:true}));
+  const interrupt=()=>cleanup();
+  inputEvents.forEach(type=>window.addEventListener(type,interrupt,{passive:true}));
   const animate=timestamp=>{
    if(!tourActive)return;
    if(!started)started=timestamp;
-   const elapsed=timestamp-started;
-   const t=Math.min(1,elapsed/duration);
+   const elapsed=timestamp-started,t=Math.min(1,elapsed/duration);
    const eased=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
    const target=Math.max(0,stops[index].getBoundingClientRect().top+scrollY-58);
-   window.scrollTo(0,from+(target-from)*eased);
+   window.scrollTo({top:from+(target-from)*eased,behavior:'instant'});
    if(elapsed<duration+pause){tourFrame=requestAnimationFrame(animate);return;}
    index++;
-   if(index>=stops.length){tourActive=false;['wheel','touchstart','pointerdown','keydown'].forEach(type=>window.removeEventListener(type,interrupt));return;}
+   if(index>=stops.length){cleanup();return;}
    from=scrollY;started=timestamp;tourFrame=requestAnimationFrame(animate);
   };
   tourFrame=requestAnimationFrame(animate);
  }
- if(!reducedMotion){
-  // Give the hero and solar system time to appear before the cinematic journey begins.
-  window.addEventListener('load',()=>setTimeout(startCosmicTour,1400),{once:true});
-  if(document.readyState==='complete')setTimeout(startCosmicTour,1400);
+ // Wait for layout, fonts and images; reset browser scroll restoration so the tour starts at the hero.
+ if('scrollRestoration' in history)history.scrollRestoration='manual';
+ window.addEventListener('load',()=>{
+  window.scrollTo({top:0,behavior:'instant'});
+  updateCosmicJourney();
+  setTimeout(startCosmicTour,1800);
+ },{once:true});
+ if(document.readyState==='complete'){
+  window.scrollTo({top:0,behavior:'instant'});
+  setTimeout(startCosmicTour,1800);
  }
 </script></body></html>
