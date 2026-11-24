@@ -490,11 +490,11 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
   pctx.clearRect(0,0,vw,vh);
   const cx=vw*.5,cy=vh*.48;
   const speed=Math.min(1,Math.abs(scrollVelocity)/28);
-  const boost=tourActive?.48:0;
+  const boost=tourActive ? 0.48 : 0;
   for(const star of stars){
-   const oldDepth=star.depth;
+   let oldDepth=star.depth;
    star.depth-=.0018+speed*.035+boost*.018;
-   if(star.depth<=.075){star.depth=1;star.angle=Math.random()*Math.PI*2;star.hue=Math.random()>.78?'#c6b5ff':'#a9efff';}
+   if(star.depth<=.075){star.depth=1;oldDepth=1;star.angle=Math.random()*Math.PI*2;star.hue=Math.random()>.78?'#c6b5ff':'#a9efff';}
    const radius=(1/star.depth)*Math.min(vw,vh)*.48;
    const oldRadius=(1/oldDepth)*Math.min(vw,vh)*.48;
    const x=cx+Math.cos(star.angle)*radius;
