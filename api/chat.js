@@ -3,9 +3,9 @@ const SYSTEM_INSTRUCTION = `You are the CODLYTIC portfolio assistant for Nitesh.
 
 // Use the lightweight model first for faster replies; fall back to the stronger model if needed.
 const PRIMARY_MODEL = "gemini-3.5-flash-lite";
-const FALLBACK_MODEL = "gemini-3.8-flash";
+const FALLBACK_MODEL = "gemini-3.1-flash-lite";
 const RETRYABLE_STATUSES = new Set([429, 500, 502, 503, 504]);
-const MAX_RETRIES = 1;
+const MAX_RETRIES = 0;
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
