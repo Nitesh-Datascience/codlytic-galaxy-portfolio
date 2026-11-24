@@ -353,8 +353,68 @@ footer{background:#03040d88;border-top-color:#9bdfff20}
  .nebula:before,.nebula:after{animation:none!important}
 }
 
+
+/* Scroll-driven cosmic flight: the page feels like travelling deeper into space */
+:root{--journey-progress:0;--journey-glow:.18}
+.warp-field{
+ position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+ opacity:calc(.36 + var(--journey-progress)*.58);
+ background:
+  radial-gradient(ellipse 34% 62% at 50% 52%,#3269a50a 0%,transparent 75%),
+  radial-gradient(ellipse 26% 44% at 18% 68%,#7a5bcb0b 0%,transparent 76%);
+}
+.warp-field:before{
+ content:"";position:absolute;inset:-30% -10%;
+ background:
+  linear-gradient(180deg,transparent 0%,#7beaff08 35%,#a78bfa12 50%,#7beaff08 65%,transparent 100%);
+ filter:blur(30px);
+ transform:translate3d(0,calc(var(--journey-progress)*-9%),0) rotate(-9deg);
+}
+.warp-field:after{
+ content:"";position:absolute;left:50%;top:0;width:1px;height:100%;
+ background:linear-gradient(180deg,transparent,#8deaff22 18%,#8deaff55 48%,#bba1ff22 78%,transparent);
+ box-shadow:0 0 24px #6fe8ff55,0 0 65px #9b79ff22;
+ opacity:calc(var(--journey-glow)*.65);
+ transform:translateX(-50%) scaleY(.5 + var(--journey-progress)*.5);
+ transform-origin:center;
+}
+.warp-ray{
+ position:absolute;display:block;height:1px;width:clamp(90px,18vw,260px);
+ background:linear-gradient(90deg,transparent,#a7eaff,#d9f8ff,transparent);
+ box-shadow:0 0 8px #75e8ff,0 0 22px #8d8aff;
+ opacity:calc(var(--journey-progress)*.55);
+}
+.ray-a{left:4%;top:27%;transform:rotate(23deg) translateX(calc(var(--journey-progress)*24vw))}
+.ray-b{right:3%;top:54%;transform:rotate(-19deg) translateX(calc(var(--journey-progress)*-22vw))}
+.ray-c{left:20%;top:76%;transform:rotate(-12deg) translateX(calc(var(--journey-progress)*18vw))}
+.ray-d{right:17%;top:15%;transform:rotate(15deg) translateX(calc(var(--journey-progress)*-16vw))}
+.warp-dust{
+ position:absolute;width:3px;height:3px;border-radius:50%;background:#e6faff;
+ box-shadow:0 0 9px 2px #80eaff,0 0 24px 5px #8b78ff66;
+ opacity:calc(.12 + var(--journey-progress)*.65);
+}
+.dust-a{left:22%;top:38%;transform:translate3d(0,calc(var(--journey-progress)*-34vh),0) scale(calc(1 + var(--journey-progress)*2))}
+.dust-b{left:76%;top:63%;transform:translate3d(0,calc(var(--journey-progress)*-27vh),0) scale(calc(1 + var(--journey-progress)*2.4))}
+.dust-c{left:48%;top:84%;transform:translate3d(0,calc(var(--journey-progress)*-42vh),0) scale(calc(1 + var(--journey-progress)*1.8))}
+.journey-section>*{
+ opacity:.28;transform:translate3d(0,34px,0) scale(.985);
+ filter:blur(3px);
+ transition:opacity .9s ease,transform 1s cubic-bezier(.2,.7,.2,1),filter 1s ease;
+}
+.journey-section.journey-visible>*{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+.journey-section{scroll-margin-top:88px}
+@media(max-width:700px){
+ .warp-ray{width:90px}
+ .warp-field:before{filter:blur(22px)}
+ .journey-section>*{transform:translate3d(0,20px,0) scale(.99)}
+}
+@media(prefers-reduced-motion:reduce){
+ .warp-field,.warp-field:before,.warp-field:after,.warp-ray,.warp-dust{display:none!important}
+ .journey-section>*{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+}
+
 </style></head>
-<body><canvas id="stars"></canvas><div class="nebula"></div>
+<body><canvas id="stars"></canvas><div class="nebula"></div><div class="warp-field" aria-hidden="true"><i class="warp-ray ray-a"></i><i class="warp-ray ray-b"></i><i class="warp-ray ray-c"></i><i class="warp-ray ray-d"></i><i class="warp-dust dust-a"></i><i class="warp-dust dust-b"></i><i class="warp-dust dust-c"></i></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About Me</a><a href="#universe">Explore Planet</a><a href="#projects">Project Planet</a><a href="#contact">Contact</a></div></nav>
 <header class="hero"><div><div class="eyebrow">WELCOME TO MY DIGITAL UNIVERSE</div><h1>CODLYTIC</h1><p>Exploring the universe of data, transforming raw information into meaningful insights, and building intelligent solutions with Python, SQL and Machine Learning.</p><div class="actions"><a class="btn" href="#projects">Explore the Galaxy ↗</a><a class="btn secondary" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub Profile</a></div>
 <div class="system" id="universe" aria-label="Animated solar system with eight planets and Pluto"><div class="sky-canopy" aria-hidden="true"></div><div class="sun" title="Sun"></div><i class="cosmic-streak one"></i><i class="cosmic-streak two"></i><div class="orbit o1"><button class="planet p1" type="button" aria-label="Mercury" title="Mercury"></button></div><div class="orbit o2"><button class="planet p2" type="button" aria-label="Venus" title="Venus"></button></div><div class="orbit o3"><button class="planet p3" type="button" data-topic="analytics" aria-label="Earth" title="Earth"></button></div><div class="orbit o4"><button class="planet p4" type="button" data-topic="churn" aria-label="Mars" title="Mars"></button></div><div class="orbit o5"><button class="planet p5" type="button" data-topic="fraud" aria-label="Jupiter" title="Jupiter"></button></div><div class="orbit o6"><button class="planet p6" type="button" aria-label="Saturn" title="Saturn"></button></div><div class="orbit o7"><button class="planet p7" type="button" aria-label="Uranus" title="Uranus"></button></div><div class="orbit o8"><button class="planet p8" type="button" aria-label="Neptune" title="Neptune"></button></div><div class="orbit o9"><button class="planet p9" type="button" aria-label="Pluto dwarf planet" title="Pluto (dwarf planet)"></button></div></div>
@@ -393,20 +453,30 @@ document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click'
 document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('click',()=>{document.getElementById('projects').scrollIntoView({behavior:'smooth'});const map={analytics:0,churn:1,fraud:2};const cards=document.querySelectorAll('#projects .card');cards.forEach((card,i)=>{card.style.borderColor=i===map[p.dataset.topic]?'#70e7ff':'#9bb7ff26';card.style.boxShadow=i===map[p.dataset.topic]?'0 0 35px #36cfff55':'';});}));
 
 
-// Visitor-controlled navigation: the page never auto-scrolls away from the universe intro.
- let interrupted=false, started=false, timer;
- const interrupt=()=>{if(!started){interrupted=true;clearTimeout(timer);}};
- const keyInterrupt=e=>{if(['ArrowDown','PageDown',' ','End'].includes(e.key))interrupt();};
- window.addEventListener('wheel',interrupt,{passive:true});
- window.addEventListener('touchstart',interrupt,{passive:true});
- window.addEventListener('keydown',keyInterrupt);
- if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-  timer=setTimeout(()=>{
-   if(!interrupted&&!started&&window.scrollY<40){
-    started=true;const target=document.getElementById('projects');
-    if(target){const top=target.getBoundingClientRect().top+window.scrollY-12;window.scrollTo({top,behavior:'smooth'});}
-   }
-  },9000);
+// Scroll-driven cinematic flight: visitor controls the journey; no forced auto-scroll.
+ const root=document.documentElement;
+ let scrollTick=false;
+ const updateCosmicJourney=()=>{
+  const maxScroll=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
+  const progress=Math.min(1,Math.max(0,window.scrollY/maxScroll));
+  root.style.setProperty('--journey-progress',progress.toFixed(4));
+  root.style.setProperty('--journey-glow',(0.18+progress*0.72).toFixed(3));
+  scrollTick=false;
+ };
+ window.addEventListener('scroll',()=>{
+  if(!scrollTick){requestAnimationFrame(updateCosmicJourney);scrollTick=true;}
+ },{passive:true});
+ updateCosmicJourney();
+ const journeySections=document.querySelectorAll('header.hero,body>section');
+ if('IntersectionObserver' in window&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const revealObserver=new IntersectionObserver(entries=>{
+   entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add('journey-visible');}
+   });
+  },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+  journeySections.forEach(section=>{section.classList.add('journey-section');revealObserver.observe(section);});
+ }else{
+  journeySections.forEach(section=>section.classList.add('journey-visible'));
  }
 
 </script></body></html>
