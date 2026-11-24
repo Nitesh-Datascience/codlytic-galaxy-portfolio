@@ -156,7 +156,39 @@ section{padding:90px clamp(20px,8vw,120px)}.section-head{text-align:center;margi
 .system .orbit{z-index:1}.system .sun{z-index:2}.system .cosmic-streak{z-index:3}
 @media(max-width:700px){.sky-canopy{top:-1%;left:0;right:0;height:53%}}
 @media(prefers-reduced-motion:reduce){.sky-canopy:before,.sky-canopy:after{animation:none!important}}
-\n</style></head>
+\n
+/* Richer, realistic star canopy: many star points, layered nebula and independent twinkle */
+.sky-canopy{
+ background:
+  radial-gradient(ellipse at 50% 34%,#182c58b8 0%,#101d3c70 42%,transparent 76%),
+  radial-gradient(ellipse at 18% 28%,#7657bb38 0%,transparent 43%),
+  radial-gradient(ellipse at 82% 22%,#3d9bb544 0%,transparent 42%),
+  radial-gradient(ellipse at 52% 72%,#557ac526 0%,transparent 60%);
+}
+.sky-canopy:before{
+ background-image:
+  radial-gradient(2px 2px at 5% 18%,#fff 48%,transparent 58%),radial-gradient(1px 1px at 11% 62%,#d9efff 48%,transparent 58%),
+  radial-gradient(2px 2px at 18% 35%,#fff4cf 48%,transparent 58%),radial-gradient(1px 1px at 25% 12%,#e5f5ff 48%,transparent 58%),
+  radial-gradient(1.5px 1.5px at 31% 73%,#d9e5ff 48%,transparent 58%),radial-gradient(2px 2px at 38% 27%,#fff 48%,transparent 58%),
+  radial-gradient(1px 1px at 44% 56%,#c9e9ff 48%,transparent 58%),radial-gradient(2px 2px at 51% 13%,#fff1cf 48%,transparent 58%),
+  radial-gradient(1px 1px at 58% 39%,#fff 48%,transparent 58%),radial-gradient(1.5px 1.5px at 64% 68%,#d9eaff 48%,transparent 58%),
+  radial-gradient(2px 2px at 71% 21%,#fff 48%,transparent 58%),radial-gradient(1px 1px at 77% 49%,#d8eaff 48%,transparent 58%),
+  radial-gradient(2px 2px at 84% 13%,#fff0d2 48%,transparent 58%),radial-gradient(1px 1px at 91% 61%,#e4f5ff 48%,transparent 58%),
+  radial-gradient(1.5px 1.5px at 97% 31%,#fff 48%,transparent 58%);
+ animation:deepStarTwinkle 4.6s ease-in-out infinite alternate;
+}
+.sky-canopy:after{
+ background-image:
+  radial-gradient(1px 1px at 8% 44%,#fff 50%,transparent 60%),radial-gradient(2px 2px at 16% 19%,#d8eaff 50%,transparent 60%),
+  radial-gradient(1px 1px at 28% 51%,#fff 50%,transparent 60%),radial-gradient(1.5px 1.5px at 35% 8%,#fff0cf 50%,transparent 60%),
+  radial-gradient(1px 1px at 47% 31%,#fff 50%,transparent 60%),radial-gradient(2px 2px at 55% 63%,#dceeff 50%,transparent 60%),
+  radial-gradient(1px 1px at 66% 15%,#fff 50%,transparent 60%),radial-gradient(1.5px 1.5px at 74% 38%,#fff0d0 50%,transparent 60%),
+  radial-gradient(1px 1px at 87% 28%,#fff 50%,transparent 60%),radial-gradient(2px 2px at 94% 52%,#dceeff 50%,transparent 60%);
+ opacity:.7;filter:drop-shadow(0 0 4px #a8dfff);animation:deepStarTwinkle 3.2s ease-in-out infinite alternate-reverse;
+}
+@keyframes deepStarTwinkle{0%{opacity:.28;transform:translate3d(0,2px,0) scale(.99)}45%{opacity:.85}100%{opacity:1;transform:translate3d(0,-3px,0) scale(1.01)}}
+
+</style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#universe">Universe</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
 <header class="hero"><div><div class="eyebrow">WELCOME TO MY DIGITAL UNIVERSE</div><h1>CODLYTIC</h1><p>Exploring the universe of data, transforming raw information into meaningful insights, and building intelligent solutions with Python, SQL and Machine Learning.</p><div class="actions"><a class="btn" href="#projects">Explore the Galaxy ↗</a><a class="btn secondary" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub Profile</a></div>
@@ -195,19 +227,21 @@ document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click'
 document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('click',()=>{document.getElementById('projects').scrollIntoView({behavior:'smooth'});const map={analytics:0,churn:1,fraud:2};const cards=document.querySelectorAll('#projects .card');cards.forEach((card,i)=>{card.style.borderColor=i===map[p.dataset.topic]?'#70e7ff':'#9bb7ff26';card.style.boxShadow=i===map[p.dataset.topic]?'0 0 35px #36cfff55':'';});}));
 
 
-// Reliable first-visit auto journey: let the intro finish, then glide to Projects.
-// Only deliberate touch/trackpad/mouse-wheel scrolling interrupts the automatic journey.
+// Cinematic auto-scroll after intro; stop only when the visitor deliberately interacts.
 (function(){
  let interrupted=false, started=false, timer;
  const interrupt=()=>{if(!started){interrupted=true;clearTimeout(timer);}};
- ['wheel','touchstart'].forEach(evt=>window.addEventListener(evt,interrupt,{once:true,passive:true}));
+ const keyInterrupt=e=>{if(['ArrowDown','PageDown',' ','End'].includes(e.key))interrupt();};
+ window.addEventListener('wheel',interrupt,{passive:true});
+ window.addEventListener('touchstart',interrupt,{passive:true});
+ window.addEventListener('keydown',keyInterrupt);
  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-   timer=setTimeout(()=>{
-     if(!interrupted && !started && window.scrollY<40){
-       started=true;
-       document.getElementById('projects')?.scrollIntoView({behavior:'smooth',block:'start'});
-     }
-   },8500);
+  timer=setTimeout(()=>{
+   if(!interrupted&&!started&&window.scrollY<40){
+    started=true;const target=document.getElementById('projects');
+    if(target){const top=target.getBoundingClientRect().top+window.scrollY-12;window.scrollTo({top,behavior:'smooth'});}
+   }
+  },9000);
  }
 })();
 
