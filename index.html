@@ -758,41 +758,5 @@ document.querySelectorAll// Gentle automatic cinematic journey with a discreet p
   }
   stop();
  })();
-})();e(resolve=>{timer=setTimeout(resolve,ms);});
- const ease=(t)=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
- const glideTo=(target,duration)=>new Promise(resolve=>{
-  const start=window.scrollY,delta=target-start,startTime=performance.now();
-  const step=(now)=>{
-   if(!active){resolve();return;}
-   const p=Math.min(1,(now-startTime)/duration);
-   window.scrollTo(0,start+delta*ease(p));
-   if(p<1)frame=requestAnimationFrame(step);else resolve();
-  };
-  frame=requestAnimationFrame(step);
- });
- const stop=()=>{
-  if(!active)return;
-  active=false;
-  if(frame)cancelAnimationFrame(frame);
-  if(timer)clearTimeout(timer);
- };
- const manual=(event)=>{
-  if(!active)return;
-  if(event.type==='keydown'&&!['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key))return;
-  stop();
- };
- ['wheel','touchstart','keydown'].forEach(type=>window.addEventListener(type,manual,{passive:true}));
- window.addEventListener('pagehide',stop);
- (async()=>{
-  await wait(2200);
-  for(const section of stops){
-   if(!active)break;
-   const top=section.getBoundingClientRect().top+window.scrollY;
-   if(reduced)window.scrollTo(0,top);
-   else await glideTo(top,5200);
-   if(!active)break;
-   await wait(2600);
-  }
- })();
 })();
 </script></body></html>
