@@ -604,6 +604,16 @@ nav{backdrop-filter:blur(18px) saturate(1.2)}
  .card,.btn,.planet{transition:none!important}
 }
 
+
+/* Minimal cinematic journey HUD — no extra controls */
+#cinemaHud{position:fixed;left:50%;bottom:24px;transform:translate(-50%,18px);z-index:7;width:min(340px,calc(100vw - 36px));padding:13px 16px 12px;border:1px solid #8ceaff55;border-radius:16px;background:linear-gradient(120deg,#071426dc,#171334dc);backdrop-filter:blur(18px);box-shadow:0 12px 42px #0008,0 0 28px #70e7ff1c;opacity:0;pointer-events:none;transition:opacity .8s ease,transform .8s ease}
+#cinemaHud.on{opacity:1;transform:translate(-50%,0)}
+#cinemaHud .hud-top{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#dffaff;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase}
+#cinemaHud .hud-name{margin-top:5px;color:#fff;font-size:.92rem;font-weight:700;letter-spacing:.03em}
+#cinemaHud .hud-track{height:3px;margin-top:11px;border-radius:9px;background:#ffffff20;overflow:hidden}
+#cinemaHud .hud-fill{height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,#70e7ff,#b69aff);box-shadow:0 0 12px #70e7ff;transition:width 1s ease}
+@media(max-width:600px){#cinemaHud{bottom:14px;padding:11px 13px}#cinemaHud .hud-name{font-size:.84rem}}
+@media(prefers-reduced-motion:reduce){#cinemaHud{transition:none}}
 </style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div><div class="warp-field" aria-hidden="true"><i class="warp-ray ray-a"></i><i class="warp-ray ray-b"></i><i class="warp-ray ray-c"></i><i class="warp-ray ray-d"></i><i class="warp-dust dust-a"></i><i class="warp-dust dust-b"></i><i class="warp-dust dust-c"></i></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About Me</a><a href="#universe">Explore Planet</a><a href="#projects">Project Planet</a><a href="#toolkit">Skills</a><a href="#contact">Contact</a></div></nav>
@@ -688,34 +698,67 @@ function addChatBubble(text,who){const el=document.createElement('div');el.class
 const CHAT_API_URL=window.CODLYTIC_CHAT_API_URL||'/api/chat';
 async function askPortfolio(question){if(!question.trim())return;addChatBubble(question,'user');chatInput.value='';chatSend.disabled=true;chatStatus.textContent='Connecting to portfolio AI…';try{const response=await fetch(CHAT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:question})});const contentType=response.headers.get('content-type')||'';if(!contentType.includes('application/json')){if(response.status===404)throw new Error('Chat backend not found on this hosting domain. The Vercel API URL must be connected to this portfolio.');throw new Error('Chat server returned a non-JSON response (HTTP '+response.status+').');}const data=await response.json();if(!response.ok)throw new Error(data.error||'Chat server error (HTTP '+response.status+').');if(!data.reply)throw new Error('The AI server returned an empty reply.');addChatBubble(data.reply,'bot');chatStatus.textContent='Powered by Gemini · Check important details with Nitesh.';}catch(err){const message=err instanceof TypeError?'Could not reach the chat server. Check the Vercel deployment and API URL.':(err.message||'Something went wrong. Please try again.');addChatBubble(message,'bot');chatStatus.textContent='Chat connection needs setup · '+message;}finally{chatSend.disabled=false;chatInput.focus();}}
 chatForm.addEventListener('submit',e=>{e.preventDefault();askPortfolio(chatInput.value);});
-document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>askPortfolio(b.dataset.prompt)));
-document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('click',()=>{document.getElementById('projects').scrollIntoView({behavior:'smooth'});const map={analytics:0,churn:1,fraud:2};const cards=document.querySelectorAll('#projects .card');cards.forEach((card,i)=>{card.style.borderColor=i===map[p.dataset.topic]?'#70e7ff':'#9bb7ff26';card.style.boxShadow=i===map[p.dataset.topic]?'0 0 35px #36cfff55':'';});}));
-
-
-// Lightweight section reveals: no forced auto-scroll or second full-screen canvas loop.
- const journeySections=document.querySelectorAll('header.hero,body>section');
- if('IntersectionObserver' in window){
-  const revealObserver=new IntersectionObserver(entries=>{
-   entries.forEach(entry=>{
-    if(entry.isIntersecting){
-     entry.target.classList.add('journey-visible');
-     revealObserver.unobserve(entry.target);
-    }
-   });
-  },{threshold:.08,rootMargin:'0px 0px -4% 0px'});
-  journeySections.forEach(section=>{
-   section.classList.add('journey-section');
-   revealObserver.observe(section);
-  });
- }else journeySections.forEach(section=>section.classList.add('journey-visible'));
-
-// Gentle automatic cinematic journey — begins on page load.
+document.querySelectorAll// Gentle automatic cinematic journey with a discreet progress HUD.
 (()=>{
  const stops=[document.querySelector('header.hero'),...document.querySelectorAll('body>section')].filter(Boolean);
  if(!stops.length)return;
  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- let active=true,stopIndex=0,frame=null,timer=null,lastY=window.scrollY;
- const wait=(ms)=>new Promise(resolve=>{timer=setTimeout(resolve,ms);});
+ const hud=document.createElement('div');
+ hud.id='cinemaHud';
+ hud.setAttribute('aria-live','polite');
+ hud.innerHTML='<div class="hud-top"><span>✦ CINEMATIC JOURNEY</span><span class="hud-count"></span></div><div class="hud-name">Entering the universe</div><div class="hud-track"><div class="hud-fill"></div></div>';
+ document.body.appendChild(hud);
+ const count=hud.querySelector('.hud-count'),name=hud.querySelector('.hud-name'),fill=hud.querySelector('.hud-fill');
+ let active=true,frame=null,timer=null;
+ const wait=ms=>new Promise(resolve=>{timer=setTimeout(resolve,ms)});
+ const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+ const glideTo=(target,duration)=>new Promise(resolve=>{
+  const start=window.scrollY,delta=target-start,startTime=performance.now();
+  if(Math.abs(delta)<2){resolve();return;}
+  const step=now=>{
+   if(!active){resolve();return;}
+   const p=Math.min(1,(now-startTime)/duration);
+   window.scrollTo(0,start+delta*ease(p));
+   if(p<1)frame=requestAnimationFrame(step);else resolve();
+  };
+  frame=requestAnimationFrame(step);
+ });
+ const stop=()=>{
+  if(!active)return;
+  active=false;
+  if(frame)cancelAnimationFrame(frame);
+  if(timer)clearTimeout(timer);
+  hud.classList.remove('on');
+  setTimeout(()=>hud.remove(),900);
+ };
+ const manual=event=>{
+  if(!active)return;
+  if(event.type==='keydown'&&!['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key))return;
+  stop();
+ };
+ ['wheel','touchstart','keydown'].forEach(type=>window.addEventListener(type,manual,{passive:true}));
+ window.addEventListener('pagehide',stop);
+ (async()=>{
+  await wait(1200);
+  if(!active)return;
+  hud.classList.add('on');
+  for(let i=0;i<stops.length;i++){
+   if(!active)break;
+   const section=stops[i];
+   const heading=section.querySelector('h1,h2,h3');
+   const label=heading?.textContent?.trim()||section.getAttribute('aria-label')||'Explore the galaxy';
+   count.textContent=String(i+1).padStart(2,'0')+' / '+String(stops.length).padStart(2,'0');
+   name.textContent=label;
+   fill.style.width=((i+1)/stops.length*100)+'%';
+   const top=section.getBoundingClientRect().top+window.scrollY;
+   if(reduced)window.scrollTo(0,top);
+   else await glideTo(top,6800);
+   if(!active)break;
+   await wait(3200);
+  }
+  stop();
+ })();
+})();e(resolve=>{timer=setTimeout(resolve,ms);});
  const ease=(t)=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
  const glideTo=(target,duration)=>new Promise(resolve=>{
   const start=window.scrollY,delta=target-start,startTime=performance.now();
