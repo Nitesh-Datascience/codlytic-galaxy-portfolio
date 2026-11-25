@@ -704,26 +704,7 @@ function addChatBubble(text,who){const el=document.createElement('div');el.class
 const CHAT_API_URL=window.CODLYTIC_CHAT_API_URL||'/api/chat';
 async function askPortfolio(question){if(!question.trim())return;addChatBubble(question,'user');chatInput.value='';chatSend.disabled=true;chatStatus.textContent='Connecting to portfolio AI…';try{const response=await fetch(CHAT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:question})});const contentType=response.headers.get('content-type')||'';if(!contentType.includes('application/json')){if(response.status===404)throw new Error('Chat backend not found on this hosting domain. The Vercel API URL must be connected to this portfolio.');throw new Error('Chat server returned a non-JSON response (HTTP '+response.status+').');}const data=await response.json();if(!response.ok)throw new Error(data.error||'Chat server error (HTTP '+response.status+').');if(!data.reply)throw new Error('The AI server returned an empty reply.');addChatBubble(data.reply,'bot');chatStatus.textContent='Powered by Gemini · Check important details with Nitesh.';}catch(err){const message=err instanceof TypeError?'Could not reach the chat server. Check the Vercel deployment and API URL.':(err.message||'Something went wrong. Please try again.');addChatBubble(message,'bot');chatStatus.textContent='Chat connection needs setup · '+message;}finally{chatSend.disabled=false;chatInput.focus();}}
 chatForm.addEventListener('submit',e=>{e.preventDefault();askPortfolio(chatInput.value);});
-// Gentle automatic cinematic journey with a discreet progress HUD.
-(()=>{
- const stops=[document.querySelector('header.hero'),...document.querySelectorAll('body>section')].filter(Boolean);
- if(!stops.length)return;
- const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const hud=document.createElement('div');
- hud.id='cinemaHud';
- hud.setAttribute('aria-live','polite');
- hud.innerHTML='<div class="hud-top"><span>✦ CINEMATIC JOURNEY</span><span class="hud-count"></span></div><div class="hud-name">Entering the universe</div><div class="hud-track"><div class="hud-fill"></div></div>';
- document.body.appendChild(hud);
- const count=hud.querySelector('.hud-count'),name=hud.querySelector('.hud-name'),fill=hud.querySelector('.hud-fill');
- let active=true,frame=null,timer=null;
- const wait=ms=>new Promise(resolve=>{timer=setTimeout(resolve,ms)});
- const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
- const glideTo=(target,duration)=>new Promise(resolve=>{
-  const start=window.scrollY,delta=target-start,startTime=performance.now();
-  if(Math.abs(delta)<2){resolve();return;}
-  const step=now=>{
-   if(!active){resolve();return;}
-   const p=Math.min(1,(now-startTime)/duration// Gentle automatic cinematic journey without an on-screen progress HUD.
+// Gentle automatic cinematic journey — no floating progress overlay.
 (()=>{
  const stops=[document.querySelector('header.hero'),...document.querySelectorAll('body>section')].filter(Boolean);
  if(!stops.length)return;
@@ -769,3 +750,6 @@ chatForm.addEventListener('submit',e=>{e.preventDefault();askPortfolio(chatInput
   stop();
  })();
 })();
+</script>
+</body>
+</html>
