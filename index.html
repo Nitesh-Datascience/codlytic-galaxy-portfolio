@@ -604,21 +604,6 @@ nav{backdrop-filter:blur(18px) saturate(1.2)}
  .card,.btn,.planet{transition:none!important}
 }
 
-/* Visitor-controlled cinematic tour: manual start, pause/resume and stop */
-.tour-toggle{
- position:fixed;left:22px;bottom:22px;z-index:8;
- display:inline-flex;align-items:center;gap:9px;
- border:1px solid #9b8cff88;border-radius:999px;padding:13px 18px;
- color:#f7f5ff;background:linear-gradient(110deg,#28245feF,#145a78ee);
- box-shadow:0 8px 35px #0008,0 0 22px #8c7bff22;
- backdrop-filter:blur(14px);cursor:pointer;font-family:inherit;font-weight:700;font-size:.86rem;line-height:1.2;
- transition:transform .35s,box-shadow .35s,border-color .35s,background .35s;
-}
-.tour-toggle:hover{transform:translateY(-3px);border-color:#b9efff;box-shadow:0 12px 38px #0009,0 0 28px #8c7bff55}
-.tour-toggle[aria-pressed="true"]{background:linear-gradient(110deg,#74452eee,#174e70ee);border-color:#ffc58c}
-.tour-toggle:focus-visible{outline:2px solid #c9f6ff;outline-offset:4px}
-@media(max-width:700px){.tour-toggle{left:12px;bottom:12px;padding:11px 13px;font-size:.75rem}.guide-launch{right:12px;bottom:12px;padding:11px 13px;font-size:.75rem}}
-@media(prefers-reduced-motion:reduce){.tour-toggle{transition:none}}
 </style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div><div class="warp-field" aria-hidden="true"><i class="warp-ray ray-a"></i><i class="warp-ray ray-b"></i><i class="warp-ray ray-c"></i><i class="warp-ray ray-d"></i><i class="warp-dust dust-a"></i><i class="warp-dust dust-b"></i><i class="warp-dust dust-c"></i></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About Me</a><a href="#universe">Explore Planet</a><a href="#projects">Project Planet</a><a href="#toolkit">Skills</a><a href="#contact">Contact</a></div></nav>
@@ -670,7 +655,6 @@ nav{backdrop-filter:blur(18px) saturate(1.2)}
  </div>
 </section>
 
-<button class="tour-toggle" id="cinematicTourToggle" type="button" aria-pressed="false" aria-label="Start automatic cinematic tour">▶ Start cinematic tour</button>
 <button class="guide-launch" id="guideLaunch" type="button" aria-expanded="false" aria-controls="guidePanel">✦ Ask Portfolio Guide</button>
 <aside class="guide-panel" id="guidePanel" aria-label="CODLYTIC Portfolio Guide">
  <div class="guide-top"><h3>CODLYTIC Guide ✦</h3><button class="guide-close" id="guideClose" type="button" aria-label="Close guide">✕</button></div>
@@ -725,37 +709,47 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
   });
  }else journeySections.forEach(section=>section.classList.add('journey-visible'));
 
-// Optional cinematic tour — starts only when the visitor presses the toggle.
+// Gentle automatic cinematic journey — begins on page load.
 (()=>{
- const toggle=document.getElementById('cinematicTourToggle');
  const stops=[document.querySelector('header.hero'),...document.querySelectorAll('body>section')].filter(Boolean);
- if(!toggle||!stops.length)return;
- let active=false,index=0,timer=null;
+ if(!stops.length)return;
  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const label=(text)=>{toggle.textContent=text;toggle.setAttribute('aria-pressed',String(active));};
- const finish=()=>{
-  active=false;clearTimeout(timer);timer=null;index=0;
-  label('▶ Start cinematic tour');
- };
- const advance=()=>{
-  if(!active)return;
-  if(index>=stops.length){finish();return;}
-  stops[index].scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
-  index++;
-  label('■ Stop cinematic tour · '+index+'/'+stops.length);
-  timer=setTimeout(advance,6500);
- };
- toggle.addEventListener('click',()=>{
-  if(active){finish();return;}
-  index=0;active=true;advance();
+ let active=true,stopIndex=0,frame=null,timer=null,lastY=window.scrollY;
+ const wait=(ms)=>new Promise(resolve=>{timer=setTimeout(resolve,ms);});
+ const ease=(t)=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+ const glideTo=(target,duration)=>new Promise(resolve=>{
+  const start=window.scrollY,delta=target-start,startTime=performance.now();
+  const step=(now)=>{
+   if(!active){resolve();return;}
+   const p=Math.min(1,(now-startTime)/duration);
+   window.scrollTo(0,start+delta*ease(p));
+   if(p<1)frame=requestAnimationFrame(step);else resolve();
+  };
+  frame=requestAnimationFrame(step);
  });
- const stopOnManualNavigation=(event)=>{
+ const stop=()=>{
+  if(!active)return;
+  active=false;
+  if(frame)cancelAnimationFrame(frame);
+  if(timer)clearTimeout(timer);
+ };
+ const manual=(event)=>{
   if(!active)return;
   if(event.type==='keydown'&&!['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key))return;
-  // Manual navigation always wins; the tour will not fight the visitor.
-  finish();
+  stop();
  };
- ['wheel','touchstart','keydown'].forEach(type=>window.addEventListener(type,stopOnManualNavigation,{passive:true}));
- window.addEventListener('pagehide',()=>{active=false;clearTimeout(timer);});
-})();;
+ ['wheel','touchstart','keydown'].forEach(type=>window.addEventListener(type,manual,{passive:true}));
+ window.addEventListener('pagehide',stop);
+ (async()=>{
+  await wait(2200);
+  for(const section of stops){
+   if(!active)break;
+   const top=section.getBoundingClientRect().top+window.scrollY;
+   if(reduced)window.scrollTo(0,top);
+   else await glideTo(top,5200);
+   if(!active)break;
+   await wait(2600);
+  }
+ })();
+})();
 </script></body></html>
