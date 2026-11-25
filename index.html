@@ -611,7 +611,7 @@ nav{backdrop-filter:blur(18px) saturate(1.2)}
  border:1px solid #9b8cff88;border-radius:999px;padding:13px 18px;
  color:#f7f5ff;background:linear-gradient(110deg,#28245feF,#145a78ee);
  box-shadow:0 8px 35px #0008,0 0 22px #8c7bff22;
- backdrop-filter:blur(14px);cursor:pointer;font:700 .86rem/1.2 inherit;
+ backdrop-filter:blur(14px);cursor:pointer;font-family:inherit;font-weight:700;font-size:.86rem;line-height:1.2;
  transition:transform .35s,box-shadow .35s,border-color .35s,background .35s;
 }
 .tour-toggle:hover{transform:translateY(-3px);border-color:#b9efff;box-shadow:0 12px 38px #0009,0 0 28px #8c7bff55}
@@ -734,34 +734,28 @@ document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('
  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const label=(text)=>{toggle.textContent=text;toggle.setAttribute('aria-pressed',String(active));};
  const finish=()=>{
-  active=false;clearTimeout(timer);timer=null;label('▶ Start cinematic tour');
+  active=false;clearTimeout(timer);timer=null;index=0;
+  label('▶ Start cinematic tour');
  };
  const advance=()=>{
   if(!active)return;
   if(index>=stops.length){finish();return;}
   stops[index].scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
   index++;
-  label('Ⅱ Pause tour · '+index+'/'+stops.length);
+  label('■ Stop cinematic tour · '+index+'/'+stops.length);
   timer=setTimeout(advance,6500);
  };
  toggle.addEventListener('click',()=>{
-  if(active){
-   active=false;clearTimeout(timer);timer=null;label('▶ Resume tour · '+index+'/'+stops.length);
-   toggle.dataset.paused='true';
-   return;
-  }
-  if(toggle.dataset.paused==='true'){
-   active=true;delete toggle.dataset.paused;advance();return;
-  }
+  if(active){finish();return;}
   index=0;active=true;advance();
  });
- const stopOnManualScroll=()=>{
+ const stopOnManualNavigation=(event)=>{
   if(!active)return;
-  // A deliberate wheel/touch/key action pauses the tour instead of fighting the visitor.
-  active=false;clearTimeout(timer);timer=null;toggle.dataset.paused='true';
-  label('▶ Resume tour · '+index+'/'+stops.length);
+  if(event.type==='keydown'&&!['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key))return;
+  // Manual navigation always wins; the tour will not fight the visitor.
+  finish();
  };
- ['wheel','touchstart','keydown'].forEach(type=>window.addEventListener(type,stopOnManualScroll,{passive:true}));
+ ['wheel','touchstart','keydown'].forEach(type=>window.addEventListener(type,stopOnManualNavigation,{passive:true}));
  window.addEventListener('pagehide',()=>{active=false;clearTimeout(timer);});
-})();
+})();;
 </script></body></html>
