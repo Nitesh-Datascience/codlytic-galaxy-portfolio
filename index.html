@@ -83,31 +83,78 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 .chat-messages{height:190px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:12px 0}.chat-bubble{max-width:92%;padding:9px 11px;border-radius:12px;font-size:.86rem;white-space:pre-wrap;overflow-wrap:anywhere}.chat-bubble.bot{background:#ffffff12;align-self:flex-start}.chat-bubble.user{background:#174c68;align-self:flex-end}.chat-form{display:flex;gap:7px}.chat-form input{min-width:0;flex:1;background:#070d1b;border:1px solid #344663;border-radius:10px;padding:10px;color:white}.chat-send{border:0;border-radius:10px;padding:0 13px;background:#205875;color:white;cursor:pointer}.chat-status{font-size:.75rem;color:#91a2bf;margin-top:8px}
 @media(max-width:600px){nav{padding:14px 18px}.links{gap:13px;font-size:.8rem}.hero{min-height:82vh}.planet-scene{height:150px}.sun{width:62px;height:62px}.ring{width:140px;height:72px}.ring.two{width:220px;height:110px}.ring.three{width:300px;height:145px}section{padding:68px 22px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Refined CODLYTIC About section */
+.about-section{position:relative}
+.about-shell{max-width:1080px;margin:0 auto}
+.about-intro{display:grid;grid-template-columns:230px 1fr;align-items:center;gap:clamp(22px,5vw,58px);padding:clamp(22px,4vw,42px);border:1px solid #3a5875;border-radius:26px;background:radial-gradient(ellipse at 12% 50%,#17304a99,transparent 48%),linear-gradient(135deg,#101b2cF2,#080d19F2);box-shadow:0 20px 60px #0006;overflow:hidden}
+.about-avatar-wrap{width:190px;height:190px;position:relative;display:grid;place-items:center;margin:auto}
+.about-avatar{width:128px;height:128px;border-radius:50%;display:grid;place-items:center;font-size:2.7rem;font-weight:800;letter-spacing:-.08em;color:#e9fbff;background:radial-gradient(circle at 35% 28%,#315d7d,#14283e 58%,#080f1c);border:1px solid #9beaff99;box-shadow:0 0 32px #49cfff33,inset 0 0 24px #8be9ff22}
+.about-orbit{position:absolute;inset:9px;border:1px solid #8be9ff55;border-radius:50%;transform:rotate(-24deg) scaleY(.72)}
+.about-orbit:after{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:#9beeff;box-shadow:0 0 14px #8be9ff;top:18px;left:24px}
+.about-orbit.orbit-two{inset:0;transform:rotate(55deg) scaleY(.78);border-color:#b7a0ff55}
+.about-orbit.orbit-two:after{background:#c4b4ff;box-shadow:0 0 14px #b7a0ff;top:auto;left:auto;bottom:25px;right:13px}
+.about-online{position:absolute;bottom:1px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:.61rem;letter-spacing:.13em;color:#c7f6ff;background:#0b1726;border:1px solid #70dfff55;border-radius:999px;padding:5px 10px}
+.about-online i{display:inline-block;width:6px;height:6px;background:#70e6b0;border-radius:50%;margin-right:6px;box-shadow:0 0 8px #70e6b0}
+.about-kicker,.about-card-label{font-size:.68rem;letter-spacing:.18em;color:var(--cyan);font-weight:800}
+.about-kicker span{color:#c2aaff;margin-left:5px}
+.about-intro-copy h3{font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;margin:9px 0 8px;letter-spacing:-.04em}
+.about-period{color:var(--cyan)}
+.about-role{font-size:.69rem;letter-spacing:.13em;color:#b9c9df;font-weight:700;margin-bottom:15px}
+.about-role b{color:var(--cyan);padding:0 5px}
+.about-intro-copy p,.about-detail p{color:var(--muted);margin:0;max-width:660px;font-size:.94rem}
+.about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.about-tags span,.about-skill-list span{font-size:.75rem;color:#dff8ff;border:1px solid #75dfff42;background:#12273a;padding:6px 11px;border-radius:999px}
+.about-social{display:flex;flex-wrap:wrap;gap:18px;margin-top:20px}
+.about-social a{font-size:.82rem;color:var(--cyan);font-weight:700}
+.about-social a:hover,.about-project-links a:hover{color:#fff}
+.about-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.about-detail{padding:22px;border:1px solid #293e5b;border-radius:20px;background:linear-gradient(145deg,#101a2bdd,#090f1ddd);transition:transform .22s,border-color .22s,box-shadow .22s}
+.about-detail:hover{transform:translateY(-3px);border-color:#77dfff88;box-shadow:0 12px 30px #0004}
+.about-card-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.about-card-icon{width:31px;height:31px;display:grid;place-items:center;border:1px solid #8be9ff55;border-radius:10px;color:var(--cyan);background:#153049;font-size:1rem}
+.about-detail h4{font-size:1.08rem;margin:0 0 7px;color:#f3f8ff}
+.about-experience{display:flex;gap:10px;align-items:flex-start;border-top:1px solid #ffffff12;margin-top:17px;padding-top:14px}
+.about-experience-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px #8be9ff;margin-top:6px;flex:0 0 8px}
+.about-experience strong,.about-experience small{display:block}
+.about-experience strong{font-size:.86rem;color:#edf7ff}
+.about-experience small{font-size:.76rem;color:var(--muted);margin-top:2px}
+.about-skill-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.about-project-links{display:grid;gap:8px;margin-top:15px}
+.about-project-links a{display:flex;justify-content:space-between;gap:12px;color:var(--cyan);font-size:.83rem;border-top:1px solid #ffffff12;padding-top:9px}
+.about-project-links b{font-weight:500}
+.about-vision-line{display:flex;align-items:center;gap:10px;margin-top:19px}
+.about-vision-line span{height:1px;width:38px;background:linear-gradient(90deg,var(--cyan),transparent)}
+.about-vision-line small{font-size:.62rem;letter-spacing:.13em;color:#9eb2ca}
+@media(max-width:700px){.about-intro{grid-template-columns:1fr;text-align:center}.about-intro-copy p{margin:auto}.about-tags,.about-social{justify-content:center}.about-detail-grid{grid-template-columns:1fr}.about-avatar-wrap{width:170px;height:170px}.about-avatar{width:116px;height:116px}}
+@media(prefers-reduced-motion:reduce){.about-detail{transition:none}.about-detail:hover{transform:none}}
 </style>
 </head>
 <body>
 <canvas id="stars" aria-hidden="true"></canvas>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About</a><a href="#notes">Notes</a><a href="#contact">Contact</a></div></nav>
 <header class="hero"><div class="hero-inner"><div class="eyebrow">A PERSONAL DIGITAL SPACE</div><h1>CODLYTIC</h1><p>Curiosity, ideas and technology — a small corner of the internet where I explore, experiment and turn what I learn into something meaningful.</p><div class="actions"><a class="btn" href="#about">Discover my space</a><a class="btn ghost" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub ↗</a></div></div><div class="system" aria-label="Animated solar system with the Sun and eight orbiting planets"><div class="sun"></div><div class="orbit o1"><button class="planet" type="button" aria-label="Mercury" aria-pressed="false"><span class="planet-label">Mercury</span></button></div><div class="orbit o2"><button class="planet" type="button" aria-label="Venus" aria-pressed="false"><span class="planet-label">Venus</span></button></div><div class="orbit o3"><button class="planet" type="button" aria-label="Earth" aria-pressed="false"><span class="planet-label">Earth</span></button></div><div class="orbit o4"><button class="planet" type="button" aria-label="Mars" aria-pressed="false"><span class="planet-label">Mars</span></button></div><div class="orbit o5"><button class="planet" type="button" aria-label="Jupiter" aria-pressed="false"><span class="planet-label">Jupiter</span></button></div><div class="orbit o6"><button class="planet" type="button" aria-label="Saturn" aria-pressed="false"><span class="planet-label">Saturn</span></button><span class="saturn-ring" aria-hidden="true"></span></div><div class="orbit o7"><button class="planet" type="button" aria-label="Uranus" aria-pressed="false"><span class="planet-label">Uranus</span></button></div><div class="orbit o8"><button class="planet" type="button" aria-label="Neptune" aria-pressed="false"><span class="planet-label">Neptune</span></button></div></div></header>
-<section id="about">
-<div class="section-head"><div class="eyebrow">THE PERSON BEHIND THE SPACE</div><h2>A little about me</h2><p>One page. A quick introduction to the person, the skills and the work behind CODLYTIC.</p></div>
-<div class="about-panel">
- <article class="about-main">
-  <div class="about-kicker">Hello, I’m</div>
-  <h3>Nitesh Kumar</h3>
-  <p>I’m a Data Science and Analytics enthusiast who enjoys turning raw data into meaningful insights and building practical technology projects. I’m always learning, experimenting and finding better ways to solve real-world problems.</p>
-  <div class="about-tags"><span>Data Science</span><span>Analytics</span><span>Python</span><span>AI & ML</span></div>
- </article>
- <aside class="about-side">
-  <div class="about-stat"><div class="about-icon">✦</div><div><strong>My Journey</strong><span>Learning through hands-on projects, continuous practice and a 4-month Data Science and Analytics internship at Zoho Development.</span></div></div>
-  <div class="about-stat"><div class="about-icon">◎</div><div><strong>My Approach</strong><span>Understand the problem, explore the data, build a useful solution and keep improving it.</span></div></div>
- </aside>
- <div class="about-grid">
-  <article class="about-tile"><h4>Skills I Explore</h4><p>Python · SQL · Excel · Power BI · Machine Learning · AI</p></article>
-  <article class="about-tile"><h4>What I Build</h4><p>Data-driven projects, dashboards and interactive web experiences.</p><div class="about-links"><a href="https://github.com/Nitesh-Datascience/EduPro_Project" target="_blank" rel="noreferrer">EduPro ↗</a><a href="https://github.com/Nitesh-Datascience/codlytic-galaxy-portfolio" target="_blank" rel="noreferrer">Galaxy Portfolio ↗</a></div></article>
-  <article class="about-tile"><h4>My Vision</h4><p>Use data and AI to create thoughtful, useful solutions for real-world challenges.</p></article>
+<section id="about" class="about-section">
+ <div class="section-head"><div class="eyebrow">THE PERSON BEHIND CODLYTIC</div><h2>A little about me</h2><p>Curiosity, data and code — the things that keep me building.</p></div>
+ <div class="about-shell">
+  <div class="about-intro">
+   <div class="about-avatar-wrap"><div class="about-orbit orbit-one"></div><div class="about-orbit orbit-two"></div><div class="about-avatar">NK</div><span class="about-online"><i></i> ALWAYS LEARNING</span></div>
+   <div class="about-intro-copy">
+    <div class="about-kicker">HELLO, WORLD <span>✦</span></div>
+    <h3>I’m Nitesh Kumar<span class="about-period">.</span></h3>
+    <div class="about-role">DATA SCIENCE <b>·</b> ANALYTICS <b>·</b> TECHNOLOGY</div>
+    <p>I enjoy turning raw data into meaningful insights and building practical digital experiences. I’m curious by nature, hands-on in my learning, and always exploring how technology can solve real-world problems.</p>
+    <div class="about-tags"><span>Data Science</span><span>Analytics</span><span>Python</span><span>AI &amp; ML</span></div>
+    <div class="about-social"><a href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.instagram.com/codlytic" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://youtube.com/@codlytic" target="_blank" rel="noreferrer">YouTube ↗</a></div>
+   </div>
+  </div>
+  <div class="about-detail-grid">
+   <article class="about-detail journey-card"><div class="about-card-top"><span class="about-card-icon">✧</span><span class="about-card-label">THE JOURNEY</span></div><h4>Learning by building.</h4><p>Growing through hands-on practice, real projects and continuous learning.</p><div class="about-experience"><span class="about-experience-dot"></span><div><strong>Zoho Development</strong><small>Data Science &amp; Analytics · 4-month internship</small></div></div></article>
+   <article class="about-detail"><div class="about-card-top"><span class="about-card-icon">⌘</span><span class="about-card-label">MY TOOLKIT</span></div><h4>Tools I work with.</h4><div class="about-skill-list"><span>Python</span><span>SQL</span><span>Excel</span><span>Power BI</span><span>Machine Learning</span><span>AI</span></div></article>
+   <article class="about-detail"><div class="about-card-top"><span class="about-card-icon">↗</span><span class="about-card-label">SELECTED WORK</span></div><h4>Ideas into projects.</h4><p>Exploring data, building useful tools and bringing ideas to life.</p><div class="about-project-links"><a href="https://github.com/Nitesh-Datascience/EduPro_Project" target="_blank" rel="noreferrer"><span>EduPro Project</span><b>↗</b></a><a href="https://github.com/Nitesh-Datascience/codlytic-galaxy-portfolio" target="_blank" rel="noreferrer"><span>Galaxy Portfolio</span><b>↗</b></a></div></article>
+   <article class="about-detail vision-card"><div class="about-card-top"><span class="about-card-icon">◎</span><span class="about-card-label">THE VISION</span></div><h4>Make technology meaningful.</h4><p>Use data and AI to create thoughtful solutions that make a real difference.</p><div class="about-vision-line"><span></span><small>STAY CURIOUS · KEEP CREATING</small></div></article>
+  </div>
  </div>
-</div>
 </section>
 <section id="notes"><div class="section-head"><div class="eyebrow">A SPACE THAT CAN GROW</div><h2>Ideas & Notes</h2><p>Some thoughts are worth keeping. This space will grow into a personal notes and knowledge corner in a future update.</p></div><div class="quiet-card"><h3>Coming in a future chapter</h3><p>A simple place to write, save and revisit notes, learning snippets and ideas. For now, this stays intentionally quiet and uncluttered.</p></div></section>
 <section id="contact"><div class="section-head"><div class="eyebrow">SAY HELLO</div><h2>Find me around the web</h2><p>Connect, follow along or explore what I’m working on.</p></div><div class="socials" aria-label="Social links">
