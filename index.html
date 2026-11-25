@@ -35,7 +35,7 @@ h1{font-size:clamp(3.7rem,11vw,8rem);line-height:1;margin:18px 0;letter-spacing:
 .planet:after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset -12px -5px 15px #0008,inset 2px 2px 5px #ffffff35;pointer-events:none}
 .planet:hover,.planet:focus-visible,.planet.active{filter:saturate(1.35) brightness(1.28);box-shadow:inset -13px -7px 17px #0007,inset 3px 2px 7px #ffffff77,0 0 22px color-mix(in srgb,var(--planet),transparent 15%);outline:none}
 .planet-label{position:absolute;left:50%;bottom:calc(100% + 13px);transform:translate(-50%,5px);padding:5px 11px;border:1px solid #8be9ff88;border-radius:999px;background:#07111fee;color:#f5fbff;font:600 12px/1.2 Inter,system-ui,sans-serif;letter-spacing:.04em;white-space:nowrap;z-index:12;opacity:0;visibility:hidden;pointer-events:none;box-shadow:0 4px 18px #000b,0 0 14px #8be9ff33;transition:opacity .18s,transform .18s,visibility .18s}
-.planet.active .planet-label,.planet:focus-visible .planet-label{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.planet:hover .planet-label,.planet.active .planet-label,.planet:focus-visible .planet-label{opacity:1;visibility:visible;transform:translate(-50%,0)}
 .orbit.o1 .planet{background-image:url('https://www.solarsystemscope.com/textures/download/2k_mercury.jpg')}
 .orbit.o2 .planet{background-image:url('https://www.solarsystemscope.com/textures/download/2k_venus_surface.jpg')}
 .orbit.o3 .planet{background-image:url('https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg')}
