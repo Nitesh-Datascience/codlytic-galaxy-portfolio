@@ -552,6 +552,57 @@ html{scroll-behavior:smooth;scroll-padding-top:88px}
  .orbit,.system,.sun,.hero:before,.hero:after,.cosmic-streak{animation:none!important}
  .journey-section>*{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
 }
+
+/* Cinematic atmosphere pass: subtle depth, controlled glow and film-like movement */
+body{background:#030510}
+.nebula{overflow:hidden}
+.nebula:before,.nebula:after{content:"";position:absolute;inset:-24%;pointer-events:none;will-change:transform}
+.nebula:before{
+ background:
+  radial-gradient(ellipse 34% 28% at 18% 32%,#3c8dc51c 0%,transparent 72%),
+  radial-gradient(ellipse 30% 34% at 78% 38%,#7655c51b 0%,transparent 72%),
+  radial-gradient(ellipse 38% 26% at 52% 78%,#236c9b18 0%,transparent 74%);
+ filter:blur(34px);animation:cinemaNebula 46s ease-in-out infinite alternate;
+}
+.nebula:after{
+ background:radial-gradient(ellipse at center,transparent 42%,#02030bd9 100%);
+ opacity:.62;
+}
+@keyframes cinemaNebula{
+ 0%{transform:translate3d(-2%,-1%,0) scale(1) rotate(0deg)}
+ 50%{transform:translate3d(2%,1%,0) scale(1.08) rotate(5deg)}
+ 100%{transform:translate3d(-1%,2%,0) scale(1.03) rotate(-4deg)}
+}
+.hero{background:radial-gradient(ellipse at 50% 48%,#15294a20 0%,transparent 62%)}
+.hero h1{animation:titleGlow 7s ease-in-out infinite alternate}
+@keyframes titleGlow{
+ from{filter:drop-shadow(0 0 16px #75dfff28)}
+ to{filter:drop-shadow(0 0 34px #75dfff62) drop-shadow(0 0 58px #987aff22)}
+}
+.sun{animation:sunBreath 6s ease-in-out infinite alternate}
+@keyframes sunBreath{
+ from{box-shadow:0 0 34px #ffbd70aa,0 0 90px #a64fff66,0 0 150px #ff9c4a22}
+ to{box-shadow:0 0 48px #ffcf8c,0 0 125px #a64fff99,0 0 210px #ff9c4a44}
+}
+.orbit{border-color:#a9dfff55;box-shadow:inset 0 0 18px #6acfff0a,0 0 20px #56cfff12}
+.planet{transition:filter .55s ease,box-shadow .55s ease}
+.planet:hover,.planet:focus-visible{filter:brightness(1.45) saturate(1.2);box-shadow:inset -8px -7px 13px #0009,0 0 22px #8ceaffbb,0 0 38px #8c78ff66}
+.card{transform:translateZ(0);backface-visibility:hidden}
+.card:hover{transform:perspective(900px) translateY(-8px) rotateX(1.2deg);box-shadow:0 24px 70px #0008,0 0 26px #61dfff18}
+section:not(.hero){position:relative}
+section:not(.hero):before{content:"";position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,#83dcff22,#b9a0ff22,transparent);pointer-events:none}
+nav{backdrop-filter:blur(18px) saturate(1.2)}
+.btn{transition:transform .45s cubic-bezier(.2,.75,.25,1),box-shadow .45s,border-color .45s,background .45s}
+.btn:hover{box-shadow:0 0 26px #58dfff55,0 10px 35px #0005}
+@media(max-width:700px){
+ .nebula:before{filter:blur(24px);animation-duration:58s}
+ .hero h1{animation-duration:9s}
+ .card:hover{transform:translateY(-4px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .nebula:before,.hero h1,.sun{animation:none!important}
+ .card,.btn,.planet{transition:none!important}
+}
 </style></head>
 <body><canvas id="stars"></canvas><div class="nebula"></div><div class="warp-field" aria-hidden="true"><i class="warp-ray ray-a"></i><i class="warp-ray ray-b"></i><i class="warp-ray ray-c"></i><i class="warp-ray ray-d"></i><i class="warp-dust dust-a"></i><i class="warp-dust dust-b"></i><i class="warp-dust dust-c"></i></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About Me</a><a href="#universe">Explore Planet</a><a href="#projects">Project Planet</a><a href="#toolkit">Skills</a><a href="#contact">Contact</a></div></nav>
