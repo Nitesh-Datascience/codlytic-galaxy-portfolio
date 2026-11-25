@@ -714,7 +714,7 @@ function addChatBubble(text,who){const el=document.createElement('div');el.class
 const CHAT_API_URL=window.CODLYTIC_CHAT_API_URL||'/api/chat';
 async function askPortfolio(question){if(!question.trim())return;addChatBubble(question,'user');chatInput.value='';chatSend.disabled=true;chatStatus.textContent='Connecting to portfolio AI…';try{const response=await fetch(CHAT_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:question})});const contentType=response.headers.get('content-type')||'';if(!contentType.includes('application/json')){if(response.status===404)throw new Error('Chat backend not found on this hosting domain. The Vercel API URL must be connected to this portfolio.');throw new Error('Chat server returned a non-JSON response (HTTP '+response.status+').');}const data=await response.json();if(!response.ok)throw new Error(data.error||'Chat server error (HTTP '+response.status+').');if(!data.reply)throw new Error('The AI server returned an empty reply.');addChatBubble(data.reply,'bot');chatStatus.textContent='Powered by Gemini · Check important details with Nitesh.';}catch(err){const message=err instanceof TypeError?'Could not reach the chat server. Check the Vercel deployment and API URL.':(err.message||'Something went wrong. Please try again.');addChatBubble(message,'bot');chatStatus.textContent='Chat connection needs setup · '+message;}finally{chatSend.disabled=false;chatInput.focus();}}
 chatForm.addEventListener('submit',e=>{e.preventDefault();askPortfolio(chatInput.value);});
-document.querySelectorAll// Gentle automatic cinematic journey with a discreet progress HUD.
+// Gentle automatic cinematic journey with a discreet progress HUD.
 (()=>{
  const stops=[document.querySelector('header.hero'),...document.querySelectorAll('body>section')].filter(Boolean);
  if(!stops.length)return;
@@ -768,9 +768,9 @@ document.querySelectorAll// Gentle automatic cinematic journey with a discreet p
    fill.style.width=((i+1)/stops.length*100)+'%';
    const top=section.getBoundingClientRect().top+window.scrollY;
    if(reduced)window.scrollTo(0,top);
-   else await glideTo(top,6800);
+   else await glideTo(top,12500);
    if(!active)break;
-   await wait(3200);
+   await wait(4200);
   }
   stop();
  })();
