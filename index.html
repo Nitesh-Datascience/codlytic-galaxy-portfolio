@@ -537,8 +537,23 @@ nav{z-index:10!important}
 .suggestion-form .btn{justify-self:start}
 .suggestion-status{min-height:20px;color:#9deeff;font-size:.82rem;margin:0}
 @media(max-width:600px){.suggestion-section{padding-top:18px}.suggestion-panel{border-radius:18px}.suggestion-form .btn{width:100%}}
+
+/* Smooth, lightweight motion pass: preserve the galaxy look without forced scrolling. */
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+:root{scrollbar-gutter:stable}
+.orbit.o1{--speed:24s}.orbit.o2{--speed:30s}.orbit.o3{--speed:36s}
+.orbit.o4{--speed:43s}.orbit.o5{--speed:50s}.orbit.o6{--speed:58s}
+.orbit.o7{--speed:66s}.orbit.o8{--speed:76s}.orbit.o9{--speed:88s}
+.orbit{animation-duration:var(--speed)!important}
+.journey-section>*{transition:opacity .75s ease,transform .75s cubic-bezier(.2,.7,.2,1),filter .75s ease}
+.card,.social-card,.toolkit-item,.btn,.guide-choice{transition-duration:.4s}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ .orbit,.system,.sun,.hero:before,.hero:after,.cosmic-streak{animation:none!important}
+ .journey-section>*{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+}
 </style></head>
-<body><canvas id="stars"></canvas><canvas id="warpParticles" aria-hidden="true"></canvas><div class="nebula"></div><div class="warp-field" aria-hidden="true"><i class="warp-ray ray-a"></i><i class="warp-ray ray-b"></i><i class="warp-ray ray-c"></i><i class="warp-ray ray-d"></i><i class="warp-dust dust-a"></i><i class="warp-dust dust-b"></i><i class="warp-dust dust-c"></i></div>
+<body><canvas id="stars"></canvas><div class="nebula"></div><div class="warp-field" aria-hidden="true"><i class="warp-ray ray-a"></i><i class="warp-ray ray-b"></i><i class="warp-ray ray-c"></i><i class="warp-ray ray-d"></i><i class="warp-dust dust-a"></i><i class="warp-dust dust-b"></i><i class="warp-dust dust-c"></i></div>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About Me</a><a href="#universe">Explore Planet</a><a href="#projects">Project Planet</a><a href="#toolkit">Skills</a><a href="#contact">Contact</a></div></nav>
 <header class="hero"><div><div class="eyebrow">WELCOME TO MY DIGITAL UNIVERSE</div><h1>CODLYTIC</h1><p>Exploring the universe of data, transforming raw information into meaningful insights, and building intelligent solutions with Python, SQL and Machine Learning.</p><div class="actions"><a class="btn" href="#projects">Explore the Galaxy ↗</a><a class="btn secondary" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub Profile</a></div>
 <div class="system" id="universe" aria-label="Animated solar system with eight planets and Pluto"><div class="sky-canopy" aria-hidden="true"></div><div class="sun" title="Sun"></div><i class="cosmic-streak one"></i><i class="cosmic-streak two"></i><div class="orbit o1"><button class="planet p1" type="button" aria-label="Mercury" title="Mercury"></button></div><div class="orbit o2"><button class="planet p2" type="button" aria-label="Venus" title="Venus"></button></div><div class="orbit o3"><button class="planet p3" type="button" data-topic="analytics" aria-label="Earth" title="Earth"></button></div><div class="orbit o4"><button class="planet p4" type="button" data-topic="churn" aria-label="Mars" title="Mars"></button></div><div class="orbit o5"><button class="planet p5" type="button" data-topic="fraud" aria-label="Jupiter" title="Jupiter"></button></div><div class="orbit o6"><button class="planet p6" type="button" aria-label="Saturn" title="Saturn"></button></div><div class="orbit o7"><button class="planet p7" type="button" aria-label="Uranus" title="Uranus"></button></div><div class="orbit o8"><button class="planet p8" type="button" aria-label="Neptune" title="Neptune"></button></div><div class="orbit o9"><button class="planet p9" type="button" aria-label="Pluto dwarf planet" title="Pluto (dwarf planet)"></button></div></div>
@@ -599,7 +614,7 @@ nav{z-index:10!important}
 </aside>
 <footer>© <span id="year"></span> CODLYTIC · A Universe of Data & Intelligence</footer>
 <script>
-const c=document.getElementById('stars'),ctx=c.getContext('2d');let w,h,backgroundStars=[];function resize(){w=c.width=innerWidth;h=c.height=innerHeight;backgroundStars=Array.from({length:Math.min(300,Math.floor(w*h/4200))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.7+.3,a:Math.random()*.75+.2,phase:Math.random()*Math.PI*2}))}function draw(){ctx.clearRect(0,0,w,h);for(const p of backgroundStars){ctx.globalAlpha=p.a*(.55+.45*Math.sin(Date.now()*.0012+p.phase));ctx.fillStyle='#dff8ff';ctx.shadowBlur=p.r>1.2?9:4;ctx.shadowColor='#79dfff';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}ctx.shadowBlur=0;requestAnimationFrame(draw)}addEventListener('resize',resize);resize();draw();document.getElementById('year').textContent=new Date().getFullYear();
+const c=document.getElementById('stars'),ctx=c.getContext('2d');let w,h,backgroundStars=[];function resize(){w=c.width=innerWidth;h=c.height=innerHeight;backgroundStars=Array.from({length:Math.min(300,Math.floor(w*h/4200))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.7+.3,a:Math.random()*.75+.2,phase:Math.random()*Math.PI*2}))}let lastStarFrame=0;function draw(timestamp=0){if(timestamp-lastStarFrame>=33){lastStarFrame=timestamp;ctx.clearRect(0,0,w,h);for(const p of backgroundStars){ctx.globalAlpha=p.a*(.55+.45*Math.sin(timestamp*.0008+p.phase));ctx.fillStyle='#dff8ff';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1}requestAnimationFrame(draw)}addEventListener('resize',resize);resize();draw();document.getElementById('year').textContent=new Date().getFullYear();
 const guidePanel=document.getElementById('guidePanel'),guideLaunch=document.getElementById('guideLaunch');
 guideLaunch.addEventListener('click',()=>{const open=guidePanel.classList.toggle('open');guideLaunch.setAttribute('aria-expanded',String(open));});
 document.getElementById('guideClose').addEventListener('click',()=>{guidePanel.classList.remove('open');guideLaunch.setAttribute('aria-expanded','false');});
@@ -625,114 +640,20 @@ document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click'
 document.querySelectorAll('.planet[data-topic]').forEach(p=>p.addEventListener('click',()=>{document.getElementById('projects').scrollIntoView({behavior:'smooth'});const map={analytics:0,churn:1,fraud:2};const cards=document.querySelectorAll('#projects .card');cards.forEach((card,i)=>{card.style.borderColor=i===map[p.dataset.topic]?'#70e7ff':'#9bb7ff26';card.style.boxShadow=i===map[p.dataset.topic]?'0 0 35px #36cfff55':'';});}));
 
 
-// CODLYTIC hyperspace flight: reliable auto-tour with interruptible manual control.
- const root=document.documentElement;
- const system=document.querySelector('.system');
- const hero=document.querySelector('.hero');
- const particleCanvas=document.getElementById('warpParticles');
- const pctx=particleCanvas.getContext('2d');
- let vw=innerWidth,vh=innerHeight,lastY=scrollY,scrollVelocity=0,stars=[];
- let scrollTick=false,tourActive=false,tourFrame=0;
- const originalScrollBehavior=getComputedStyle(root).scrollBehavior;
- function resizeWarp(){
-  vw=innerWidth;vh=innerHeight;
-  particleCanvas.width=Math.round(vw*devicePixelRatio);particleCanvas.height=Math.round(vh*devicePixelRatio);
-  pctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-  stars=Array.from({length:Math.min(210,Math.floor(vw*vh/5600))},()=>({
-   angle:Math.random()*Math.PI*2,depth:Math.random()*.88+.12,
-   hue:Math.random()>.8?'#c9baff':'#a9efff',size:Math.random()*1.45+.45
-  }));
- }
- function drawHyperspace(){
-  pctx.clearRect(0,0,vw,vh);
-  const cx=vw*.5,cy=vh*.48,speed=Math.min(1,Math.abs(scrollVelocity)/28);
-  const boost=tourActive ? .48 : 0;
-  for(const star of stars){
-   let oldDepth=star.depth;
-   star.depth-=.0045+speed*.055+boost*.045;
-   if(star.depth<=.075){star.depth=1;oldDepth=1;star.angle=Math.random()*Math.PI*2;star.hue=Math.random()>.8?'#c9baff':'#a9efff';}
-   const radius=(1/star.depth)*Math.min(vw,vh)*.48;
-   const oldRadius=(1/oldDepth)*Math.min(vw,vh)*.48;
-   const x=cx+Math.cos(star.angle)*radius,y=cy+Math.sin(star.angle)*radius;
-   const ox=cx+Math.cos(star.angle)*oldRadius,oy=cy+Math.sin(star.angle)*oldRadius;
-   const alpha=Math.min(.88,(1-star.depth)*.95);
-   pctx.globalAlpha=alpha;pctx.strokeStyle=star.hue;pctx.lineWidth=star.size*(.5+speed*1.8);
-   pctx.shadowBlur=5+speed*15;pctx.shadowColor=star.hue;
-   pctx.beginPath();pctx.moveTo(ox,oy);pctx.lineTo(x,y);pctx.stroke();
-   if(star.depth<.34){pctx.globalAlpha=alpha*.72;pctx.fillStyle='#effcff';pctx.beginPath();pctx.arc(x,y,star.size*1.2,0,Math.PI*2);pctx.fill();}
-  }
-  pctx.globalAlpha=1;pctx.shadowBlur=0;scrollVelocity*=.9;
-  requestAnimationFrame(drawHyperspace);
- }
- function updateCosmicJourney(){
-  const maxScroll=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-  const progress=Math.min(1,Math.max(0,scrollY/maxScroll));
-  root.style.setProperty('--journey-progress',progress.toFixed(4));
-  root.style.setProperty('--journey-glow',(0.24+progress*.76).toFixed(3));
-  if(system&&hero){
-   const travel=Math.min(1,Math.max(0,scrollY/Math.max(1,hero.offsetHeight*.9)));
-   root.style.setProperty('--system-zoom',(1-travel*.88).toFixed(3));
-   system.style.opacity=String(Math.max(.02,1-travel*.99));
-   system.style.filter='blur('+(travel*3).toFixed(1)+'px)';
-  }
-  scrollTick=false;
- }
- window.addEventListener('scroll',()=>{
-  const now=scrollY;scrollVelocity=Math.max(-65,Math.min(65,now-lastY));lastY=now;
-  if(!scrollTick){requestAnimationFrame(updateCosmicJourney);scrollTick=true;}
- },{passive:true});
- window.addEventListener('resize',resizeWarp,{passive:true});
- resizeWarp();drawHyperspace();updateCosmicJourney();
-
+// Lightweight section reveals: no forced auto-scroll or second full-screen canvas loop.
  const journeySections=document.querySelectorAll('header.hero,body>section');
  if('IntersectionObserver' in window){
-  const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-   if(entry.isIntersecting)entry.target.classList.add('journey-visible');
-  }),{threshold:.08,rootMargin:'0px 0px -4% 0px'});
-  journeySections.forEach(section=>{section.classList.add('journey-section');revealObserver.observe(section);});
+  const revealObserver=new IntersectionObserver(entries=>{
+   entries.forEach(entry=>{
+    if(entry.isIntersecting){
+     entry.target.classList.add('journey-visible');
+     revealObserver.unobserve(entry.target);
+    }
+   });
+  },{threshold:.08,rootMargin:'0px 0px -4% 0px'});
+  journeySections.forEach(section=>{
+   section.classList.add('journey-section');
+   revealObserver.observe(section);
+  });
  }else journeySections.forEach(section=>section.classList.add('journey-visible'));
-
- // Auto-tour always starts on a fresh page load. Explicit user input cancels it.
- function startCosmicTour(){
-  if(tourActive)return;
-  const stops=['about','projects','contact'].map(id=>document.getElementById(id)).filter(Boolean);
-  if(!stops.length)return;
-  tourActive=true;
-  const previousBehavior=root.style.scrollBehavior;
-  root.style.scrollBehavior='auto';
-  let index=0,from=scrollY,started=0;
-  const duration=7000,pause=1600;
-  const inputEvents=['wheel','touchstart','pointerdown','keydown'];
-  const cleanup=()=>{
-   tourActive=false;cancelAnimationFrame(tourFrame);
-   root.style.scrollBehavior=previousBehavior||originalScrollBehavior||'auto';
-   inputEvents.forEach(type=>window.removeEventListener(type,interrupt));
-  };
-  const interrupt=()=>cleanup();
-  inputEvents.forEach(type=>window.addEventListener(type,interrupt,{passive:true}));
-  const animate=timestamp=>{
-   if(!tourActive)return;
-   if(!started)started=timestamp;
-   const elapsed=timestamp-started,t=Math.min(1,elapsed/duration);
-   const eased=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-   const target=Math.max(0,stops[index].getBoundingClientRect().top+scrollY-58);
-   window.scrollTo({top:from+(target-from)*eased,behavior:'instant'});
-   if(elapsed<duration+pause){tourFrame=requestAnimationFrame(animate);return;}
-   index++;
-   if(index>=stops.length){cleanup();return;}
-   from=scrollY;started=timestamp;tourFrame=requestAnimationFrame(animate);
-  };
-  tourFrame=requestAnimationFrame(animate);
- }
- // Wait for layout, fonts and images; reset browser scroll restoration so the tour starts at the hero.
- if('scrollRestoration' in history)history.scrollRestoration='manual';
- window.addEventListener('load',()=>{
-  window.scrollTo({top:0,behavior:'instant'});
-  updateCosmicJourney();
-  setTimeout(startCosmicTour,1800);
- },{once:true});
- if(document.readyState==='complete'){
-  window.scrollTo({top:0,behavior:'instant'});
-  setTimeout(startCosmicTour,1800);
- }
 </script></body></html>
