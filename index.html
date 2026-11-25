@@ -84,6 +84,19 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 @media(max-width:600px){nav{padding:14px 18px}.links{gap:13px;font-size:.8rem}.hero{min-height:82vh}.planet-scene{height:150px}.sun{width:62px;height:62px}.ring{width:140px;height:72px}.ring.two{width:220px;height:110px}.ring.three{width:300px;height:145px}section{padding:68px 22px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
+/* Compact spacing for the About section */
+.about-section{padding-top:56px;padding-bottom:58px;scroll-margin-top:76px}
+.about-section .section-head{margin-bottom:20px}
+.about-section .section-head h2{font-size:clamp(1.75rem,4vw,2.45rem);margin:5px 0}
+.about-section .section-head p{margin:5px 0}
+.about-intro{padding:clamp(18px,3vw,30px);gap:clamp(18px,3.5vw,40px);grid-template-columns:190px 1fr}
+.about-avatar-wrap{width:158px;height:158px}
+.about-avatar{width:108px;height:108px;font-size:2.3rem}
+.about-detail-grid{gap:11px;margin-top:11px}
+.about-detail{padding:18px}
+.about-card-top{margin-bottom:9px}
+.about-experience{margin-top:12px;padding-top:11px}
+@media(max-width:700px){.about-intro{grid-template-columns:1fr;padding:20px}.about-avatar-wrap{width:148px;height:148px}.about-avatar{width:102px;height:102px}}
 /* Refined CODLYTIC About section */
 .about-section{position:relative}
 .about-shell{max-width:1080px;margin:0 auto}
