@@ -605,16 +605,6 @@ nav{backdrop-filter:blur(18px) saturate(1.2)}
 }
 
 
-/* Minimal cinematic journey HUD — no extra controls */
-#cinemaHud{position:fixed;left:50%;bottom:24px;transform:translate(-50%,18px);z-index:7;width:min(340px,calc(100vw - 36px));padding:13px 16px 12px;border:1px solid #8ceaff55;border-radius:16px;background:linear-gradient(120deg,#071426dc,#171334dc);backdrop-filter:blur(18px);box-shadow:0 12px 42px #0008,0 0 28px #70e7ff1c;opacity:0;pointer-events:none;transition:opacity .8s ease,transform .8s ease}
-#cinemaHud.on{opacity:1;transform:translate(-50%,0)}
-#cinemaHud .hud-top{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#dffaff;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase}
-#cinemaHud .hud-name{margin-top:5px;color:#fff;font-size:.92rem;font-weight:700;letter-spacing:.03em}
-#cinemaHud .hud-track{height:3px;margin-top:11px;border-radius:9px;background:#ffffff20;overflow:hidden}
-#cinemaHud .hud-fill{height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,#70e7ff,#b69aff);box-shadow:0 0 12px #70e7ff;transition:width 1s ease}
-@media(max-width:600px){#cinemaHud{bottom:14px;padding:11px 13px}#cinemaHud .hud-name{font-size:.84rem}}
-@media(prefers-reduced-motion:reduce){#cinemaHud{transition:none}}
-
 /* Living universe: swirling nebula, drifting asteroid belt and meteor showers */
 body{background-image:radial-gradient(ellipse at 50% 8%,#17284a55,transparent 48%),radial-gradient(ellipse at 12% 58%,#402c7040,transparent 42%),radial-gradient(ellipse at 88% 72%,#174c6540,transparent 45%)}
 body:before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,#315b9630 42deg,transparent 92deg,#8652b52b 156deg,transparent 220deg,#2d8ba32b 286deg,transparent 360deg);filter:blur(70px);opacity:.7;animation:nebulaStorm 65s linear infinite}
@@ -733,6 +723,19 @@ chatForm.addEventListener('submit',e=>{e.preventDefault();askPortfolio(chatInput
   if(Math.abs(delta)<2){resolve();return;}
   const step=now=>{
    if(!active){resolve();return;}
+   const p=Math.min(1,(now-startTime)/duration// Gentle automatic cinematic journey without an on-screen progress HUD.
+(()=>{
+ const stops=[document.querySelector('header.hero'),...document.querySelectorAll('body>section')].filter(Boolean);
+ if(!stops.length)return;
+ const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let active=true,frame=null,timer=null;
+ const wait=ms=>new Promise(resolve=>{timer=setTimeout(resolve,ms)});
+ const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+ const glideTo=(target,duration)=>new Promise(resolve=>{
+  const start=window.scrollY,delta=target-start,startTime=performance.now();
+  if(Math.abs(delta)<2){resolve();return;}
+  const step=now=>{
+   if(!active){resolve();return;}
    const p=Math.min(1,(now-startTime)/duration);
    window.scrollTo(0,start+delta*ease(p));
    if(p<1)frame=requestAnimationFrame(step);else resolve();
@@ -744,8 +747,6 @@ chatForm.addEventListener('submit',e=>{e.preventDefault();askPortfolio(chatInput
   active=false;
   if(frame)cancelAnimationFrame(frame);
   if(timer)clearTimeout(timer);
-  hud.classList.remove('on');
-  setTimeout(()=>hud.remove(),900);
  };
  const manual=event=>{
   if(!active)return;
@@ -757,15 +758,8 @@ chatForm.addEventListener('submit',e=>{e.preventDefault();askPortfolio(chatInput
  (async()=>{
   await wait(1200);
   if(!active)return;
-  hud.classList.add('on');
-  for(let i=0;i<stops.length;i++){
+  for(const section of stops){
    if(!active)break;
-   const section=stops[i];
-   const heading=section.querySelector('h1,h2,h3');
-   const label=heading?.textContent?.trim()||section.getAttribute('aria-label')||'Explore the galaxy';
-   count.textContent=String(i+1).padStart(2,'0')+' / '+String(stops.length).padStart(2,'0');
-   name.textContent=label;
-   fill.style.width=((i+1)/stops.length*100)+'%';
    const top=section.getBoundingClientRect().top+window.scrollY;
    if(reduced)window.scrollTo(0,top);
    else await glideTo(top,12500);
@@ -775,4 +769,3 @@ chatForm.addEventListener('submit',e=>{e.preventDefault();askPortfolio(chatInput
   stop();
  })();
 })();
-</script></body></html>
