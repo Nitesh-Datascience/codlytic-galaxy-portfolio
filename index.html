@@ -311,6 +311,32 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 @media(max-width:700px){.asteroid-belt{width:78vw;height:44vw;opacity:.8}.belt-rock{transform:scale(.78)}.about-asteroid-one{left:3%;top:61%;transform:scale(.75)}.about-asteroid-four{right:12%;top:18%}}
 @media(prefers-reduced-motion:reduce){.asteroid-belt,.space-asteroid{animation:none!important}}
 
+
+/* Bigger, more realistic asteroid scale */
+.asteroid-belt{width:min(780px,94vw);height:min(470px,62vh)}
+.belt-rock{box-shadow:inset -5px -5px 7px #182238, inset 2px 2px 3px #ffffff55,0 0 13px #b7dfff77}
+.belt-rock:nth-child(1){--rock-size:22px}.belt-rock:nth-child(2){--rock-size:12px}
+.belt-rock:nth-child(3){--rock-size:34px}.belt-rock:nth-child(4){--rock-size:17px}
+.belt-rock:nth-child(5){--rock-size:27px}.belt-rock:nth-child(6){--rock-size:14px}
+.belt-rock:nth-child(7){--rock-size:40px}.belt-rock:nth-child(8){--rock-size:18px}
+.belt-rock:nth-child(9){--rock-size:30px}.belt-rock:nth-child(10){--rock-size:13px}
+.belt-rock:nth-child(11){--rock-size:36px}.belt-rock:nth-child(12){--rock-size:20px}
+.belt-rock:nth-child(13){--rock-size:15px}.belt-rock:nth-child(14){--rock-size:9px}
+.space-asteroid{box-shadow:inset -12px -10px 16px #080d1cbb,inset 4px 3px 8px #ffffff66,0 0 28px #9bcfff77}
+.about-asteroid-one{width:86px;height:72px;left:6%;top:54%}
+.about-asteroid-two{width:58px;height:50px;right:7%;top:34%}
+.about-asteroid-three{width:38px;height:33px;left:61%;top:81%}
+.about-asteroid-four{width:72px;height:62px;right:25%;top:12%}
+@media(max-width:700px){
+ .asteroid-belt{width:88vw;height:55vw;opacity:.9}
+ .belt-rock:nth-child(3){--rock-size:24px}.belt-rock:nth-child(7){--rock-size:29px}
+ .belt-rock:nth-child(9){--rock-size:23px}.belt-rock:nth-child(11){--rock-size:26px}
+ .about-asteroid-one{width:56px;height:48px;left:2%;top:61%}
+ .about-asteroid-two{width:42px;height:36px;right:3%;top:32%}
+ .about-asteroid-three{width:28px;height:24px}
+ .about-asteroid-four{width:48px;height:42px;right:12%;top:18%}
+}
+
 </style>
 </head>
 <body>
