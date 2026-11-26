@@ -224,6 +224,41 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 @keyframes profileOrbitTwo{to{transform:rotate(415deg) scaleY(.78)}}
 @media(prefers-reduced-motion:reduce){.about-avatar-wrap:before,.about-avatar-wrap:after,.about-orbit.orbit-one,.about-orbit.orbit-two{animation:none!important}}
 
+
+/* Cinematic depth behind the profile card */
+.about-intro{
+ position:relative;isolation:isolate;
+ background:
+  radial-gradient(ellipse at 16% 48%,#2879a34a 0%,transparent 38%),
+  radial-gradient(ellipse at 88% 18%,#8154c84a 0%,transparent 36%),
+  radial-gradient(ellipse at 76% 100%,#146c8060 0%,transparent 42%),
+  linear-gradient(118deg,#111c32f5 0%,#0b1325f7 48%,#080d1bf7 100%);
+ border-color:#54708d88;
+ box-shadow:0 26px 80px #0009,0 0 42px #43bce91c,inset 0 1px 0 #d7f5ff18,inset 0 -28px 55px #02071366;
+}
+.about-intro:before{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;
+ background:
+  linear-gradient(112deg,transparent 8%,#8be9ff0b 31%,transparent 48%),
+  radial-gradient(ellipse at 50% -22%,#a5dfff22,transparent 56%),
+  repeating-linear-gradient(125deg,transparent 0 46px,#d8f5ff05 47px,transparent 48px 96px);
+ mix-blend-mode:screen;opacity:.9;
+}
+.about-intro:after{
+ content:"";position:absolute;inset:1px;z-index:-1;pointer-events:none;border-radius:inherit;
+ background:linear-gradient(180deg,#d7f2ff08,transparent 28%,#02061122 100%);
+ box-shadow:inset 0 0 55px #02071366;
+}
+.about-intro-copy,.about-avatar-wrap{position:relative;z-index:1}
+.about-section .about-shell:after{
+ content:"";position:absolute;z-index:-2;left:50%;top:50%;width:80%;height:72%;
+ transform:translate(-50%,-50%);pointer-events:none;
+ background:radial-gradient(ellipse,#327ba52a 0%,#5a3b8a18 42%,transparent 72%);
+ filter:blur(42px);animation:aboutBackdropBreath 11s ease-in-out infinite alternate;
+}
+@keyframes aboutBackdropBreath{from{opacity:.48;transform:translate(-52%,-48%) scale(.94)}to{opacity:.95;transform:translate(-48%,-52%) scale(1.08)}}
+@media(prefers-reduced-motion:reduce){.about-section .about-shell:after{animation:none!important}}
+
 </style>
 </head>
 <body>
