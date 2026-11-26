@@ -348,6 +348,43 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 @keyframes astronautOuterFloat{0%,100%{transform:translate3d(0,0,0) rotate(12deg)}50%{transform:translate3d(-24px,-30px,0) rotate(-13deg)}}
 @media(max-width:700px){.astronaut-ring{left:5%;top:19%;width:40px}.astronaut-outside{right:1%;bottom:9%;width:35px}.space-astronaut{right:3%;top:112px;width:42px;opacity:.72}}
 @media(prefers-reduced-motion:reduce){.system-astronaut,.space-astronaut{animation:none!important}}
+
+/* Keep the enlarged asteroid field around the outer edges, away from the Sun */
+.asteroid-belt{
+ width:min(1580px,118vw)!important;
+ height:min(980px,112vh)!important;
+ border:0!important;
+ animation:asteroidBeltSpin 180s linear infinite!important;
+ opacity:.96;
+}
+.asteroid-belt:before{display:none!important}
+.belt-rock{
+ box-shadow:inset -6px -6px 8px #182238,inset 2px 2px 4px #ffffff66,0 0 16px #b7dfff88!important;
+}
+.belt-rock:nth-child(1){left:3%!important;top:17%!important;--rock-size:32px!important}
+.belt-rock:nth-child(2){left:14%!important;top:5%!important;--rock-size:22px!important}
+.belt-rock:nth-child(3){left:34%!important;top:2%!important;--rock-size:42px!important}
+.belt-rock:nth-child(4){left:66%!important;top:4%!important;--rock-size:28px!important}
+.belt-rock:nth-child(5){left:86%!important;top:9%!important;--rock-size:38px!important}
+.belt-rock:nth-child(6){left:96%!important;top:27%!important;--rock-size:24px!important}
+.belt-rock:nth-child(7){left:98%!important;top:67%!important;--rock-size:46px!important}
+.belt-rock:nth-child(8){left:85%!important;top:89%!important;--rock-size:29px!important}
+.belt-rock:nth-child(9){left:67%!important;top:96%!important;--rock-size:40px!important}
+.belt-rock:nth-child(10){left:35%!important;top:95%!important;--rock-size:25px!important}
+.belt-rock:nth-child(11){left:13%!important;top:87%!important;--rock-size:44px!important}
+.belt-rock:nth-child(12){left:2%!important;top:68%!important;--rock-size:30px!important}
+.belt-rock:nth-child(13){left:7%!important;top:43%!important;--rock-size:23px!important}
+.belt-rock:nth-child(14){left:93%!important;top:48%!important;--rock-size:35px!important}
+@media(max-width:700px){
+ .asteroid-belt{width:118vw!important;height:92vh!important;opacity:.86}
+ .belt-rock:nth-child(1){--rock-size:22px!important}
+ .belt-rock:nth-child(3){--rock-size:29px!important}
+ .belt-rock:nth-child(5){--rock-size:26px!important}
+ .belt-rock:nth-child(7){--rock-size:32px!important}
+ .belt-rock:nth-child(9){--rock-size:28px!important}
+ .belt-rock:nth-child(11){--rock-size:30px!important}
+}
+
 </style>
 </head>
 <body>
