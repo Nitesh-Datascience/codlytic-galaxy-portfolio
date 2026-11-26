@@ -385,6 +385,21 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
  .belt-rock:nth-child(11){--rock-size:30px!important}
 }
 
+
+/* Smooth Sun surface: remove dark-looking center spots and hard corona rings */
+.sun{
+ background:radial-gradient(circle at 40% 38%,#fff5c9 0%,#ffe18a 22%,#ffb94e 48%,#f88939 76%,#e85c2b 100%)!important;
+ box-shadow:0 0 30px 10px #fff0b8,0 0 95px 34px #ff9b4588,0 0 175px 65px #a64fff44,0 0 260px 88px #ff9c4a33!important;
+}
+.sun:before,.sun:after{display:none!important;content:none!important}
+/* Two additional matching astronauts, kept around the outer edge */
+.astronaut-third{right:17%;top:8%;width:clamp(38px,4.4vw,58px);animation:astronautOuterFloat 17s ease-in-out infinite}
+.astronaut-fourth{left:3%;bottom:8%;width:clamp(34px,4vw,52px);animation:astronautOrbitFloat 19s ease-in-out infinite reverse}
+@media(max-width:700px){
+ .astronaut-third{right:7%;top:8%;width:34px}
+ .astronaut-fourth{left:1%;bottom:5%;width:31px}
+}
+
 </style>
 </head>
 <body>
@@ -410,6 +425,44 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
  </g>
  <path d="M54 45q10-3 13-10" stroke="#8be9ff" stroke-width="2" fill="none" opacity=".7"/>
 </svg><svg class="system-astronaut astronaut-outside" viewBox="0 0 80 96" role="img" aria-label="Astronaut floating outside the planetary orbit" xmlns="http://www.w3.org/2000/svg">
+ <g stroke="#a8c8dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M27 40 14 49q-5 4-2 10l8 8 8-5-5-8 12-5" fill="#dceaf2"/>
+  <path d="m53 40 13 7q6 4 3 10l-7 9-8-5 4-8-12-5" fill="#dceaf2"/>
+  <path d="m30 66-7 14q-2 5 3 7l8 2 7-17" fill="#dceaf2"/>
+  <path d="m49 66 8 14q3 5-2 7l-8 2-8-17" fill="#dceaf2"/>
+  <rect x="25" y="32" width="30" height="39" rx="12" fill="#f0f5f7"/>
+  <rect x="18" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <rect x="54" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <path d="M31 35q-2-17 9-20 12 1 10 20" fill="#f5f8fa"/>
+  <rect x="27" y="7" width="27" height="30" rx="13" fill="#e8f1f5"/>
+  <rect x="30" y="12" width="21" height="19" rx="9" fill="#173b58" stroke="#86dfff"/>
+  <path d="M34 17q6-5 12-1" fill="none" stroke="#b7ecff" stroke-width="2.5" opacity=".85"/>
+  <path d="M36 51h8m-4-4v8" stroke="#5aa9c9" stroke-width="2"/>
+  <rect x="20" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <rect x="55" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <path d="M28 83h10m5 0h10" stroke="#d6e6ee" stroke-width="4"/>
+ </g>
+ <path d="M54 45q10-3 13-10" stroke="#8be9ff" stroke-width="2" fill="none" opacity=".7"/>
+</svg><svg class="system-astronaut astronaut-third" viewBox="0 0 80 96" role="img" aria-label="Astronaut floating near the outer planetary orbit" xmlns="http://www.w3.org/2000/svg">
+ <g stroke="#a8c8dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M27 40 14 49q-5 4-2 10l8 8 8-5-5-8 12-5" fill="#dceaf2"/>
+  <path d="m53 40 13 7q6 4 3 10l-7 9-8-5 4-8-12-5" fill="#dceaf2"/>
+  <path d="m30 66-7 14q-2 5 3 7l8 2 7-17" fill="#dceaf2"/>
+  <path d="m49 66 8 14q3 5-2 7l-8 2-8-17" fill="#dceaf2"/>
+  <rect x="25" y="32" width="30" height="39" rx="12" fill="#f0f5f7"/>
+  <rect x="18" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <rect x="54" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <path d="M31 35q-2-17 9-20 12 1 10 20" fill="#f5f8fa"/>
+  <rect x="27" y="7" width="27" height="30" rx="13" fill="#e8f1f5"/>
+  <rect x="30" y="12" width="21" height="19" rx="9" fill="#173b58" stroke="#86dfff"/>
+  <path d="M34 17q6-5 12-1" fill="none" stroke="#b7ecff" stroke-width="2.5" opacity=".85"/>
+  <path d="M36 51h8m-4-4v8" stroke="#5aa9c9" stroke-width="2"/>
+  <rect x="20" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <rect x="55" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <path d="M28 83h10m5 0h10" stroke="#d6e6ee" stroke-width="4"/>
+ </g>
+ <path d="M54 45q10-3 13-10" stroke="#8be9ff" stroke-width="2" fill="none" opacity=".7"/>
+</svg><svg class="system-astronaut astronaut-fourth" viewBox="0 0 80 96" role="img" aria-label="Astronaut floating floating near the asteroid belt" xmlns="http://www.w3.org/2000/svg">
  <g stroke="#a8c8dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
   <path d="M27 40 14 49q-5 4-2 10l8 8 8-5-5-8 12-5" fill="#dceaf2"/>
   <path d="m53 40 13 7q6 4 3 10l-7 9-8-5 4-8-12-5" fill="#dceaf2"/>
