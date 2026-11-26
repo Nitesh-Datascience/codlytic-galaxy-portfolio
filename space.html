@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050713">
+<meta name="description" content="Explore the CODLYTIC galaxy — an interactive journey through space.">
+<title>GO TO SPACE | CODLYTIC</title>
+<style>
+:root{color-scheme:dark;--cyan:#91eaff;--violet:#b9a3ff;--muted:#aab8d0}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#03050d;color:#f5f8ff;font-family:Inter,system-ui,Segoe UI,sans-serif}
+body{min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% 48%,#121d3a 0%,#080d20 40%,#03050d 78%)}
+#stars{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+.topbar{position:relative;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:20px clamp(18px,5vw,64px)}
+.brand{font-size:.9rem;letter-spacing:.25em;font-weight:900;color:var(--cyan)}
+.back{color:#eaf8ff;text-decoration:none;border:1px solid #91eaff66;border-radius:999px;padding:9px 16px;background:#0a1830cc;font-size:.88rem}
+.back:hover{background:#153454}
+.intro{position:relative;z-index:2;text-align:center;padding:14px 18px 0}
+.kicker{font-size:.72rem;letter-spacing:.3em;color:var(--cyan)}
+h1{font-size:clamp(2.7rem,8vw,6.2rem);line-height:1;margin:12px 0;background:linear-gradient(100deg,#fff,var(--cyan),var(--violet));background-clip:text;color:transparent;letter-spacing:-.06em}
+.intro p{margin:0 auto;color:var(--muted);max-width:600px}
+.universe{position:relative;width:min(900px,100vw);height:min(660px,74vh);min-height:430px;margin:0 auto;display:grid;place-items:center;perspective:900px}
+.nebula{position:absolute;width:75%;height:65%;border-radius:50%;background:radial-gradient(ellipse,#6b56d544 0%,#277bb033 38%,transparent 72%);filter:blur(32px);animation:breathe 8s ease-in-out infinite alternate}
+.sun{position:absolute;width:clamp(78px,12vw,130px);aspect-ratio:1;border-radius:50%;z-index:2;background:radial-gradient(circle at 32% 28%,#fff8d9 0 8%,#ffe28c 18%,#ff9b4b 52%,#e84c35 78%,#8e235c);box-shadow:0 0 35px 12px #ffb45c99,0 0 100px 35px #ff7e5a66,0 0 180px 65px #a66aff44;animation:pulse 3s ease-in-out infinite alternate}
+.orbit{position:absolute;left:50%;top:50%;width:var(--d);height:calc(var(--d)*.55);border:1px solid #9beaff55;border-radius:50%;transform:translate(-50%,-50%) rotateX(12deg);animation:spin var(--speed) linear infinite}
+.orbit:after{content:"";position:absolute;left:100%;top:50%;width:var(--s);height:var(--s);border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 30% 25%,#fff,var(--c) 35%,#111a32 100%);box-shadow:inset -10px -7px 14px #0009,0 0 18px color-mix(in srgb,var(--c),transparent 20%)}
+.o1{--d:170px;--speed:9s;--s:17px;--c:#c6b9a2}
+.o2{--d:260px;--speed:14s;--s:25px;--c:#d9a66b}
+.o3{--d:350px;--speed:19s;--s:31px;--c:#36a9e1}
+.o4{--d:440px;--speed:25s;--s:26px;--c:#d56b58}
+.o5{--d:535px;--speed:32s;--s:52px;--c:#d8b184}
+.o6{--d:630px;--speed:40s;--s:43px;--c:#75cbd2}
+.saturn-ring{position:absolute;left:100%;top:50%;width:76px;height:28px;border:4px solid #e7c68d;border-left-color:#fff0c8;border-right-color:#a87849;border-radius:50%;transform:translate(-50%,-50%) rotate(-24deg);z-index:1;pointer-events:none}
+.planet{position:absolute;left:100%;top:50%;z-index:3;transform:translate(-50%,-50%);width:var(--s);height:var(--s);border-radius:50%;border:1px solid #ffffff55;background:radial-gradient(circle at 30% 25%,#fff,var(--c) 42%,#111a32 100%);box-shadow:inset -10px -7px 14px #0009,0 0 16px color-mix(in srgb,var(--c),transparent 15%);cursor:pointer;padding:0}
+.planet:focus-visible{outline:2px solid white;outline-offset:5px}
+.ship{position:absolute;z-index:4;left:15%;top:27%;font-size:clamp(24px,4vw,40px);filter:drop-shadow(0 0 12px #8be9ff);animation:cruise 12s ease-in-out infinite}
+.moon{position:absolute;right:16%;top:25%;width:35px;height:35px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#c5d4e9 48%,#66728d 100%);box-shadow:0 0 28px #c6d9ff66;animation:float 6s ease-in-out infinite}
+.info{position:relative;z-index:3;min-height:70px;text-align:center;padding:0 20px 24px}
+#planetInfo{display:inline-block;max-width:min(560px,90vw);padding:11px 18px;border:1px solid #8be9ff55;border-radius:16px;background:#081326d9;color:#dceeff}
+#planetInfo strong{color:var(--cyan)}
+.footer{text-align:center;color:#71819d;font-size:.78rem;padding:0 20px 24px}
+@keyframes spin{to{transform:translate(-50%,-50%) rotateX(12deg) rotateZ(360deg)}}
+@keyframes pulse{to{filter:brightness(1.2)}}
+@keyframes breathe{to{transform:scale(1.12);opacity:.65}}
+@keyframes cruise{0%,100%{transform:translate(0,0) rotate(-18deg)}50%{transform:translate(190px,90px) rotate(8deg)}}
+@keyframes float{50%{transform:translateY(-16px)}}
+@media(max-width:620px){.universe{height:500px;min-height:420px;width:100vw}.o1{--d:125px}.o2{--d:190px}.o3{--d:255px}.o4{--d:320px}.o5{--d:385px}.o6{--d:450px}.moon{right:9%}.ship{left:7%}@keyframes cruise{50%{transform:translate(95px,65px) rotate(8deg)}}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<header class="topbar"><a class="brand" href="/">CODLYTIC</a><a class="back" href="/">← Back to Portfolio</a></header>
+<main>
+<section class="intro"><div class="kicker">A LITTLE JOURNEY BEYOND THE STARS</div><h1>GO TO SPACE</h1><p>Explore the planets, follow their orbits and take a moment to enjoy the universe.</p></section>
+<section class="universe" aria-label="Animated solar system">
+<div class="nebula"></div><div class="sun" role="img" aria-label="Glowing sun"></div><div class="moon" aria-label="Moon"></div><div class="ship" aria-label="Spaceship">🚀</div>
+<div class="orbit o1"><button class="planet" data-name="Mercury" data-copy="The smallest planet, racing close to the Sun." aria-label="Mercury"></button></div>
+<div class="orbit o2"><button class="planet" data-name="Venus" data-copy="A bright world wrapped in thick clouds." aria-label="Venus"></button></div>
+<div class="orbit o3"><button class="planet" data-name="Earth" data-copy="Our home — the blue planet full of life." aria-label="Earth"></button></div>
+<div class="orbit o4"><button class="planet" data-name="Mars" data-copy="The red planet, with giant volcanoes and ancient valleys." aria-label="Mars"></button></div>
+<div class="orbit o5"><button class="planet" data-name="Jupiter" data-copy="The giant planet, famous for its Great Red Spot." aria-label="Jupiter"></button></div>
+<div class="orbit o6"><span class="saturn-ring"></span><button class="planet" data-name="Saturn" data-copy="A gas giant surrounded by spectacular rings." aria-label="Saturn"></button></div>
+</section>
+<div class="info"><div id="planetInfo" aria-live="polite">✦ Select any planet to discover a little about it.</div></div>
+</main>
+<footer class="footer">CODLYTIC · KEEP EXPLORING · KEEP CREATING</footer>
+<script>
+const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');let stars=[],w=0,h=0,t=0;
+function resize(){const d=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;canvas.width=w*d;canvas.height=h*d;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(d,0,0,d,0,0);stars=Array.from({length:Math.min(260,Math.floor(w*h/3600))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+.2,p:Math.random()*6.28}))}
+function draw(){ctx.clearRect(0,0,w,h);t+=.018;for(const s of stars){ctx.globalAlpha=.35+.55*(.5+.5*Math.sin(t+s.p));ctx.fillStyle='#e9f8ff';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.283);ctx.fill()}ctx.globalAlpha=1;requestAnimationFrame(draw)}
+addEventListener('resize',resize);resize();draw();
+document.querySelectorAll('.planet').forEach(p=>p.addEventListener('click',()=>{document.getElementById('planetInfo').innerHTML='<strong>'+p.dataset.name+'</strong> — '+p.dataset.copy;}));
+</script>
+</body>
+</html>
