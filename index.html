@@ -338,30 +338,6 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 }
 
 
-/* Little scientists perched on the About cards */
-.about-detail{position:relative;overflow:visible}
-.card-scientist{
- position:absolute;z-index:4;right:18px;top:-35px;display:block;
- font-size:38px;line-height:1;transform:rotate(-7deg);
- filter:drop-shadow(0 5px 7px #0009) drop-shadow(0 0 8px #82dfff66);
- transform-origin:50% 100%;animation:scientistPerch 5s ease-in-out infinite;
-}
-.card-scientist:before{
- content:"";position:absolute;z-index:-1;left:1px;right:1px;bottom:-5px;height:5px;
- border-radius:5px;background:linear-gradient(90deg,#52738e,#b7d9e9,#52738e);
- box-shadow:0 3px 7px #0008;
-}
-.card-scientist:after{
- content:"";position:absolute;left:12px;bottom:-12px;width:15px;height:10px;
- border-left:3px solid #b9d8eb;border-right:3px solid #b9d8eb;
- transform:skewX(-12deg);opacity:.9;
-}
-.scientist-b{right:22px;animation-delay:-1.2s;transform:rotate(6deg)}
-.scientist-c{right:15px;animation-delay:-2.1s;transform:rotate(-4deg)}
-.scientist-d{right:24px;animation-delay:-3s;transform:rotate(5deg)}
-@keyframes scientistPerch{0%,100%{translate:0 0}50%{translate:0 -5px}}
-@media(max-width:700px){.card-scientist{font-size:31px;top:-28px;right:13px}.about-detail{margin-top:9px}}
-@media(prefers-reduced-motion:reduce){.card-scientist{animation:none!important}}
 </style>
 </head>
 <body>
@@ -401,8 +377,8 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
    </div>
   </div>
   <div class="about-detail-grid">
-   <article class="about-detail journey-card"><span class="card-scientist scientist-a" aria-hidden="true">🧑‍🔬</span><div class="about-card-top"><span class="about-card-icon">✧</span><span class="about-card-label">THE JOURNEY</span></div><h4>Learning by building.</h4><p>Growing through hands-on practice, real projects and continuous learning.</p><div class="about-experience"><span class="about-experience-dot"></span><div><strong>Zidio Development</strong><small>Data Science &amp; Analytics · 4-month internship</small></div></div></article>
-   <article class="about-detail"><span class="card-scientist scientist-b" aria-hidden="true">👩‍🔬</span><div class="about-card-top"><span class="about-card-icon">⌘</span><span class="about-card-label">MY TOOLKIT</span></div><h4>Tools I work with.</h4><div class="about-skill-list">
+   <article class="about-detail journey-card"><div class="about-card-top"><span class="about-card-icon">✧</span><span class="about-card-label">THE JOURNEY</span></div><h4>Learning by building.</h4><p>Growing through hands-on practice, real projects and continuous learning.</p><div class="about-experience"><span class="about-experience-dot"></span><div><strong>Zidio Development</strong><small>Data Science &amp; Analytics · 4-month internship</small></div></div></article>
+   <article class="about-detail"><div class="about-card-top"><span class="about-card-icon">⌘</span><span class="about-card-label">MY TOOLKIT</span></div><h4>Tools I work with.</h4><div class="about-skill-list">
 <span><i class="fa-brands fa-python" aria-hidden="true"></i>Python</span>
 <span><i class="fa-solid fa-database" aria-hidden="true"></i>SQL</span>
 <span><i class="fa-solid fa-file-excel" aria-hidden="true"></i>Excel</span>
@@ -410,8 +386,8 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 <span><i class="fa-solid fa-brain" aria-hidden="true"></i>Machine Learning</span>
 <span><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>AI</span>
 </div></article>
-   <article class="about-detail"><span class="card-scientist scientist-c" aria-hidden="true">👨‍🔬</span><div class="about-card-top"><span class="about-card-icon">↗</span><span class="about-card-label">SELECTED WORK</span></div><h4>Ideas into projects.</h4><p>Exploring data, building useful tools and bringing ideas to life.</p><div class="about-project-links"><a href="https://github.com/Nitesh-Datascience/EduPro_Project" target="_blank" rel="noreferrer"><span>EduPro Project</span><b>↗</b></a><a href="https://github.com/Nitesh-Datascience/codlytic-galaxy-portfolio" target="_blank" rel="noreferrer"><span>Galaxy Portfolio</span><b>↗</b></a></div></article>
-   <article class="about-detail vision-card"><span class="card-scientist scientist-d" aria-hidden="true">🧑‍🔬</span><div class="about-card-top"><span class="about-card-icon">◎</span><span class="about-card-label">THE VISION</span></div><h4>Make technology meaningful.</h4><p>Use data and AI to create thoughtful solutions that make a real difference.</p><div class="about-vision-line"><span></span><small>STAY CURIOUS · KEEP CREATING</small></div></article>
+   <article class="about-detail"><div class="about-card-top"><span class="about-card-icon">↗</span><span class="about-card-label">SELECTED WORK</span></div><h4>Ideas into projects.</h4><p>Exploring data, building useful tools and bringing ideas to life.</p><div class="about-project-links"><a href="https://github.com/Nitesh-Datascience/EduPro_Project" target="_blank" rel="noreferrer"><span>EduPro Project</span><b>↗</b></a><a href="https://github.com/Nitesh-Datascience/codlytic-galaxy-portfolio" target="_blank" rel="noreferrer"><span>Galaxy Portfolio</span><b>↗</b></a></div></article>
+   <article class="about-detail vision-card"><div class="about-card-top"><span class="about-card-icon">◎</span><span class="about-card-label">THE VISION</span></div><h4>Make technology meaningful.</h4><p>Use data and AI to create thoughtful solutions that make a real difference.</p><div class="about-vision-line"><span></span><small>STAY CURIOUS · KEEP CREATING</small></div></article>
   </div>
  </div>
 </section>
