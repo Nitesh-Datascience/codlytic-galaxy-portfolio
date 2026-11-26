@@ -199,6 +199,31 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 .about-detail-grid{gap:10px;margin-top:10px}
 .about-detail{padding:17px}
 @media(max-width:700px){.about-section{padding-top:38px;padding-bottom:40px}.about-intro{padding:18px}.about-avatar-wrap{transform:scale(.92)}}
+
+/* Animated mini-galaxy surrounding the profile photo */
+.about-avatar-wrap{isolation:isolate;overflow:visible}
+.about-avatar-wrap:before{
+ content:"";position:absolute;inset:-8px;border-radius:50%;z-index:0;
+ background:conic-gradient(from 0deg,transparent 0 9%,#8be9ff 14%,#8be9ff22 23%,transparent 31% 43%,#b7a0ff 51%,#b7a0ff22 60%,transparent 69% 82%,#5ce4ee 91%,transparent 100%);
+ -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1px));
+ mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1px));
+ filter:drop-shadow(0 0 7px #6bdfff88);animation:profileGalaxySpin 18s linear infinite;
+}
+.about-avatar-wrap:after{
+ content:"";position:absolute;inset:-22px;border-radius:50%;z-index:-1;pointer-events:none;
+ background:radial-gradient(ellipse at 25% 35%,#35cfff44,transparent 38%),radial-gradient(ellipse at 78% 68%,#9b69ff55,transparent 42%),radial-gradient(ellipse at 50% 50%,#4b9fff22,transparent 68%);
+ filter:blur(12px);animation:profileNebulaPulse 7s ease-in-out infinite alternate;
+}
+.about-avatar{position:relative;z-index:2}
+.about-orbit{z-index:1;pointer-events:none}
+.about-orbit.orbit-one{animation:profileOrbitOne 22s linear infinite}
+.about-orbit.orbit-two{animation:profileOrbitTwo 29s linear infinite reverse}
+@keyframes profileGalaxySpin{to{transform:rotate(360deg)}}
+@keyframes profileNebulaPulse{from{opacity:.55;transform:scale(.94) rotate(-8deg)}to{opacity:1;transform:scale(1.08) rotate(10deg)}}
+@keyframes profileOrbitOne{to{transform:rotate(336deg) scaleY(.72)}}
+@keyframes profileOrbitTwo{to{transform:rotate(415deg) scaleY(.78)}}
+@media(prefers-reduced-motion:reduce){.about-avatar-wrap:before,.about-avatar-wrap:after,.about-orbit.orbit-one,.about-orbit.orbit-two{animation:none!important}}
+
 </style>
 </head>
 <body>
