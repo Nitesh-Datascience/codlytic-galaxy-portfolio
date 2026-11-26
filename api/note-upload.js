@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 const URL = process.env.SUPABASE_URL;
 const KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
 function cookie(req,name){const v=(req.headers.cookie||"").split(";").map(x=>x.trim()).find(x=>x.startsWith(name+"="));return v?decodeURIComponent(v.slice(name.length+1)):""}
@@ -16,7 +17,7 @@ export default async function handler(req,res){
   if(!/\\.pdf$/i.test(name)||!encoded)return send(res,400,{error:"Choose a PDF file."});
   const bytes=Buffer.from(encoded,"base64");
   if(bytes.length<5||bytes.length>3145728||bytes.subarray(0,5).toString()!=="%PDF-")return send(res,400,{error:"PDF must be valid and no larger than 3 MB."});
-  const path=crypto.randomUUID()+".pdf";
+  const path=randomUUID()+".pdf";
   const uploaded=await fetch(URL+"/storage/v1/object/codlytic-note-pdfs/"+path,{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+token,"Content-Type":"application/pdf","x-upsert":"false"},body:bytes});
   if(!uploaded.ok){const err=await uploaded.json().catch(()=>({}));return send(res,uploaded.status,{error:err.message||"PDF upload failed."})}
   return send(res,201,{path,name,size:bytes.length});
