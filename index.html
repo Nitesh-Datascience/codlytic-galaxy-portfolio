@@ -259,6 +259,36 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 @keyframes aboutBackdropBreath{from{opacity:.48;transform:translate(-52%,-48%) scale(.94)}to{opacity:.95;transform:translate(-48%,-52%) scale(1.08)}}
 @media(prefers-reduced-motion:reduce){.about-section .about-shell:after{animation:none!important}}
 
+
+/* Floating astronaut, drifting space rocks and zooming twinkle stars */
+.about-space-scene{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.space-astronaut{
+ position:absolute;right:5.5%;top:170px;display:block;font-size:clamp(38px,5vw,62px);
+ filter:drop-shadow(0 0 12px #8be9ff88);opacity:.88;
+ animation:astronautFloat 8s ease-in-out infinite,astronautTurn 18s ease-in-out infinite;
+}
+.space-rock{position:absolute;width:9px;height:9px;border-radius:38% 62% 48% 52%;
+ background:linear-gradient(135deg,#d8e4f4,#758ba8 58%,#394b69);
+ box-shadow:inset -2px -2px 3px #14233d,0 0 10px #9adfff55;
+}
+.space-rock:after{content:"";position:absolute;width:42px;height:2px;right:5px;top:3px;transform:rotate(-24deg);transform-origin:right center;background:linear-gradient(90deg,transparent,#a7eaff99);filter:blur(.6px)}
+.rock-one{top:26%;left:13%;animation:rockDriftOne 13s linear infinite}
+.rock-two{top:66%;right:15%;width:6px;height:6px;animation:rockDriftTwo 17s linear infinite}
+.rock-three{top:48%;left:78%;width:5px;height:5px;animation:rockDriftThree 20s linear infinite}
+.space-star{position:absolute;width:3px;height:3px;border-radius:50%;background:#e7f8ff;box-shadow:0 0 7px 2px #8be9ff88;animation:starZoom 4.5s ease-in-out infinite}
+.star-a{left:9%;top:44%;animation-delay:-1s}.star-b{left:27%;top:18%;animation-delay:-2.7s}
+.star-c{left:43%;top:78%;animation-delay:-.6s}.star-d{left:62%;top:31%;animation-delay:-3.4s}
+.star-e{left:84%;top:76%;animation-delay:-1.8s}.star-f{left:93%;top:39%;animation-delay:-2.2s}
+.star-g{left:72%;top:12%;animation-delay:-.3s}.star-h{left:18%;top:86%;animation-delay:-3s}
+@keyframes astronautFloat{0%,100%{transform:translate3d(0,0,0) rotate(-7deg)}50%{transform:translate3d(-15px,-22px,0) rotate(7deg)}}
+@keyframes astronautTurn{0%,100%{filter:drop-shadow(0 0 9px #8be9ff66)}50%{filter:drop-shadow(0 0 17px #b79affaa)}}
+@keyframes rockDriftOne{0%{transform:translate3d(0,0,0) rotate(0)}100%{transform:translate3d(150px,75px,0) rotate(260deg)}}
+@keyframes rockDriftTwo{0%{transform:translate3d(0,0,0) rotate(0)}100%{transform:translate3d(-125px,-85px,0) rotate(300deg)}}
+@keyframes rockDriftThree{0%{transform:translate3d(0,0,0) rotate(0)}100%{transform:translate3d(-95px,115px,0) rotate(220deg)}}
+@keyframes starZoom{0%,100%{opacity:.25;transform:scale(.55)}50%{opacity:1;transform:scale(2.8)}}
+@media(max-width:700px){.space-astronaut{right:4%;top:112px;font-size:36px;opacity:.48}.rock-three{left:88%}.space-rock{opacity:.75}}
+@media(prefers-reduced-motion:reduce){.space-astronaut,.space-rock,.space-star{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -266,6 +296,11 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About</a><a href="#notes">Notes</a><a href="#contact">Contact</a></div></nav>
 <header class="hero"><div class="hero-inner"><div class="eyebrow">A PERSONAL DIGITAL SPACE</div><h1>CODLYTIC</h1><p>Curiosity, ideas and technology — a small corner of the internet where I explore, experiment and turn what I learn into something meaningful.</p><div class="actions"><a class="btn" href="#about">Discover my space</a><a class="btn ghost" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub ↗</a></div></div><div class="system" aria-label="Animated solar system with the Sun and eight orbiting planets"><div class="sun"></div><div class="orbit o1"><button class="planet" type="button" aria-label="Mercury" aria-pressed="false"><span class="planet-label">Mercury</span></button></div><div class="orbit o2"><button class="planet" type="button" aria-label="Venus" aria-pressed="false"><span class="planet-label">Venus</span></button></div><div class="orbit o3"><button class="planet" type="button" aria-label="Earth" aria-pressed="false"><span class="planet-label">Earth</span></button></div><div class="orbit o4"><button class="planet" type="button" aria-label="Mars" aria-pressed="false"><span class="planet-label">Mars</span></button></div><div class="orbit o5"><button class="planet" type="button" aria-label="Jupiter" aria-pressed="false"><span class="planet-label">Jupiter</span></button></div><div class="orbit o6"><button class="planet" type="button" aria-label="Saturn" aria-pressed="false"><span class="planet-label">Saturn</span></button><span class="saturn-ring" aria-hidden="true"></span></div><div class="orbit o7"><button class="planet" type="button" aria-label="Uranus" aria-pressed="false"><span class="planet-label">Uranus</span></button></div><div class="orbit o8"><button class="planet" type="button" aria-label="Neptune" aria-pressed="false"><span class="planet-label">Neptune</span></button></div></div></header>
 <section id="about" class="about-section">
+ <div class="about-space-scene" aria-hidden="true">
+  <span class="space-astronaut">🧑‍🚀</span>
+  <span class="space-rock rock-one"></span><span class="space-rock rock-two"></span><span class="space-rock rock-three"></span>
+  <span class="space-star star-a"></span><span class="space-star star-b"></span><span class="space-star star-c"></span><span class="space-star star-d"></span><span class="space-star star-e"></span><span class="space-star star-f"></span><span class="space-star star-g"></span><span class="space-star star-h"></span>
+ </div>
  <div class="section-head"><div class="eyebrow">THE PERSON BEHIND CODLYTIC</div><h2>A little about me</h2></div>
  <div class="about-shell">
   <div class="about-intro">
