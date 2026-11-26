@@ -1,6 +1,6 @@
 import { next } from "@vercel/functions";
 
-const URL = process.env.SUPABASE_URL;
+const SUPABASE_URL = process.env.SUPABASE_URL;
 const KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
 
 function readCookie(request, name) {
@@ -20,15 +20,15 @@ export default async function middleware(request) {
   const headers = new Headers();
   let authenticated = false;
 
-  if (URL && KEY && access) {
+  if (SUPABASE_URL && KEY && access) {
     try {
-      const check = await fetch(URL + "/auth/v1/user", { headers: { apikey: KEY, Authorization: "Bearer " + access } });
+      const check = await fetch(SUPABASE_URL + "/auth/v1/user", { headers: { apikey: KEY, Authorization: "Bearer " + access } });
       authenticated = check.ok;
     } catch {}
   }
-  if (!authenticated && URL && KEY && refresh) {
+  if (!authenticated && SUPABASE_URL && KEY && refresh) {
     try {
-      const renewed = await fetch(URL + "/auth/v1/token?grant_type=refresh_token", {
+      const renewed = await fetch(SUPABASE_URL + "/auth/v1/token?grant_type=refresh_token", {
         method: "POST",
         headers: { apikey: KEY, "Content-Type": "application/json" },
         body: JSON.stringify({ refresh_token: refresh })
