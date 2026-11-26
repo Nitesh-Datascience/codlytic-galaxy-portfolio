@@ -1,6 +1,20 @@
 const URL=process.env.SUPABASE_URL,KEY=process.env.SUPABASE_PUBLISHABLE_KEY;
 function send(res,s,d){res.statusCode=s;res.setHeader("Content-Type","application/json");res.setHeader("Cache-Control","no-store");res.end(JSON.stringify(d))}
 export default async function handler(req,res){
+ if(req.method==="GET"){
+  try{
+   const token=(req.headers.cookie||"").split(";").map(x=>x.trim()).find(x=>x.startsWith("codlytic_access="));
+   const access=token?decodeURIComponent(token.slice("codlytic_access=".length)):"";
+   if(!access)return send(res,401,{error:"Sign in required."});
+   const auth=await fetch(URL+"/auth/v1/user",{headers:{apikey:KEY,Authorization:"Bearer "+access}});
+   if(!auth.ok)return send(res,401,{error:"Sign in again."});
+   const a=await fetch(URL+"/rest/v1/rpc/is_admin",{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+access,"Content-Type":"application/json"},body:"{}"});
+   if(!a.ok||await a.json()!==true)return send(res,403,{error:"Admin access required."});
+   const r=await fetch(URL+"/rest/v1/codlytic_note_feedback?select=id,note_id,feedback_type,message,created_at,codlytic_notes(title)&order=created_at.desc",{headers:{apikey:KEY,Authorization:"Bearer "+access}});
+   const rows=await r.json();if(!r.ok)return send(res,r.status,{error:"Could not load feedback."});
+   return send(res,200,{feedback:rows});
+  }catch(e){return send(res,500,{error:e.message})}
+ }
  if(req.method!=="POST")return send(res,405,{error:"Method not allowed."});
  if(req.headers.origin&&req.headers.host&&new URL(req.headers.origin).host!==req.headers.host)return send(res,403,{error:"Invalid origin."});
  try{
