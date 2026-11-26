@@ -37,7 +37,7 @@ export default async function middleware(request) {
         const session = await renewed.json();
         access = session.access_token;
         refresh = session.refresh_token;
-        const userCheck = await fetch(URL + "/auth/v1/user", { headers: { apikey: KEY, Authorization: "Bearer " + access } });
+        const userCheck = await fetch(SUPABASE_URL + "/auth/v1/user", { headers: { apikey: KEY, Authorization: "Bearer " + access } });
         authenticated = userCheck.ok;
         if (authenticated) {
           headers.append("Set-Cookie", cookieHeader("codlytic_access", access, session.expires_in || 3600));
