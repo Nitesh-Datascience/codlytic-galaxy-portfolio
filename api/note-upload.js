@@ -12,9 +12,9 @@ export default async function handler(req,res){
   const admin=await fetch(URL+"/rest/v1/rpc/is_admin",{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+token,"Content-Type":"application/json"},body:"{}"});
   if(!admin.ok||await admin.json()!==true)return send(res,403,{error:"Notes editor access is not enabled for this account."});
   const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):(req.body||{});
-  const name=String(body.name||"note.pdf").replace(/[\\/\\\\]/g,"_").slice(0,160);
-  const encoded=String(body.data||"").replace(/^data:application\\/pdf;base64,/i,"");
-  if(!/\\.pdf$/i.test(name)||!encoded)return send(res,400,{error:"Choose a PDF file."});
+  const name=String(body.name||"note.pdf").replace(/[\/\\]/g,"_").slice(0,160);
+  const encoded=String(body.data||"").replace(/^data:application\/pdf;base64,/i,"");
+  if(!/\.pdf$/i.test(name)||!encoded)return send(res,400,{error:"Choose a PDF file."});
   const bytes=Buffer.from(encoded,"base64");
   if(bytes.length<5||bytes.length>3145728||bytes.subarray(0,5).toString()!=="%PDF-")return send(res,400,{error:"PDF must be valid and no larger than 3 MB."});
   const path=randomUUID()+".pdf";
