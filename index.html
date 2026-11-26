@@ -338,15 +338,82 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 }
 
 
+
+/* Clean, suit-style astronauts drifting around the solar system */
+.system-astronaut,.space-astronaut{position:absolute;display:block;width:clamp(42px,5vw,66px);height:auto;overflow:visible;z-index:5;pointer-events:none;filter:drop-shadow(0 5px 9px #0009) drop-shadow(0 0 12px #8be9ff66)}
+.astronaut-ring{left:13%;top:16%;animation:astronautOrbitFloat 12s ease-in-out infinite}
+.astronaut-outside{right:5%;bottom:13%;width:clamp(36px,4vw,54px);animation:astronautOuterFloat 16s ease-in-out infinite}
+.space-astronaut{right:5.5%;top:170px;width:clamp(42px,5vw,62px);opacity:.94;animation:astronautOuterFloat 13s ease-in-out infinite}
+@keyframes astronautOrbitFloat{0%,100%{transform:translate3d(0,0,0) rotate(-16deg)}50%{transform:translate3d(22px,-28px,0) rotate(13deg)}}
+@keyframes astronautOuterFloat{0%,100%{transform:translate3d(0,0,0) rotate(12deg)}50%{transform:translate3d(-24px,-30px,0) rotate(-13deg)}}
+@media(max-width:700px){.astronaut-ring{left:5%;top:19%;width:40px}.astronaut-outside{right:1%;bottom:9%;width:35px}.space-astronaut{right:3%;top:112px;width:42px;opacity:.72}}
+@media(prefers-reduced-motion:reduce){.system-astronaut,.space-astronaut{animation:none!important}}
 </style>
 </head>
 <body>
 <canvas id="stars" aria-hidden="true"></canvas>
 <nav><a class="brand" href="#">CODLYTIC</a><div class="links"><a href="#about">About</a><a href="#notes">Notes</a><a href="#contact">Contact</a></div></nav>
-<header class="hero"><div class="hero-inner"><div class="eyebrow">A PERSONAL DIGITAL SPACE</div><h1>CODLYTIC</h1><p>Curiosity, ideas and technology — a small corner of the internet where I explore, experiment and turn what I learn into something meaningful.</p><div class="actions"><a class="btn" href="#about">Discover my space</a><a class="btn ghost" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub ↗</a></div></div><div class="system" aria-label="Animated solar system with the Sun and eight orbiting planets"><div class="sun"></div><div class="orbit o1"><button class="planet" type="button" aria-label="Mercury" aria-pressed="false"><span class="planet-label">Mercury</span></button></div><div class="orbit o2"><button class="planet" type="button" aria-label="Venus" aria-pressed="false"><span class="planet-label">Venus</span></button></div><div class="orbit o3"><button class="planet" type="button" aria-label="Earth" aria-pressed="false"><span class="planet-label">Earth</span></button></div><div class="orbit o4"><button class="planet" type="button" aria-label="Mars" aria-pressed="false"><span class="planet-label">Mars</span></button></div><div class="orbit o5"><button class="planet" type="button" aria-label="Jupiter" aria-pressed="false"><span class="planet-label">Jupiter</span></button></div><div class="orbit o6"><button class="planet" type="button" aria-label="Saturn" aria-pressed="false"><span class="planet-label">Saturn</span></button><span class="saturn-ring" aria-hidden="true"></span></div><div class="orbit o7"><button class="planet" type="button" aria-label="Uranus" aria-pressed="false"><span class="planet-label">Uranus</span></button></div><div class="orbit o8"><button class="planet" type="button" aria-label="Neptune" aria-pressed="false"><span class="planet-label">Neptune</span></button></div><div class="asteroid-belt" aria-hidden="true"><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span></div></div></header>
+<header class="hero"><div class="hero-inner"><div class="eyebrow">A PERSONAL DIGITAL SPACE</div><h1>CODLYTIC</h1><p>Curiosity, ideas and technology — a small corner of the internet where I explore, experiment and turn what I learn into something meaningful.</p><div class="actions"><a class="btn" href="#about">Discover my space</a><a class="btn ghost" href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub ↗</a></div></div><div class="system" aria-label="Animated solar system with the Sun and eight orbiting planets"><div class="sun"></div><svg class="system-astronaut astronaut-ring" viewBox="0 0 80 96" role="img" aria-label="Astronaut floating beside the planetary orbit" xmlns="http://www.w3.org/2000/svg">
+ <g stroke="#a8c8dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M27 40 14 49q-5 4-2 10l8 8 8-5-5-8 12-5" fill="#dceaf2"/>
+  <path d="m53 40 13 7q6 4 3 10l-7 9-8-5 4-8-12-5" fill="#dceaf2"/>
+  <path d="m30 66-7 14q-2 5 3 7l8 2 7-17" fill="#dceaf2"/>
+  <path d="m49 66 8 14q3 5-2 7l-8 2-8-17" fill="#dceaf2"/>
+  <rect x="25" y="32" width="30" height="39" rx="12" fill="#f0f5f7"/>
+  <rect x="18" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <rect x="54" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <path d="M31 35q-2-17 9-20 12 1 10 20" fill="#f5f8fa"/>
+  <rect x="27" y="7" width="27" height="30" rx="13" fill="#e8f1f5"/>
+  <rect x="30" y="12" width="21" height="19" rx="9" fill="#173b58" stroke="#86dfff"/>
+  <path d="M34 17q6-5 12-1" fill="none" stroke="#b7ecff" stroke-width="2.5" opacity=".85"/>
+  <path d="M36 51h8m-4-4v8" stroke="#5aa9c9" stroke-width="2"/>
+  <rect x="20" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <rect x="55" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <path d="M28 83h10m5 0h10" stroke="#d6e6ee" stroke-width="4"/>
+ </g>
+ <path d="M54 45q10-3 13-10" stroke="#8be9ff" stroke-width="2" fill="none" opacity=".7"/>
+</svg><svg class="system-astronaut astronaut-outside" viewBox="0 0 80 96" role="img" aria-label="Astronaut floating outside the planetary orbit" xmlns="http://www.w3.org/2000/svg">
+ <g stroke="#a8c8dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M27 40 14 49q-5 4-2 10l8 8 8-5-5-8 12-5" fill="#dceaf2"/>
+  <path d="m53 40 13 7q6 4 3 10l-7 9-8-5 4-8-12-5" fill="#dceaf2"/>
+  <path d="m30 66-7 14q-2 5 3 7l8 2 7-17" fill="#dceaf2"/>
+  <path d="m49 66 8 14q3 5-2 7l-8 2-8-17" fill="#dceaf2"/>
+  <rect x="25" y="32" width="30" height="39" rx="12" fill="#f0f5f7"/>
+  <rect x="18" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <rect x="54" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <path d="M31 35q-2-17 9-20 12 1 10 20" fill="#f5f8fa"/>
+  <rect x="27" y="7" width="27" height="30" rx="13" fill="#e8f1f5"/>
+  <rect x="30" y="12" width="21" height="19" rx="9" fill="#173b58" stroke="#86dfff"/>
+  <path d="M34 17q6-5 12-1" fill="none" stroke="#b7ecff" stroke-width="2.5" opacity=".85"/>
+  <path d="M36 51h8m-4-4v8" stroke="#5aa9c9" stroke-width="2"/>
+  <rect x="20" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <rect x="55" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <path d="M28 83h10m5 0h10" stroke="#d6e6ee" stroke-width="4"/>
+ </g>
+ <path d="M54 45q10-3 13-10" stroke="#8be9ff" stroke-width="2" fill="none" opacity=".7"/>
+</svg><div class="orbit o1"><button class="planet" type="button" aria-label="Mercury" aria-pressed="false"><span class="planet-label">Mercury</span></button></div><div class="orbit o2"><button class="planet" type="button" aria-label="Venus" aria-pressed="false"><span class="planet-label">Venus</span></button></div><div class="orbit o3"><button class="planet" type="button" aria-label="Earth" aria-pressed="false"><span class="planet-label">Earth</span></button></div><div class="orbit o4"><button class="planet" type="button" aria-label="Mars" aria-pressed="false"><span class="planet-label">Mars</span></button></div><div class="orbit o5"><button class="planet" type="button" aria-label="Jupiter" aria-pressed="false"><span class="planet-label">Jupiter</span></button></div><div class="orbit o6"><button class="planet" type="button" aria-label="Saturn" aria-pressed="false"><span class="planet-label">Saturn</span></button><span class="saturn-ring" aria-hidden="true"></span></div><div class="orbit o7"><button class="planet" type="button" aria-label="Uranus" aria-pressed="false"><span class="planet-label">Uranus</span></button></div><div class="orbit o8"><button class="planet" type="button" aria-label="Neptune" aria-pressed="false"><span class="planet-label">Neptune</span></button></div><div class="asteroid-belt" aria-hidden="true"><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span><span class="belt-rock"></span></div></div></header>
 <section id="about" class="about-section">
  <div class="about-space-scene" aria-hidden="true">
-  <span class="space-astronaut">🧑‍🚀</span>
+  <svg class="space-astronaut about-astronaut" viewBox="0 0 80 96" role="img" aria-label="Astronaut floating in the About section" xmlns="http://www.w3.org/2000/svg">
+ <g stroke="#a8c8dc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M27 40 14 49q-5 4-2 10l8 8 8-5-5-8 12-5" fill="#dceaf2"/>
+  <path d="m53 40 13 7q6 4 3 10l-7 9-8-5 4-8-12-5" fill="#dceaf2"/>
+  <path d="m30 66-7 14q-2 5 3 7l8 2 7-17" fill="#dceaf2"/>
+  <path d="m49 66 8 14q3 5-2 7l-8 2-8-17" fill="#dceaf2"/>
+  <rect x="25" y="32" width="30" height="39" rx="12" fill="#f0f5f7"/>
+  <rect x="18" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <rect x="54" y="40" width="8" height="23" rx="4" fill="#c9dce7"/>
+  <path d="M31 35q-2-17 9-20 12 1 10 20" fill="#f5f8fa"/>
+  <rect x="27" y="7" width="27" height="30" rx="13" fill="#e8f1f5"/>
+  <rect x="30" y="12" width="21" height="19" rx="9" fill="#173b58" stroke="#86dfff"/>
+  <path d="M34 17q6-5 12-1" fill="none" stroke="#b7ecff" stroke-width="2.5" opacity=".85"/>
+  <path d="M36 51h8m-4-4v8" stroke="#5aa9c9" stroke-width="2"/>
+  <rect x="20" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <rect x="55" y="43" width="5" height="17" rx="2" fill="#8daebe"/>
+  <path d="M28 83h10m5 0h10" stroke="#d6e6ee" stroke-width="4"/>
+ </g>
+ <path d="M54 45q10-3 13-10" stroke="#8be9ff" stroke-width="2" fill="none" opacity=".7"/>
+</svg>
   <span class="space-rock rock-one"></span><span class="space-rock rock-two"></span><span class="space-rock rock-three"></span>
   <span class="space-asteroid about-asteroid-one"></span><span class="space-asteroid about-asteroid-two"></span><span class="space-asteroid about-asteroid-three"></span><span class="space-asteroid about-asteroid-four"></span>
   <span class="space-star star-a"></span><span class="space-star star-b"></span><span class="space-star star-c"></span><span class="space-star star-d"></span><span class="space-star star-e"></span><span class="space-star star-f"></span><span class="space-star star-g"></span><span class="space-star star-h"></span>
