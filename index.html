@@ -5,6 +5,7 @@
 <meta name="theme-color" content="#070912">
 <meta name="description" content="CODLYTIC — Nitesh Kumar's personal digital space for ideas, experiments and technology.">
 <title>CODLYTIC — A Personal Digital Space</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <style>
 :root{color-scheme:dark;--bg:#070912;--panel:#101729;--line:#26344d;--cyan:#8be9ff;--violet:#b7a0ff;--muted:#aab6ce}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#000;color:#f4f7ff;font-family:Inter,system-ui,Segoe UI,sans-serif;line-height:1.65;overflow-x:hidden}
@@ -120,9 +121,13 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 .about-intro-copy p,.about-detail p{color:var(--muted);margin:0;max-width:660px;font-size:.94rem}
 .about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .about-tags span,.about-skill-list span{font-size:.75rem;color:#dff8ff;border:1px solid #75dfff42;background:#12273a;padding:6px 11px;border-radius:999px}
-.about-social{display:flex;flex-wrap:wrap;gap:18px;margin-top:20px}
-.about-social a{font-size:.82rem;color:var(--cyan);font-weight:700}
-.about-social a:hover,.about-project-links a:hover{color:#fff}
+.about-social{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.about-social a{width:42px;height:42px;display:grid;place-items:center;border:1px solid #8be9ff55;border-radius:13px;background:#102238;color:var(--cyan);font-size:1.12rem;transition:transform .2s,border-color .2s,background .2s}
+.about-social a:hover{transform:translateY(-3px);border-color:var(--cyan);background:#173852;color:#fff}
+.about-project-links a:hover{color:#fff}
+.about-skill-list span{display:inline-flex;align-items:center;gap:8px}
+.about-skill-list i{font-size:1rem;color:var(--cyan)}
+.icon-links a:focus-visible,.socials a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 .about-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
 .about-detail{padding:22px;border:1px solid #293e5b;border-radius:20px;background:linear-gradient(145deg,#101a2bdd,#090f1ddd);transition:transform .22s,border-color .22s,box-shadow .22s}
 .about-detail:hover{transform:translateY(-3px);border-color:#77dfff88;box-shadow:0 12px 30px #0004}
@@ -211,24 +216,31 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
     <div class="about-role">DATA SCIENCE <b>·</b> ANALYTICS <b>·</b> TECHNOLOGY</div>
     <p>I enjoy turning raw data into meaningful insights and building practical digital experiences. I’m curious by nature, hands-on in my learning, and always exploring how technology can solve real-world problems.</p>
     <div class="about-tags"><span>Data Science</span><span>Analytics</span><span>Python</span><span>AI &amp; ML</span></div>
-    <div class="about-social" aria-label="Social media and portfolio links">
-<a href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer">GitHub ↗</a>
-<a href="https://www.linkedin.com/in/niteshkumar-codlytic/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-<a href="https://www.instagram.com/codlytic" target="_blank" rel="noreferrer">Instagram ↗</a>
-<a href="https://youtube.com/@codlytic" target="_blank" rel="noreferrer">YouTube ↗</a>
-<a href="https://x.com/HeyNiteshh" target="_blank" rel="noreferrer">X ↗</a>
-<a href="https://www.facebook.com/share/1J7a5fWJVQ/" target="_blank" rel="noreferrer">Facebook ↗</a>
-<a href="mailto:ns0762005@gmail.com">Email ↗</a>
-<a href="https://nitesh-datascience.github.io/portfolio/" target="_blank" rel="noreferrer">Main Portfolio ↗</a>
-<a href="https://github.com/Nitesh-Datascience/universe-portfolio" target="_blank" rel="noreferrer">Universe Portfolio ↗</a>
-<a href="https://nitesh-datascience.github.io/Nitesh-Tree-Portfolio/" target="_blank" rel="noreferrer">🌳 Tree Portfolio ↗</a>
-<a href="https://codlytic-galaxy-portfolio.vercel.app" target="_blank" rel="noreferrer">Galaxy Portfolio ↗</a>
+    <div class="about-social icon-links" aria-label="Social media and portfolio links">
+<a href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github"></i></a>
+<a href="https://www.linkedin.com/in/niteshkumar-codlytic/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+<a href="https://www.instagram.com/codlytic" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+<a href="https://youtube.com/@codlytic" target="_blank" rel="noreferrer" aria-label="YouTube" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+<a href="https://x.com/HeyNiteshh" target="_blank" rel="noreferrer" aria-label="X" title="X"><i class="fa-brands fa-x-twitter"></i></a>
+<a href="https://www.facebook.com/share/1J7a5fWJVQ/" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+<a href="mailto:ns0762005@gmail.com" aria-label="Email" title="Email"><i class="fa-regular fa-envelope"></i></a>
+<a href="https://nitesh-datascience.github.io/portfolio/" target="_blank" rel="noreferrer" aria-label="Main Portfolio" title="Main Portfolio"><i class="fa-solid fa-globe"></i></a>
+<a href="https://github.com/Nitesh-Datascience/universe-portfolio" target="_blank" rel="noreferrer" aria-label="Universe Portfolio" title="Universe Portfolio"><i class="fa-solid fa-earth-americas"></i></a>
+<a href="https://nitesh-datascience.github.io/Nitesh-Tree-Portfolio/" target="_blank" rel="noreferrer" aria-label="Tree Portfolio" title="Tree Portfolio"><i class="fa-solid fa-tree"></i></a>
+<a href="https://codlytic-galaxy-portfolio.vercel.app" target="_blank" rel="noreferrer" aria-label="Galaxy Portfolio" title="Galaxy Portfolio"><i class="fa-solid fa-circle-nodes"></i></a>
 </div>
    </div>
   </div>
   <div class="about-detail-grid">
    <article class="about-detail journey-card"><div class="about-card-top"><span class="about-card-icon">✧</span><span class="about-card-label">THE JOURNEY</span></div><h4>Learning by building.</h4><p>Growing through hands-on practice, real projects and continuous learning.</p><div class="about-experience"><span class="about-experience-dot"></span><div><strong>Zidio Development</strong><small>Data Science &amp; Analytics · 4-month internship</small></div></div></article>
-   <article class="about-detail"><div class="about-card-top"><span class="about-card-icon">⌘</span><span class="about-card-label">MY TOOLKIT</span></div><h4>Tools I work with.</h4><div class="about-skill-list"><span>Python</span><span>SQL</span><span>Excel</span><span>Power BI</span><span>Machine Learning</span><span>AI</span></div></article>
+   <article class="about-detail"><div class="about-card-top"><span class="about-card-icon">⌘</span><span class="about-card-label">MY TOOLKIT</span></div><h4>Tools I work with.</h4><div class="about-skill-list">
+<span><i class="fa-brands fa-python" aria-hidden="true"></i>Python</span>
+<span><i class="fa-solid fa-database" aria-hidden="true"></i>SQL</span>
+<span><i class="fa-solid fa-file-excel" aria-hidden="true"></i>Excel</span>
+<span><i class="fa-solid fa-chart-column" aria-hidden="true"></i>Power BI</span>
+<span><i class="fa-solid fa-brain" aria-hidden="true"></i>Machine Learning</span>
+<span><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>AI</span>
+</div></article>
    <article class="about-detail"><div class="about-card-top"><span class="about-card-icon">↗</span><span class="about-card-label">SELECTED WORK</span></div><h4>Ideas into projects.</h4><p>Exploring data, building useful tools and bringing ideas to life.</p><div class="about-project-links"><a href="https://github.com/Nitesh-Datascience/EduPro_Project" target="_blank" rel="noreferrer"><span>EduPro Project</span><b>↗</b></a><a href="https://github.com/Nitesh-Datascience/codlytic-galaxy-portfolio" target="_blank" rel="noreferrer"><span>Galaxy Portfolio</span><b>↗</b></a></div></article>
    <article class="about-detail vision-card"><div class="about-card-top"><span class="about-card-icon">◎</span><span class="about-card-label">THE VISION</span></div><h4>Make technology meaningful.</h4><p>Use data and AI to create thoughtful solutions that make a real difference.</p><div class="about-vision-line"><span></span><small>STAY CURIOUS · KEEP CREATING</small></div></article>
   </div>
@@ -236,13 +248,13 @@ footer{text-align:center;padding:25px;color:#7f8ba5;border-top:1px solid #ffffff
 </section>
 <section id="notes"><div class="section-head"><div class="eyebrow">A SPACE THAT CAN GROW</div><h2>Ideas & Notes</h2><p>Some thoughts are worth keeping. This space will grow into a personal notes and knowledge corner in a future update.</p></div><div class="quiet-card"><h3>Coming in a future chapter</h3><p>A simple place to write, save and revisit notes, learning snippets and ideas. For now, this stays intentionally quiet and uncluttered.</p></div></section>
 <section id="contact"><div class="section-head"><div class="eyebrow">SAY HELLO</div><h2>Find me around the web</h2><p>Connect, follow along or explore what I’m working on.</p></div><div class="socials" aria-label="Social links">
-<a href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer" aria-label="GitHub">⌘</a>
-<a href="https://www.linkedin.com/in/niteshkumar-codlytic/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn" style="font-weight:900;font-size:1rem">in</a>
-<a href="https://youtube.com/@codlytic" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
-<a href="https://www.instagram.com/codlytic" target="_blank" rel="noreferrer" aria-label="Instagram">◎</a>
-<a href="https://x.com/HeyNiteshh" target="_blank" rel="noreferrer" aria-label="X">𝕏</a>
-<a href="https://www.facebook.com/share/1J7a5fWJVQ/" target="_blank" rel="noreferrer" aria-label="Facebook">f</a>
-<a href="mailto:ns0762005@gmail.com" aria-label="Email">✉</a>
+<a href="https://github.com/Nitesh-Datascience" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><i class="fa-brands fa-github"></i></a>
+<a href="https://www.linkedin.com/in/niteshkumar-codlytic/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+<a href="https://youtube.com/@codlytic" target="_blank" rel="noreferrer" aria-label="YouTube" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+<a href="https://www.instagram.com/codlytic" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+<a href="https://x.com/HeyNiteshh" target="_blank" rel="noreferrer" aria-label="X" title="X"><i class="fa-brands fa-x-twitter"></i></a>
+<a href="https://www.facebook.com/share/1J7a5fWJVQ/" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+<a href="mailto:ns0762005@gmail.com" aria-label="Email" title="Email"><i class="fa-regular fa-envelope"></i></a>
 </div></section>
 <button class="guide-launch" id="guideLaunch" type="button" aria-expanded="false">✦ Ask CODLYTIC</button>
 <aside class="guide-panel" id="guidePanel" aria-label="CODLYTIC AI guide"><div class="guide-top"><h3>CODLYTIC Guide</h3><button class="guide-close" id="guideClose" type="button" aria-label="Close">✕</button></div><div class="chat-messages" id="chatMessages" aria-live="polite"><div class="chat-bubble bot">Hi! I’m the CODLYTIC guide. Ask me about Nitesh, his interests or this website.</div></div><form class="chat-form" id="chatForm"><input id="chatInput" maxlength="600" placeholder="Ask something..." required aria-label="Your question"><button class="chat-send" id="chatSend" type="submit">Send</button></form><div class="chat-status" id="chatStatus">AI replies use the connected Vercel API.</div></aside>
