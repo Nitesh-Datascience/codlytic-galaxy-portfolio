@@ -47,9 +47,9 @@ function cleanNote(body) {
   if (!title || !content) throw Object.assign(new Error("Title and note content are required."), { status: 400 });
   if (!CATEGORIES.includes(category)) throw Object.assign(new Error("Choose a valid category."), { status: 400 });
   const attachment_path = body.attachment_path ? String(body.attachment_path) : null;
-  const attachment_name = body.attachment_name ? String(body.attachment_name).replace(/[\\r\\n"]/g, "").slice(0, 180) : null;
+  const attachment_name = body.attachment_name ? String(body.attachment_name).replace(/[\r\n"]/g, "").slice(0, 180) : null;
   const attachment_size = body.attachment_size ? Number(body.attachment_size) : null;
-  if (attachment_path && (!/^[0-9a-f-]{36}\\.pdf$/i.test(attachment_path) || !attachment_name || !Number.isInteger(attachment_size) || attachment_size < 1 || attachment_size > 3145728)) {
+  if (attachment_path && (!/^[0-9a-f-]{36}\.pdf$/i.test(attachment_path) || !attachment_name || !Number.isInteger(attachment_size) || attachment_size < 1 || attachment_size > 3145728)) {
     throw Object.assign(new Error("Invalid PDF attachment details."), { status: 400 });
   }
   return { title, content, category, status, attachment_path, attachment_name, attachment_size };
