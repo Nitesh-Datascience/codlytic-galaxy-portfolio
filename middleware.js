@@ -1,3 +1,4 @@
+import { URL } from "node:url";
 import { next } from "@vercel/functions";
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
