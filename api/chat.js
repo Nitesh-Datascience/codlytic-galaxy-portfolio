@@ -72,7 +72,7 @@ async function requestGemini(model, key, message) {
   return { ok: false, retryable: true, error: lastError, status: 503 };
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Use POST for chat messages." });
@@ -117,4 +117,4 @@ module.exports = async function handler(req, res) {
     console.error("Portfolio chat handler failed:", error?.message || error);
     return res.status(500).json({ error: "A server error occurred. Please try again." });
   }
-};
+}
