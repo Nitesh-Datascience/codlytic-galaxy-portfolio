@@ -8,8 +8,8 @@ export default async function handler(req,res){
  if(req.headers.origin&&req.headers.host&&new URL(req.headers.origin).host!==req.headers.host)return send(res,403,{error:"Invalid origin."});
  try{
   const token=cookie(req,"codlytic_access");if(!token)return send(res,401,{error:"Please sign in first."});
-  const auth=await fetch(URL+"/auth/v1/user",{headers:{apikey:KEY,Authorization:"Bearer "+token}});if(!auth.ok)return send(res,401,{error:"Please sign in again."});
-  const admin=await fetch(URL+"/rest/v1/rpc/is_admin",{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+token,"Content-Type":"application/json"},body:"{}"});
+  const auth=await fetch(SUPABASE_URL+"/auth/v1/user",{headers:{apikey:KEY,Authorization:"Bearer "+token}});if(!auth.ok)return send(res,401,{error:"Please sign in again."});
+  const admin=await fetch(SUPABASE_URL+"/rest/v1/rpc/is_admin",{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+token,"Content-Type":"application/json"},body:"{}"});
   if(!admin.ok||await admin.json()!==true)return send(res,403,{error:"Notes editor access is not enabled for this account."});
   const body=typeof req.body==="string"?JSON.parse(req.body||"{}"):(req.body||{});
   const name=String(body.name||"note.pdf").replace(/[\/\\]/g,"_").slice(0,160);
@@ -18,7 +18,7 @@ export default async function handler(req,res){
   const bytes=Buffer.from(encoded,"base64");
   if(bytes.length<5||bytes.length>3145728||bytes.subarray(0,5).toString()!=="%PDF-")return send(res,400,{error:"PDF must be valid and no larger than 3 MB."});
   const path=randomUUID()+".pdf";
-  const uploaded=await fetch(URL+"/storage/v1/object/codlytic-note-pdfs/"+path,{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+token,"Content-Type":"application/pdf","x-upsert":"false"},body:bytes});
+  const uploaded=await fetch(SUPABASE_URL+"/storage/v1/object/codlytic-note-pdfs/"+path,{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+token,"Content-Type":"application/pdf","x-upsert":"false"},body:bytes});
   if(!uploaded.ok){const err=await uploaded.json().catch(()=>({}));return send(res,uploaded.status,{error:err.message||"PDF upload failed."})}
   return send(res,201,{path,name,size:bytes.length});
  }catch(e){return send(res,500,{error:e.message||"Upload failed."})}
