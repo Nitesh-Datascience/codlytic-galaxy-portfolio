@@ -10,7 +10,7 @@ export default async function handler(req,res){
   if(token){try{await query("/auth/v1/user",token);const a=await fetch(SUPABASE_URL+"/rest/v1/rpc/is_admin",{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+token,"Content-Type":"application/json"},body:"{}"});allowed=a.ok&&await a.json()===true;if(allowed){const rows=await query("/rest/v1/codlytic_notes?select=attachment_path,status&id=eq."+id,token);note=rows[0]}}catch{}}
   if(!note){const rows=await query("/rest/v1/codlytic_notes?select=attachment_path,status&id=eq."+id+"&status=eq.published");note=rows[0]}
   if(!note||!note.attachment_path||(!allowed&&note.status!=="published"))return send(res,404,{error:"PDF not found or not published."});
-  const signed=await fetch(SUPABASE_URL+"/storage/v1/object/sign/codlytic-note-pdfs/"+encodeURIComponent(note.attachment_path),{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify({expiresIn:3600})});
+  const signed=await fetch(SUPABASE_URL+"/storage/v1/object/sign/codlytic-note-pdfs/"+encodeURIComponent(note.attachment_path),{method:"POST",headers:{apikey:KEY,...(allowed&&token?{Authorization:"Bearer "+token}:{}),"Content-Type":"application/json"},body:JSON.stringify({expiresIn:3600})});
   const data=await signed.json().catch(()=>({}));if(!signed.ok)return send(res,signed.status,{error:data.message||"Could not create PDF link."});
   res.statusCode=302;
   res.setHeader("Location",SUPABASE_URL+"/storage/v1"+data.signedURL);
