@@ -12,6 +12,9 @@ export default async function handler(req,res){
   if(!note||!note.attachment_path||(!allowed&&note.status!=="published"))return send(res,404,{error:"PDF not found or not published."});
   const signed=await fetch(SUPABASE_URL+"/storage/v1/object/sign/codlytic-note-pdfs/"+encodeURIComponent(note.attachment_path),{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify({expiresIn:3600})});
   const data=await signed.json().catch(()=>({}));if(!signed.ok)return send(res,signed.status,{error:data.message||"Could not create PDF link."});
-  return send(res,200,{url:SUPABASE_URL+"/storage/v1"+data.signedURL});
+  res.statusCode=302;
+  res.setHeader("Location",SUPABASE_URL+"/storage/v1"+data.signedURL);
+  res.setHeader("Cache-Control","no-store");
+  return res.end();
  }catch(e){return send(res,500,{error:e.message||"PDF unavailable."})}
 }
